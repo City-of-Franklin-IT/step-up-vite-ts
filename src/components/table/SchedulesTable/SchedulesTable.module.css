@@ -1,0 +1,17 @@
+.header {
+  color: var(--primaryContent);
+  font-family: 'Play', sans-serif;
+  font-size: .80rem;
+  text-transform: uppercase;
+  padding: 4px 0;
+  background-color: var(--info);
+}
+
+.tableData {
+  font-family: 'Play', sans-serif;
+  font-weight: 100;
+  font-size: .75rem;
+  text-align: center;
+  line-height: 1.2rem;
+  border-bottom: 1px solid var(--info);
+}

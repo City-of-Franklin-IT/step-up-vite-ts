@@ -1,0 +1,75 @@
+@import '../../../animations.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Play', sans-serif;
+  border-radius: 6px;
+  width: 100%;
+  overflow: hidden;
+  animation: 250ms fade-in-bottom linear;
+}
+
+.header {
+  color: var(--primaryContent);
+  text-transform: uppercase;
+  background-color: var(--primary);
+  line-height: 3rem;
+  text-align: left;
+}
+
+.evenRow {
+  background-color: var(--neutralContent);
+  line-height: 3rem;
+}
+
+.oddRow {
+  background-color: #FFFFFF;
+  line-height: 3rem;
+}
+
+.evenRow:hover {
+  color: var(--neutralContent);
+  background-color: var(--neutral);
+}
+
+.oddRow:hover {
+  color: var(--neutralContent);
+  background-color: var(--neutral);
+}
+
+.employeeCell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  align-items: start;
+}
+
+.rank {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--primaryContent);
+  font-size: .7rem;
+  background-color: var(--primary);
+  text-transform: uppercase;
+  padding: 0px 6px;
+  height: 24px;
+  width: fit-content;
+  border-radius: 4px;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, .2);
+}
+
+.hours {
+  font-family: "Squada One", sans-serif;
+  font-size: 1.25rem;
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  line-height: initial;
+  padding: 40px;
+}
