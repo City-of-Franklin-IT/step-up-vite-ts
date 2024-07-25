@@ -8,7 +8,7 @@ export const handleBtn = (location: HandleBtnProps['location']) => {
   if(location.pathname !== '/rosters') { // On home page
     return (
       <Link to={'/rosters'} className={styles.rosterBtn}>
-        View Today's Roster
+        View Rosters
       </Link>
     )
   }

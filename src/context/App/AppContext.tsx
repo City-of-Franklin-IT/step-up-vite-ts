@@ -7,14 +7,18 @@ import { AppContextObj, AppState, Action } from './types'
 
 const AppContext = createContext<AppContextObj>({
   dispatch: () => {},
+  date: '',
   filter: '',
-  searchValue: ''
+  searchValue: '',
+  skillsFilter: ''
 })
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const initialState: AppState = {
+    date: '',
     filter: '',
-    searchValue: ''
+    searchValue: '',
+    skillsFilter: ''
   }
 
   const [state, dispatch] = useReducer<Reducer<AppState, Action>>(appReducer, initialState)

@@ -1,20 +1,34 @@
 // Types
-import { RosterEntry, Shift, Apparatus, RankAbrv, RankWFD } from "../../../context/App/types"
+import { Dispatch, SetStateAction } from "react"
+import { QueryClient } from "react-query"
+import { RosterEntry, Shift, Apparatus, RankAbrv, RankWFD, Action } from "../../../context/App/types"
 
 export interface RosterContainerProps { // RosterContainer props
   data: RosterEntry[]
 }
 
 export interface RosterContainerState { // RosterContainer state object
-  hidden: boolean
+  hidden: boolean,
+  showDatePicker: boolean,
+  date: string
 }
 
 export interface UseRosterGroupsProps { // useRosterGroups hook props
   data: RosterEntry[]
 }
 
+export interface UseSelectDateProps { // useSelectDate hook props
+  date: string,
+  dispatch: Dispatch<Action>
+}
+
 export interface SetGroupsProps { // setGroups fn props
   rosters: RosterGroup[]
+}
+
+export interface HandleDateChangeProps { // handleDateChange fn props
+  event: React.ChangeEvent<HTMLInputElement>,
+  setState: Dispatch<SetStateAction<RosterContainerState>>
 }
 
 export interface RosterItem {
@@ -38,11 +52,6 @@ export interface RosterGroup {
 }
 
 export interface StationGroup {
-  unit: Apparatus,
-  roster: RosterItem[]
-}
-
-interface UnitGroup {
   unit: Apparatus,
   roster: RosterItem[]
 }

@@ -1,8 +1,8 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 // Types
 import { Apparatus, Station } from "../../../context/App/types"
-import { UseRosterGroupsProps, SetGroupsProps, RosterItem, RosterGroup, StationGroup } from "./types"
+import { UseRosterGroupsProps, UseSelectDateProps, SetGroupsProps, HandleDateChangeProps, RosterItem, RosterGroup, StationGroup } from "./types"
 
 export const useRosterGroups = (data: UseRosterGroupsProps['data']): RosterGroup[] => useMemo(() => {
   const rosterMap = new Map<string, RosterItem[]>()
@@ -57,7 +57,13 @@ export const useRosterGroups = (data: UseRosterGroupsProps['data']): RosterGroup
   return sorted
 }, [data])
 
-export const setGroups = (rosters: SetGroupsProps['rosters']): { station: string, units: StationGroup[] }[] => {
+export const useSelectDate = (date: UseSelectDateProps['date'], dispatch: UseSelectDateProps['dispatch']): () => void => useCallback(() => {
+  if(date) {
+    dispatch({ type: 'SET_DATE', payload: date })
+  }
+}, [date])
+
+export const setGroups = (rosters: SetGroupsProps['rosters']): { station: string, units: StationGroup[] }[] => useMemo(() => {
   const stationsMap = new Map<string, StationGroup[]>()
 
   rosters.forEach(obj => {
@@ -84,4 +90,12 @@ export const setGroups = (rosters: SetGroupsProps['rosters']): { station: string
   const groups = Array.from(stationsMap.entries()).map(([station, units]) => ({ station, units }))
 
   return groups
+}, [rosters])
+
+export const handleDateChange = (event: HandleDateChangeProps['event'], setState: HandleDateChangeProps['setState']): void => {
+  const date = new Date(event.target.value)
+
+  if(!isNaN(date.getTime()) && date.getFullYear().toString().length === 4) { // Valid date/time
+    return setState(prevState => ({ ...prevState, showDatePicker: false, date: event.target.value }))
+  }
 }

@@ -9,6 +9,8 @@
 
 .header {
   position: absolute;
+  display: flex;
+  gap: 12px;
   color: var(--warning);
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
   font-size: 2.25rem;
@@ -34,11 +36,23 @@
 }
 
 .stationGroup {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-around;
   gap: 24px;
   padding: 24px;
+  padding-bottom: 60px;
   border: 1px dotted var(--neutralContent);
+}
+
+.rosterLegend {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.calendarBtn:hover {
+  animation: 100ms slide-up ease-in-out forwards;
 }

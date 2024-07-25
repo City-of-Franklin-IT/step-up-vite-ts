@@ -2,60 +2,57 @@ import { useMemo, useCallback } from "react"
 
 // Types
 import { Staff } from '../../../context/App/types'
-import { UseSetTableDataProps, UseSearchProps, FilterQualifiedProps, HandleResetSearchBtnProps, ScrollToTopProps } from './types'
+import { UseSetTableDataProps, UseSearchProps, UseSetSkills, FilterQualifiedProps, HandleResetSearchBtnProps, ScrollToTopProps } from './types'
 
-export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], searchValue: UseSetTableDataProps['searchValue']): Staff[] => useMemo(() => { // Set table data
+export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], skillsFilter: UseSetTableDataProps['skillsFilter'], searchValue: UseSetTableDataProps['searchValue']): Staff[] => useMemo(() => { // Set table data
   let array: Staff[] = []
 
-    if(filter) { // Filter applied
-      array = filterQualified(data, filter)
-      if(searchValue) {
-        const regex = new RegExp(searchValue, 'i')
+  if(filter) { // Handle qualified filter
+    array = filterQualified(data, filter)
+  } else array = data
 
-        array = array.filter(obj => {
-          for(const prop in obj) {
-            if(typeof obj[prop] === 'string' && regex.test(obj[prop])) {
-              return true
-            }
-          }
-        })
-      }
-    } else { // No filter applied
-      if(searchValue) {
-        const regex = new RegExp(searchValue, 'i')
+  if(skillsFilter) { // Handle skills filter
+    array = array.filter(obj => {
+      const skills = obj.skills.split(',').map(skill => skill.trim())
 
-        array = data.filter(obj => {
-          for(const prop in obj) {
-            if(typeof obj[prop] === 'string' && regex.test(obj[prop])) {
-              return true
-            }
-          }
-        })
-      } else array = data
-    }
+      return skills.includes(skillsFilter)
+    })
+  }
 
-    const aggregatedHours = (data: Staff[]): Staff[] => { // Aggregate duplicate employeeIds (Firefighters stepping up to either Engineer or Lieutenant)
-      const aggregatedDataMap = new Map<string, Staff>()
+  if(searchValue) { // Handle search 
+    const regex = new RegExp(searchValue, 'i')
 
-      data.forEach(obj => {
-        if(aggregatedDataMap.has(obj.employeeId)) {
-          const existing = aggregatedDataMap.get(obj.employeeId)!
-          aggregatedDataMap.set(obj.employeeId, {
-            ...existing,
-            hours: existing.hours + obj.hours
-          })
-        } else {
-          aggregatedDataMap.set(obj.employeeId, obj)
+    array = array.filter(obj => {
+      for(const prop in obj) {
+        if(typeof obj[prop] === 'string' && regex.test(obj[prop])) {
+          return true
         }
-      })
+      }
+    })
+  }
 
-      return Array.from(aggregatedDataMap.values())
-    }
+  const aggregatedHours = (data: Staff[]): Staff[] => { // Aggregate duplicate employeeIds (Firefighters stepping up to either Engineer or Lieutenant)
+    const aggregatedDataMap = new Map<string, Staff>()
 
-    const aggregated = aggregatedHours(array)
+    data.forEach(obj => {
+      if(aggregatedDataMap.has(obj.employeeId)) {
+        const existing = aggregatedDataMap.get(obj.employeeId)!
+        aggregatedDataMap.set(obj.employeeId, {
+          ...existing,
+          hours: existing.hours + obj.hours
+        })
+      } else {
+        aggregatedDataMap.set(obj.employeeId, obj)
+      }
+    })
 
-    return aggregated
-}, [data, filter, searchValue])
+    return Array.from(aggregatedDataMap.values())
+  }
+
+  const aggregated = aggregatedHours(array)
+
+  return aggregated
+}, [data, filter, skillsFilter, searchValue])
 
 export const useSearch = (searchValue: UseSearchProps['searchValue'], dispatch: UseSearchProps['dispatch']): () => void => useCallback(() => { // Set search value to ctx
   const cleanTimeout = setTimeout(() => {
@@ -66,6 +63,20 @@ export const useSearch = (searchValue: UseSearchProps['searchValue'], dispatch: 
 
   return () => clearTimeout(cleanTimeout)
 }, [searchValue])
+
+export const useSetSkills = (data: UseSetSkills['data']): string[] => useMemo(() => {
+  const skills: string[] = []
+
+  data.forEach(obj => {
+    obj.skills.split(',').forEach(x => {
+      if(!skills.includes(x.trim())) {
+        skills.push(x.trim())
+      }
+    })
+  })
+
+  return skills
+}, [data])
 
 export const handleResetSearchBtn = (setState: HandleResetSearchBtnProps['setState'], dispatch: HandleResetSearchBtnProps['dispatch']): void => {
   setState({ searchValue: '' })

@@ -8,7 +8,7 @@ function HideBtn({ setState, label }: HideBtnProps) {
     <button 
       type="button"
       className={styles.hideBtn}
-      onClick={() => setState(prevState => ({ hidden: !prevState.hidden }))}>
+      onClick={() => setState(prevState => ({ ...prevState,  hidden: !prevState.hidden }))}>
       {label}
     </button>
   )

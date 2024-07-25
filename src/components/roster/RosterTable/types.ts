@@ -17,3 +17,8 @@ export interface HandleTimeProps { // handleTime fn props
 export interface HandleRankProps { // handleRank fn props
   data: RosterItem
 }
+
+export interface HandleActiveProps { // handleActive fn props
+  start: Date,
+  end: Date
+}

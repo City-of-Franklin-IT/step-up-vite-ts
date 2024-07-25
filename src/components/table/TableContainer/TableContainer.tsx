@@ -1,12 +1,13 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import AppContext from '../../../context/App/AppContext'
-import { useSetTableData, useSearch, handleResetSearchBtn, scrollToTop } from '.'
+import { useSetTableData, useSearch, useSetSkills, handleResetSearchBtn, scrollToTop } from '.'
 import styles from './TableContainer.module.css'
 
 // Types
 import { TableContainerProps, TableContainerState } from './types'
 
 // Components
+import SkillsFilterContainer from '../../skills/SkillsFilterContainer/SkillsFilterContainer'
 import QualifiedBtn from '../../buttons/QualifiedBtn/QualifiedBtn'
 import ResetSearchBtn from '../../buttons/ResetSearchBtn/ResetSearchBtn'
 import Table from '../Table/Table'
@@ -14,17 +15,19 @@ import Search from '../../search/Search/Search'
 import BackToTopBtn from '../../buttons/BackToTopBtn/BackToTopBtn'
 
 function TableContainer({ data }: TableContainerProps) {
-  const { filter, searchValue, dispatch } = useContext(AppContext)
+  const { filter, skillsFilter, searchValue, dispatch } = useContext(AppContext)
 
   const [state, setState] = useState<TableContainerState>({ searchValue: '' })
 
   const topRef = useRef<HTMLDivElement>(null)
 
-  const tableData = useSetTableData(data, filter, searchValue)
+  const tableData = useSetTableData(data, filter, skillsFilter, searchValue)
 
   const handleSearch = useSearch(state.searchValue, dispatch)
 
-  useEffect(() => {
+  const skills = useSetSkills(tableData)
+
+  useEffect(() => { // Set searchValue to ctx
     handleSearch()
   }, [state.searchValue])
 
@@ -69,6 +72,9 @@ function TableContainer({ data }: TableContainerProps) {
               </>
             )}
         </div>
+        <SkillsFilterContainer
+          skills={skills} 
+          handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
       </div>
       <Table data={tableData} />
       <BackToTopBtn handleClick={() => scrollToTop(topRef)} />

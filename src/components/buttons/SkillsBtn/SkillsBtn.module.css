@@ -1,0 +1,26 @@
+@import '../../../animations.css';
+
+.button {
+  color: var(--neutralContent);
+  text-transform: uppercase;
+  font-family: 'Jura', sans-serif;
+  padding: 4px;
+  outline: 1px solid var(--neutralContent);
+  width: 140px;
+  border-radius: 5px;
+  box-shadow: 6px 6px 0 var(--neutralContent);
+  animation: 250ms fade-in linear;
+}
+
+.button:hover {
+  cursor: pointer;
+  outline-color: var(--warning);
+  box-shadow: 6px 6px 0 var(--warning);
+}
+
+.label {
+  font-size: .8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

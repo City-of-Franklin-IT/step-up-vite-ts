@@ -13,6 +13,16 @@ const appReducer = (state: AppReducerProps['state'], action: AppReducerProps['ac
         ...state,
         searchValue: action.payload
       }
+    case 'SET_SKILLS_FILTER':
+      return {
+        ...state,
+        skillsFilter: action.payload
+      }
+    case 'SET_DATE':
+      return {
+        ...state,
+        date: action.payload
+      }
     default:
       return state
   }

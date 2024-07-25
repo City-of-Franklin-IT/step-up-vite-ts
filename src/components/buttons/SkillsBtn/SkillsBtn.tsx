@@ -1,21 +1,21 @@
 import { useContext } from 'react'
 import AppContext from '../../../context/App/AppContext'
-import styles from './QualifiedBtn.module.css'
+import styles from './SkillsBtn.module.css'
 
 // Types
-import { QualifiedBtnProps } from './types'
+import { SkillsBtnProps } from './types'
 
-function QualifiedBtn({ type, label }: QualifiedBtnProps) {
+function SkillsBtn({ type, label }: SkillsBtnProps) {
   const { dispatch } = useContext(AppContext)
 
   return (
     <button
       type="button"
-      onClick={() => dispatch({ type: 'SET_FILTER', payload: type ? type : '' })}
+      onClick={() => dispatch({ type: 'SET_SKILLS_FILTER', payload: type ? type : '' })}
       className={styles.button}>
       <p className={styles.label}>{label}</p>
     </button>
   )
 }
 
-export default QualifiedBtn
+export default SkillsBtn

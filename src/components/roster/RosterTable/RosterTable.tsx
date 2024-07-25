@@ -1,5 +1,5 @@
 import { handleTime } from '../../../helpers'
-import { useOrderRanks, handleRank } from '.'
+import { useOrderRanks, handleRank, handleActive } from '.'
 import styles from './RosterTable.module.css'
 
 // Types
@@ -25,7 +25,7 @@ function RosterTable({ data, label }: RosterTableProps) {
         <tbody>
           {ordered.map(obj => {
             return (
-              <tr key={`${ obj.employeeId }-${ obj.station }-${ obj.shift }`} className={styles.tableData}>
+              <tr key={`${ obj.employeeId }-${ obj.station }-${ obj.staffStart }`} className={handleActive(obj.staffStart, obj.staffEnd)}>
                 <td>{handleRank(obj)}</td>
                 <td>{obj.rankAbrv}</td>
                 <td>{obj.staffStart.toString().split('T')[0]}</td>

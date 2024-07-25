@@ -13,12 +13,17 @@ export interface TableContainerState { // TableContainer state obj
 export interface UseSetTableDataProps { // useSetTableTable hook props
   data: Staff[],
   filter: string,
+  skillsFilter: string,
   searchValue: string
 }
 
 export interface UseSearchProps { // useSearch hook props
   searchValue: string,
   dispatch: Dispatch<Action>
+}
+
+export interface UseSetSkills { // useSetSkills hook props
+  data: Staff[]
 }
 
 export interface FilterQualifiedProps { // filterQualified fn props

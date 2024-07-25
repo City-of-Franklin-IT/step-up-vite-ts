@@ -1,31 +1,32 @@
 import { ReactElement, useMemo } from 'react'
+import styles from './RosterTable.module.css'
 
 // Types
 import { RosterItem } from '../RosterContainer/types'
-import { OrderRanksProps, HandleRankProps } from './types'
+import { OrderRanksProps, HandleRankProps, HandleActiveProps } from './types'
 
 export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => useMemo(() => { // Order by rank
   return data.sort((a, b) => {
-    if(a.rankAbrv === 'BC') {
-      return -1
-    }
+    const rankOrder = ['BC', 'OFF', 'ENG', 'FF']
 
-    if(a.rankAbrv === 'OFF' && b.rankAbrv !== 'BC') {
-      return -1
+    const rankA = rankOrder.indexOf(a.rankAbrv)
+    const rankB = rankOrder.indexOf(b.rankAbrv)
+  
+    if(rankA !== rankB) {
+      return rankA - rankB
     }
-
-    if(a.rankAbrv === 'ENG' && b.rankAbrv === 'FF') {
-      return -1
-    }
-
-    if(a.rankAbrv === 'ENG' && b.rankAbrv === 'OFF') {
+  
+    const startA = new Date(a.staffStart) // If ranks are the same, sort by staffStart
+    const startB = new Date(b.staffStart)
+  
+    if(startA > startB) {
       return 1
     }
-
-    if(a.rankAbrv === 'FF') {
-      return 1
+  
+    if(startA < startB) {
+      return -1
     }
-
+  
     return 0
   })
 }, [data])
@@ -72,4 +73,14 @@ export const handleRank = (data: HandleRankProps['data']): ReactElement => { // 
         </div>
       )
   }
+}
+
+export const handleActive = (start: HandleActiveProps['start'], end: HandleActiveProps['end']) => { // Handle row styling for active / inactive rows
+  const startDateTime = new Date(start)
+  const endDateTime = new Date(end)
+  const now = new Date()
+
+  if(startDateTime < now && endDateTime > now) {
+    return styles.tableData
+  } else return styles.tableDataInactive
 }

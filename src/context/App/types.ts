@@ -3,13 +3,17 @@ import { Dispatch, ReactNode } from "react"
 
 export interface AppContextObj { // AppContext
   dispatch: Dispatch<Action>,
+  date: string,
   filter: string,
-  searchValue: string
+  searchValue: string,
+  skillsFilter: string
 }
 
 export interface AppState { // App context initial state object
+  date: string,
   filter: string,
-  searchValue: string
+  searchValue: string,
+  skillsFilter: string
 }
 
 export interface AppReducerProps { // AppReducer props
@@ -64,6 +68,8 @@ export interface RosterEntry {
 export type Action =
   | { type: 'SET_FILTER', payload: string }
   | { type: 'SET_SEARCH_VALUE', payload: string }
+  | { type: 'SET_SKILLS_FILTER', payload: string }
+  | { type: 'SET_DATE', payload: string }
 
 export interface ServerResponse { // Server response object
   success: boolean
