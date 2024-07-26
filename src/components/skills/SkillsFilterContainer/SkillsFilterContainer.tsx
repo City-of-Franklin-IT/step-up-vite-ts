@@ -37,6 +37,9 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
           })}
         </>
       )}
+      {skillsFilter && (
+        <div className={styles.footer}>Showing { skillsFilter }</div>
+      )}
     </div>
   )
 }

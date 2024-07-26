@@ -10,7 +10,7 @@
   padding: 32px;
   border: 2px solid var(--neutralContent);
   border-radius: 12px;
-  animation: 250ms fade-in-left ease-in;
+  animation: 250ms fade-in-right ease-in;
 }
 
 .header {

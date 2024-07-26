@@ -8,6 +8,7 @@ import { TableContainerProps, TableContainerState } from './types'
 
 // Components
 import SkillsFilterContainer from '../../skills/SkillsFilterContainer/SkillsFilterContainer'
+import QualifiedFilterContainer from '../../qualified/QualifiedFilterContainer/QualifiedFilterContainer'
 import QualifiedBtn from '../../buttons/QualifiedBtn/QualifiedBtn'
 import ResetSearchBtn from '../../buttons/ResetSearchBtn/ResetSearchBtn'
 import Table from '../Table/Table'
@@ -39,39 +40,8 @@ function TableContainer({ data }: TableContainerProps) {
             searchValue={state.searchValue}
             setSearchValue={setState} />
         </div>
-        <div className={styles.buttons}>
-          <p className={styles.header}>Filter Qualified</p>
-          {filter ? (
-            <div className="flex gap-6">
-              <QualifiedBtn
-                label={'Remove Filter'}
-                type={''} />
-              {searchValue ? (
-                <ResetSearchBtn 
-                  handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
-              ) : null}
-            </div>
-            ) : (
-              <>
-                <QualifiedBtn
-                  type={'Engineer'}
-                  label={'Engineer'} />
-                <QualifiedBtn
-                  type={'Lieutenant'}
-                  label={'Lieutenant'} />
-                <QualifiedBtn
-                  type={'Captain'}
-                  label={'Captain'} />
-                <QualifiedBtn
-                  type={'BC'}
-                  label={'BC'} />
-                {searchValue ? (
-                  <ResetSearchBtn 
-                    handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
-                ) : null}
-              </>
-            )}
-        </div>
+        <QualifiedFilterContainer 
+          handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
         <SkillsFilterContainer
           skills={skills} 
           handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
