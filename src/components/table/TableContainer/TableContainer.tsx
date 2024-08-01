@@ -9,20 +9,18 @@ import { TableContainerProps, TableContainerState } from './types'
 // Components
 import SkillsFilterContainer from '../../skills/SkillsFilterContainer/SkillsFilterContainer'
 import QualifiedFilterContainer from '../../qualified/QualifiedFilterContainer/QualifiedFilterContainer'
-import QualifiedBtn from '../../buttons/QualifiedBtn/QualifiedBtn'
-import ResetSearchBtn from '../../buttons/ResetSearchBtn/ResetSearchBtn'
 import Table from '../Table/Table'
 import Search from '../../search/Search/Search'
 import BackToTopBtn from '../../buttons/BackToTopBtn/BackToTopBtn'
 
 function TableContainer({ data }: TableContainerProps) {
-  const { filter, skillsFilter, searchValue, dispatch } = useContext(AppContext)
+  const { filter, skillsFilter, showAllStaff, searchValue, dispatch } = useContext(AppContext)
 
   const [state, setState] = useState<TableContainerState>({ searchValue: '' })
 
   const topRef = useRef<HTMLDivElement>(null)
 
-  const tableData = useSetTableData(data, filter, skillsFilter, searchValue)
+  const tableData = useSetTableData(data, filter, skillsFilter, showAllStaff, searchValue)
 
   const handleSearch = useSearch(state.searchValue, dispatch)
 
@@ -35,7 +33,7 @@ function TableContainer({ data }: TableContainerProps) {
   return (
     <div ref={topRef} className={styles.container}>
       <div className="flex flex-col gap-14">
-        <div className="ml-10 w-1/2">
+        <div className="ml-10 w-3/4">
           <Search
             searchValue={state.searchValue}
             setSearchValue={setState} />
@@ -46,7 +44,13 @@ function TableContainer({ data }: TableContainerProps) {
           skills={skills} 
           handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
       </div>
-      <Table data={tableData} />
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2 ml-auto items-center w-fit">
+          <label className="text-white uppercase text-sm">Include Staff With 0 Hours</label>
+          <input type="checkbox" className="toggle toggle-success" checked={showAllStaff} onChange={() => dispatch({ type: 'TOGGLE_SHOW_ALL_STAFF', payload: !showAllStaff })}></input>
+        </div>
+        <Table data={tableData} />
+      </div>
       <BackToTopBtn handleClick={() => scrollToTop(topRef)} />
     </div>
   )

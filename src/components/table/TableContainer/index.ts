@@ -1,15 +1,33 @@
 import { useMemo, useCallback } from "react"
 
 // Types
-import { Staff } from '../../../context/App/types'
-import { UseSetTableDataProps, UseSearchProps, UseSetSkills, FilterQualifiedProps, HandleResetSearchBtnProps, ScrollToTopProps } from './types'
+import { UseSetTableDataProps, UseSearchProps, UseSetSkills, FilterQualifiedProps, HandleResetSearchBtnProps, ScrollToTopProps, TableData } from './types'
 
-export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], skillsFilter: UseSetTableDataProps['skillsFilter'], searchValue: UseSetTableDataProps['searchValue']): Staff[] => useMemo(() => { // Set table data
-  let array: Staff[] = []
+export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], skillsFilter: UseSetTableDataProps['skillsFilter'], showAllStaff: UseSetTableDataProps['showAllStaff'], searchValue: UseSetTableDataProps['searchValue']): TableData[] => useMemo(() => { // Set table data
+  let array: TableData[] = []
 
   if(filter) { // Handle qualified filter
     array = filterQualified(data, filter)
-  } else array = data
+  } else {
+    array = data.map(x => {
+      let hours = 0
+
+      x.StepUps.forEach(y => hours += y.hours) // Sum hours
+
+      const entry: TableData = {
+        employeeId: x.employeeId,
+        rank: x.rank,
+        fullName: x.fullName,
+        skills: x.skills,
+        phone: x.phone,
+        email: x.email,
+        hours,
+        Schedules: x.Schedules
+      }
+      
+      return entry
+    })
+  }
 
   if(skillsFilter) { // Handle skills filter
     array = array.filter(obj => {
@@ -31,28 +49,12 @@ export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseS
     })
   }
 
-  const aggregatedHours = (data: Staff[]): Staff[] => { // Aggregate duplicate employeeIds (Firefighters stepping up to either Engineer or Lieutenant)
-    const aggregatedDataMap = new Map<string, Staff>()
-
-    data.forEach(obj => {
-      if(aggregatedDataMap.has(obj.employeeId)) {
-        const existing = aggregatedDataMap.get(obj.employeeId)!
-        aggregatedDataMap.set(obj.employeeId, {
-          ...existing,
-          hours: existing.hours + obj.hours
-        })
-      } else {
-        aggregatedDataMap.set(obj.employeeId, obj)
-      }
-    })
-
-    return Array.from(aggregatedDataMap.values())
+  if(!showAllStaff) {
+    return array.filter(obj => obj.hours > 0)
   }
 
-  const aggregated = aggregatedHours(array)
-
-  return aggregated
-}, [data, filter, skillsFilter, searchValue])
+  return array
+}, [data, filter, skillsFilter, showAllStaff, searchValue])
 
 export const useSearch = (searchValue: UseSearchProps['searchValue'], dispatch: UseSearchProps['dispatch']): () => void => useCallback(() => { // Set search value to ctx
   const cleanTimeout = setTimeout(() => {
@@ -75,7 +77,7 @@ export const useSetSkills = (data: UseSetSkills['data']): string[] => useMemo(()
     })
   })
 
-  return skills
+  return skills.filter(obj => obj !== '')
 }, [data])
 
 export const handleResetSearchBtn = (setState: HandleResetSearchBtnProps['setState'], dispatch: HandleResetSearchBtnProps['dispatch']): void => {
@@ -83,13 +85,11 @@ export const handleResetSearchBtn = (setState: HandleResetSearchBtnProps['setSta
   dispatch({ type: 'SET_SEARCH_VALUE', payload: '' })
 }
 
-const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQualifiedProps['filter']): Staff[] => { // Filter staff by qualification
-  const qualified: Staff[] = []
+const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQualifiedProps['filter']): TableData[] => { // Filter staff by qualification
+  const qualified: TableData[] = []
 
   data.forEach(obj => {
     let employeeId
-    let filtered: Staff[] = []
-    let summed = 0
 
     if(filter === 'Engineer' && obj.rank === 'Firefighter') { // Engineer filter
       employeeId = obj.employeeId
@@ -107,14 +107,25 @@ const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQuali
       employeeId = obj.employeeId
     }
 
-    if(employeeId) { 
-      filtered = data.filter(item => item.employeeId === obj.employeeId)
+    let hours = 0
 
-      filtered.forEach(x => summed += x.hours)
+    obj.StepUps.forEach(x => {
+      hours += x.hours
+    })
 
-      if(summed >= 72) {
-        qualified.push(obj)
+    if(employeeId && hours >= 72) {
+      const employee: TableData = {
+        employeeId: obj.employeeId,
+        rank: obj.rank,
+        fullName: obj.fullName,
+        skills: obj.skills,
+        phone: obj.phone,
+        email: obj.email,
+        hours,
+        Schedules: obj.Schedules
       }
+
+      qualified.push(employee)
     }
   })
 

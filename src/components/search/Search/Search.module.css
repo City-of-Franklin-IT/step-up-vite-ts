@@ -3,17 +3,13 @@
 .container {
   position: relative;
   display: flex;
-  width: 80%;
+  margin-right: auto;
+  background-color: rgba(0, 0, 0, .1);
   min-height: 50px;
+  width: 80%;
   border-radius: 10px;
   box-shadow: 8px 8px 8px var(--neutral);
-  margin-right: auto;
   animation: 250ms fade-in-left linear;
-
-  @media (max-width: 1024px) { /* Tablet */ 
-    min-height: 40px;
-    width: 100%;
-  }
 }
 
 .searchInput {
@@ -21,6 +17,7 @@
   padding-left: 20px;
   padding-right: 20px;
   color: black;
+  height: 40px;
   border-radius: 10px;
 }
 
@@ -29,9 +26,9 @@
   color: var(--neutralContent);
   text-transform: uppercase;
   background-color: var(--neutral);
-  right: 0;
-  width: 120px;
-  height: 100%;
+  right: 8%;
+  width: 20%;
+  height: 40px;
   border-radius: 0 10px 10px 0;
 }
 
@@ -55,8 +52,8 @@
   font-size: 2.5rem;
   font-family: 'Fugaz One', sans-serif;
   font-weight: 400;
-  top: -36px;
-  left: -40px;
+  top: -70%;
+  left: -8%;
   z-index: 10;  
 
   @media (max-width: 1024px) { /* Tablet */ 

@@ -1,13 +1,18 @@
+import { useState } from 'react'
 import { handleHours, isParamedic } from '.'
 import styles from './Table.module.css'
 
 // Types
-import { TableProps } from './types'
+import { TableProps, TableState } from './types'
 
 // Components
 import SchedulesTable from '../SchedulesTable/SchedulesTable'
+import PhoneIcon from '../../icons/PhoneIcon/PhoneIcon'
+import EmailIcon from '../../icons/EmailIcon/EmailIcon'
 
 function Table({ data }: TableProps) {
+  const [state, setState] = useState<TableState>({ hovered: undefined })
+
   return (
     <div className={styles.container}>
       <table>
@@ -21,13 +26,35 @@ function Table({ data }: TableProps) {
         <tbody>
           {data.map((obj, index) => {
             return (
-              <tr key={`${ obj.employeeId }-tableRow-${ index }`} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
+              <tr 
+                key={`${ obj.employeeId }-tableRow-${ index }`} 
+                className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
+                onMouseEnter={() => setState({ hovered: index })}
+                onMouseLeave={() => setState({ hovered: undefined })}>
                 <td>
                   <div className={styles.employeeCell}>
-                    <div className={styles.rank}>{obj.rank}</div>
                     <div className="flex gap-2">
-                      <div className="indent-5 text-lg font-bold">{obj.fullName}</div>
+                      <div className={styles.rank}>{obj.rank}</div>
                       {isParamedic(obj.skills)}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="flex gap-1 items-center">
+                        <div className="indent-5 text-lg font-bold">{obj.fullName}</div>
+                        {obj.phone && (
+                          <PhoneIcon 
+                            width={20} 
+                            height={20}
+                            phoneNumber={obj.phone}
+                            variant={state.hovered === index ? 'light' : 'normal'}  />
+                        )}
+                        {obj.email && (
+                          <EmailIcon 
+                            width={20} 
+                            height={20} 
+                            email={obj.email}
+                            variant={state.hovered === index ? 'light' : 'normal'} />
+                        )}
+                      </div>
                     </div>
                     <div className="flex flex-col indent-10 gap-1 leading-none">
                       {obj.skills.split(',').map((skill, index) => {

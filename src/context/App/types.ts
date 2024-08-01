@@ -6,6 +6,7 @@ export interface AppContextObj { // AppContext
   date: string,
   filter: string,
   searchValue: string,
+  showAllStaff: boolean,
   skillsFilter: string
 }
 
@@ -13,6 +14,7 @@ export interface AppState { // App context initial state object
   date: string,
   filter: string,
   searchValue: string,
+  showAllStaff: boolean,
   skillsFilter: string
 }
 
@@ -34,14 +36,14 @@ export interface Staff {
   rank: Rank,
   fullName: string,
   skills: string,
-  detailCode: string,
-  hours: number
+  phone: string,
+  email: string,
+  StepUps: StepUps[],
   Schedules: Schedule[],
   [key: string]: any
 }
 
 export interface Schedule {
-  employeeId: string,
   startDate: Date,
   startTime: string,
   endDate: Date,
@@ -70,6 +72,7 @@ export type Action =
   | { type: 'SET_SEARCH_VALUE', payload: string }
   | { type: 'SET_SKILLS_FILTER', payload: string }
   | { type: 'SET_DATE', payload: string }
+  | { type: 'TOGGLE_SHOW_ALL_STAFF', payload: boolean }
 
 export interface ServerResponse { // Server response object
   success: boolean
@@ -83,7 +86,7 @@ export interface GetRosterResponse extends ServerResponse { // getRoster API cal
   data: RosterEntry[]
 }
 
-type Rank =
+export type Rank =
   | "Firefighter"
   | "Engineer"
   | "Lieutenant"
@@ -141,3 +144,14 @@ export type RankWFD =
   | "FireLT"
   | "FireE"
   | "FireF"
+
+export type DetailCode =
+  | "ENG"
+  | "LT"
+  | "CAP"
+  | "BC"
+
+interface StepUps {
+  detailCode: DetailCode,
+  hours: number
+}

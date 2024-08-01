@@ -10,6 +10,7 @@ const AppContext = createContext<AppContextObj>({
   date: '',
   filter: '',
   searchValue: '',
+  showAllStaff: false,
   skillsFilter: ''
 })
 
@@ -18,6 +19,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     date: '',
     filter: '',
     searchValue: '',
+    showAllStaff: false,
     skillsFilter: ''
   }
 

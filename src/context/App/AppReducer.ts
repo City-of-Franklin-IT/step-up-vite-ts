@@ -23,6 +23,11 @@ const appReducer = (state: AppReducerProps['state'], action: AppReducerProps['ac
         ...state,
         date: action.payload
       }
+    case 'TOGGLE_SHOW_ALL_STAFF':
+      return {
+        ...state,
+        showAllStaff: action.payload
+      }
     default:
       return state
   }

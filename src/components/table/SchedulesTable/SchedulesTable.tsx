@@ -5,6 +5,12 @@ import styles from './SchedulesTable.module.css'
 import { SchedulesTableProps } from './types'
 
 function SchedulesTable({ data }: SchedulesTableProps) {
+  if(!data.length) {
+    return (
+      <div className="text-center italic">No Recent Step-Up Shifts</div>
+    )
+  }
+
   return (
     <table>
       <thead>
@@ -20,7 +26,7 @@ function SchedulesTable({ data }: SchedulesTableProps) {
       <tbody>
         {data.map((obj, index) => {
           return (
-            <tr key={`${ obj.employeeId }-${ index }`} className={styles.tableData}>
+            <tr key={`${ index }`} className={styles.tableData}>
               <td>{obj.startDate.toString()}</td>
               <td>{handleTime(obj.startTime)}</td>
               <td>{obj.endDate.toString()}</td>

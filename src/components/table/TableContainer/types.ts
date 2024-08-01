@@ -1,6 +1,6 @@
 // Types
 import { Dispatch, SetStateAction, RefObject } from "react"
-import { Staff, Action } from "../../../context/App/types"
+import { Staff, Action, Rank, Schedule } from "../../../context/App/types"
 
 export interface TableContainerProps { // TableContainer props
   data: Staff[]
@@ -14,6 +14,7 @@ export interface UseSetTableDataProps { // useSetTableTable hook props
   data: Staff[],
   filter: string,
   skillsFilter: string,
+  showAllStaff: boolean,
   searchValue: string
 }
 
@@ -23,7 +24,7 @@ export interface UseSearchProps { // useSearch hook props
 }
 
 export interface UseSetSkills { // useSetSkills hook props
-  data: Staff[]
+  data: TableData[]
 }
 
 export interface FilterQualifiedProps { // filterQualified fn props
@@ -38,4 +39,16 @@ export interface HandleResetSearchBtnProps { // handleResetSearchBtn fn props
 
 export interface ScrollToTopProps { // scrollToTop fn props
   topRef: RefObject<HTMLElement>
+}
+
+export interface TableData {
+  employeeId: string,
+  rank: Rank,
+  fullName: string,
+  skills: string,
+  phone: string,
+  email: string,
+  hours: number,
+  Schedules: Schedule[]
+  [key: string]: any
 }
