@@ -10,12 +10,13 @@ function PhoneIcon({ width, height, phoneNumber, variant }: PhoneIconProps) {
   const [state, setState] = useState<PhoneIconState>({ hovered: false })
 
   return (
-    <Link 
+    <Link
+      data-testid="phone-icon" 
       to={`tel:${ phoneNumber }`}
       onMouseEnter={() => setState({ hovered: true })}
       onMouseLeave={() => setState({ hovered: false })}
       className={state.hovered ? styles.hovered : ''}>
-      <img src={setVariant(variant, state)} width={width} height={height} title={phoneNumber} />
+      <img data-testid="phone-icon-img" src={setVariant(variant, state)} width={width} height={height} title={phoneNumber} />
     </Link>
   )
 }

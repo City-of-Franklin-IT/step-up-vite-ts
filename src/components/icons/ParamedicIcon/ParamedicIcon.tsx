@@ -5,7 +5,7 @@ import { ParamedicIconProps } from './types'
 
 function ParamedicIcon({ width, height }: ParamedicIconProps) {
   return (
-    <img src={icon} width={width} height={height} title={'Paramedic'} />
+    <img data-testid="paramedic-icon" src={icon} width={width} height={height} title={'Paramedic'} />
   )
 }
 

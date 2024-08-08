@@ -9,7 +9,7 @@ function RosterTable({ data, label }: RosterTableProps) {
   const ordered = useOrderRanks(data)
 
   return (
-    <div className={styles.rosterTable}>
+    <div data-testid="roster-table" className={styles.rosterTable}>
       <div className={styles.label}>{label}</div>
       <table className="w-full">
         <thead>

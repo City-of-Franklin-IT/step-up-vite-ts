@@ -14,7 +14,7 @@ function Table({ data }: TableProps) {
   const [state, setState] = useState<TableState>({ hovered: undefined })
 
   return (
-    <div className={styles.container}>
+    <div data-testid="table" className={styles.container}>
       <table>
         <thead>
           <tr className={styles.header}>
@@ -26,7 +26,7 @@ function Table({ data }: TableProps) {
         <tbody>
           {data.map((obj, index) => {
             return (
-              <tr 
+              <tr
                 key={`${ obj.employeeId }-tableRow-${ index }`} 
                 className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
                 onMouseEnter={() => setState({ hovered: index })}
@@ -68,7 +68,7 @@ function Table({ data }: TableProps) {
                 <td>
                   <div className="flex flex-col items-center px-6">
                     <div className={styles.hours}>{handleHours(obj.hours)} <span className="text-sm">HRs.</span></div>
-                    <progress className={`progress ${ obj.hours >= 72 ? 'progress-success' : 'progress-warning' } bg-warning/20 h-4 shadow-lg`} value={obj.hours} max={72}></progress>
+                    <progress className={`progress ${ obj.hours > 72 ? 'progress-success' : 'progress-warning' } bg-warning/20 h-4 shadow-lg`} value={obj.hours} max={73}></progress>
                   </div>
                 </td>
                 <td>

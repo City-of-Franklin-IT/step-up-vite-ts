@@ -6,7 +6,8 @@ import { BackToTopBtnProps } from './types'
 function BackToTopBtn({ handleClick }: BackToTopBtnProps) {
   return (
     <button
-      type="button" 
+      type="button"
+      data-testid="back-to-top-btn" 
       onClick={() => handleClick()}
       className={styles.btn}>
         Back To Top

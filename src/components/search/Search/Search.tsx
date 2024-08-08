@@ -9,9 +9,10 @@ function Search({ searchValue, setSearchValue }: SearchProps) {
   const { searchValue: searchValue_ctx, dispatch } = useContext(AppContext)
 
   return (
-    <div className={styles.container}>
+    <div data-testid="search" className={styles.container}>
       <div className={styles.header}>Search</div>
       <input 
+        data-testid="search-input"
         type="text" 
         value={searchValue} 
         placeholder="by employee name.." 

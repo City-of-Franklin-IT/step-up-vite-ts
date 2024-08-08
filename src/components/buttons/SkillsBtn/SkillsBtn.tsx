@@ -11,6 +11,7 @@ function SkillsBtn({ type, label }: SkillsBtnProps) {
   return (
     <button
       type="button"
+      data-testid="skills-btn"
       onClick={() => dispatch({ type: 'SET_SKILLS_FILTER', payload: type ? type : '' })}
       className={styles.button}>
       <p className={styles.label}>{label}</p>

@@ -6,7 +6,7 @@ import { CalendarIconProps } from './types'
 
 function CalendarIcon({ width, height }: CalendarIconProps) {
   return (
-    <img src={icon} width={width} height={height} className={styles.calendarIcon} />
+    <img data-testid="calendar-icon" src={icon} width={width} height={height} className={styles.calendarIcon} />
   )
 }
 

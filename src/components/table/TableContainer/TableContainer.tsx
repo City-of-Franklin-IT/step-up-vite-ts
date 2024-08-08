@@ -20,9 +20,9 @@ function TableContainer({ data }: TableContainerProps) {
 
   const topRef = useRef<HTMLDivElement>(null)
 
-  const tableData = useSetTableData(data, filter, skillsFilter, showAllStaff, searchValue)
-
   const handleSearch = useSearch(state.searchValue, dispatch)
+
+  const tableData = useSetTableData(data, filter, skillsFilter, showAllStaff, searchValue)
 
   const skills = useSetSkills(tableData)
 
@@ -31,7 +31,7 @@ function TableContainer({ data }: TableContainerProps) {
   }, [state.searchValue])
 
   return (
-    <div ref={topRef} className={styles.container}>
+    <div data-testid="table-container" ref={topRef} className={styles.container}>
       <div className="flex flex-col gap-14">
         <div className="ml-10 w-3/4">
           <Search

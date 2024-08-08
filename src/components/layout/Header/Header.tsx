@@ -7,7 +7,7 @@ function Header() {
   const location = useLocation()
 
   return (
-    <header className={styles.header}>
+    <header data-testid="header" className={styles.header}>
       <Link to={'/'}>
         <div className={styles.title}>
           <h1 className={styles.h1}>Franklin Fire Department</h1>

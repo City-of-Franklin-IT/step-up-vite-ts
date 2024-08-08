@@ -13,7 +13,7 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
   const { skillsFilter, searchValue } = useContext(AppContext)
 
   return (
-    <div className={styles.container}>
+    <div data-testid="skills-filter-container" className={styles.container}>
       <div className={styles.header}>Filter Skills</div>
       {skillsFilter ? (
         <div className="flex gap-6">
@@ -38,7 +38,7 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
         </>
       )}
       {skillsFilter && (
-        <div className={styles.footer}>Showing { skillsFilter }</div>
+        <div data-testid="skills-filter-container-label" className={styles.footer}>Showing { skillsFilter }</div>
       )}
     </div>
   )

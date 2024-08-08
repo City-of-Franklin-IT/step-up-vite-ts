@@ -9,9 +9,9 @@ import { ReactNode } from 'react'
 
 function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className={styles.layout}>
+    <div data-testid="layout" className={styles.layout}>
       <Header />
-      <main>
+      <main data-testid="main">
         <div className={styles.container}>
           {children}
         </div>

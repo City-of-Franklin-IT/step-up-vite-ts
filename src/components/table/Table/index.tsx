@@ -6,7 +6,7 @@ import ParamedicIcon from '../../icons/ParamedicIcon/ParamedicIcon'
 import { ReactElement } from 'react'
 
 export const handleHours = (hours: number): string => { // Handle hours worked
-  if(hours >= 72) {
+  if(hours > 72) {
     return "72+"
   } else return hours.toString()
 }

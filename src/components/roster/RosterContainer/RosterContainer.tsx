@@ -29,17 +29,19 @@ function RosterContainer({ data }: RosterContainerProps) {
   }, [state.date])
 
   return (
-    <div className={styles.container}>
+    <div data-testid="roster-container" className={styles.container}>
       <div className={styles.header}>
         <div>{state.date ? new Date(new Date(state.date).setDate(new Date(state.date).getDate() + 1)).toDateString() : new Date().toDateString()}</div>
-        <button 
+        <button
+          data-testid="calendar-btn" 
           type="button"
           className={styles.calendarBtn}
           onClick={() => setState(prevState => ({ ...prevState, showDatePicker: !prevState.showDatePicker }))}>
             <CalendarIcon width={28} height={28} />
         </button>
         {state.showDatePicker && (
-          <input 
+          <input
+            data-testid="date-picker" 
             type="date"
             className="input text-warning-content bg-warning"
             onChange={(e) => handleDateChange(e, setState)} />
@@ -53,7 +55,7 @@ function RosterContainer({ data }: RosterContainerProps) {
       <div className={state.hidden ? 'hidden' : styles.tables}>
         {stationGroups.length ? stationGroups.map(obj => {
           return (
-            <div key={`station-${ obj.station }`} className="flex flex-col">
+            <div data-testid="station-group" key={`station-${ obj.station }`} className="flex flex-col">
               <div className={styles.stationHeader}>Station {obj.station}</div>
               <div className={styles.stationGroup}>
                 {obj.units.map(unit => {

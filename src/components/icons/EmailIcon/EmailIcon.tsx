@@ -11,6 +11,7 @@ function EmailIcon({ width, height, email, variant }: EmailIconProps) {
 
   return (
     <Link 
+      data-testid="email-icon"
       to={`mailto:${ email }`}
       onMouseEnter={() => setState({ hovered: true })}
       onMouseLeave={() => setState({ hovered: false })}

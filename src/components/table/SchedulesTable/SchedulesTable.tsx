@@ -7,12 +7,12 @@ import { SchedulesTableProps } from './types'
 function SchedulesTable({ data }: SchedulesTableProps) {
   if(!data.length) {
     return (
-      <div className="text-center italic">No Recent Step-Up Shifts</div>
+      <div data-testid="no-recent-shifts" className="text-center italic">No Recent Step-Up Shifts</div>
     )
   }
 
   return (
-    <table>
+    <table data-testid="schedules-table">
       <thead>
         <tr>
           <th className={styles.header}>Start Date</th>

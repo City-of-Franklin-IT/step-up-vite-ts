@@ -2,7 +2,6 @@ import { useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
 import styles from './QualifiedFilterContainer.module.css'
 
-
 // Types
 import { QualifiedFilterContainerProps } from "./types"
 
@@ -14,7 +13,7 @@ function QualifiedFilterContainer({ handleResetSearchBtn }: QualifiedFilterConta
   const { filter, searchValue } = useContext(AppContext)
 
   return (
-    <div className={styles.container}>
+    <div data-testid="qualified-filter-container" className={styles.container}>
       <div className={styles.header}>Filter Qualified</div>
       {filter ? (
             <div className="flex gap-6">

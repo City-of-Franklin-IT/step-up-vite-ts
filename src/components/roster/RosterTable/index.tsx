@@ -35,7 +35,7 @@ export const handleRank = (data: HandleRankProps['data']): ReactElement => { // 
   switch(data.rank) {
     case 'FireCapt':
       return (
-        <div className="flex gap-1 items-center">
+        <div data-testid="fire-capt" className="flex gap-1 items-center">
           {data.name}
           <div className="bg-error w-[10px] h-[10px] rounded-full" title="Captain"></div>
           {data.isParamedic && (
@@ -45,7 +45,7 @@ export const handleRank = (data: HandleRankProps['data']): ReactElement => { // 
       )
     case 'FireLT':
       return (
-        <div className="flex gap-1 items-center">
+        <div data-testid="fire-lt" className="flex gap-1 items-center">
           {data.name}
           <div className="bg-warning w-[10px] h-[10px] rounded-full" title="Lieutenant"></div>
           {data.isParamedic && (
@@ -55,7 +55,7 @@ export const handleRank = (data: HandleRankProps['data']): ReactElement => { // 
       )
     case 'FireE':
       return (
-        <div className="flex gap-1 items-center">
+        <div data-testid="fire-e" className="flex gap-1 items-center">
           {data.name}
           <div className="bg-success w-[10px] h-[10px] rounded-full" title="Engineer"></div>
           {data.isParamedic && (

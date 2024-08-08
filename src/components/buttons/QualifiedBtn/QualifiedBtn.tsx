@@ -11,6 +11,7 @@ function QualifiedBtn({ type, label }: QualifiedBtnProps) {
   return (
     <button
       type="button"
+      data-testid="qualified-btn"
       onClick={() => dispatch({ type: 'SET_FILTER', payload: type ? type : '' })}
       className={styles.button}>
       <p className={styles.label}>{label}</p>
