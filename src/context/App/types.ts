@@ -76,6 +76,7 @@ export type Action =
 
 export interface ServerResponse { // Server response object
   success: boolean
+  msg?: string
 }
 
 export interface GetStaffResponse extends ServerResponse { // getStaff API call response

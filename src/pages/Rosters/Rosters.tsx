@@ -1,7 +1,9 @@
 import { useContext, useEffect } from "react"
-import { useQuery, useQueryClient } from "react-query"
+import { useQueryClient } from "react-query"
 import AppContext from "../../context/App/AppContext"
-import { getRoster } from "../../context/App/AppActions"
+import UserContext from "../../context/User/UserContext"
+import { useValidateUser } from "../../helpers"
+import { useGetRoster } from "."
 
 // Components
 import Layout from "../../components/layout/Layout/Layout"
@@ -9,13 +11,13 @@ import RosterContainer from "../../components/roster/RosterContainer/RosterConta
 
 function Rosters() {
   const { date } = useContext(AppContext)
+  const { dispatch } = useContext(UserContext)
 
   const queryClient = useQueryClient()
 
-  const today = new Date()
-  const todayStr = `${ today.getFullYear() }-${ today.getMonth() + 1 }-${ today.getDate() }`
+  const { data } = useGetRoster(date)
 
-  const { data } = useQuery(['roster', date ? date : todayStr], () => getRoster(date ? date : todayStr))
+  useValidateUser(dispatch)
 
   useEffect(() => { // Invalidate query on date change
     if(date) {

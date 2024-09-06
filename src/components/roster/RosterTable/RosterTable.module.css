@@ -16,7 +16,7 @@
 .header {
   color: var(--primaryContent);
   font-family: 'Play', sans-serif;
-  font-size: .80rem;
+  font-size: .75rem;
   text-transform: uppercase;
   padding: 2px 14px;
   background-color: var(--accent);

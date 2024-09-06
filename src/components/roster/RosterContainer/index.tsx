@@ -7,7 +7,7 @@ import { UseRosterGroupsProps, UseSelectDateProps, SetGroupsProps, HandleDateCha
 export const useRosterGroups = (data: UseRosterGroupsProps['data']): RosterGroup[] => useMemo(() => {
   const rosterMap = new Map<string, RosterItem[]>()
 
-  const stations = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"] as Station[]
+  const stations: Station[] = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]
 
   data.filter(obj => stations.includes(obj.stationAbrvCh)).forEach(obj => {
     const key = `${ obj.physicalUnitAbrvCh }-${ obj.stationAbrvCh }`

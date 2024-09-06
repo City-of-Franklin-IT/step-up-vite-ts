@@ -113,7 +113,7 @@ const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQuali
       hours += x.hours
     })
 
-    if(employeeId && hours >= 72) {
+    if(employeeId && hours > 72) {
       const employee: TableData = {
         employeeId: obj.employeeId,
         rank: obj.rank,

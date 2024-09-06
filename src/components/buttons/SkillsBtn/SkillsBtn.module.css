@@ -4,12 +4,16 @@
   color: var(--neutralContent);
   text-transform: uppercase;
   font-family: 'Jura', sans-serif;
-  padding: 4px;
+  padding: 12px;
   outline: 1px solid var(--neutralContent);
-  width: 140px;
+  width: 100%;
   border-radius: 5px;
   box-shadow: 6px 6px 0 var(--neutralContent);
   animation: 250ms fade-in linear;
+
+  @media (min-width: 768px) { /* Tablet+ */ 
+    width: 160px;
+  }
 }
 
 .button:hover {
@@ -19,7 +23,7 @@
 }
 
 .label {
-  font-size: .8rem;
+  font-size: 1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

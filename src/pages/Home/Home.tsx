@@ -1,12 +1,18 @@
-import { useQuery } from 'react-query'
-import { getStaff } from '../../context/App/AppActions'
+import { useContext } from 'react'
+import UserContext from '../../context/User/UserContext'
+import { useValidateUser } from '../../helpers'
+import { useGetStaff } from '.'
 
 // Components
 import Layout from '../../components/layout/Layout/Layout'
 import TableContainer from '../../components/table/TableContainer/TableContainer'
 
 function Home() {
-  const { data } = useQuery(['staff'], () => getStaff())
+  const { user, dispatch } = useContext(UserContext)
+
+  const { data } = useGetStaff(user)
+
+  useValidateUser(dispatch)
 
   return (
     <Layout>

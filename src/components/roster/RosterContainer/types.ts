@@ -1,6 +1,5 @@
 // Types
 import { Dispatch, SetStateAction } from "react"
-import { QueryClient } from "react-query"
 import { RosterEntry, Shift, Apparatus, RankAbrv, RankWFD, Action } from "../../../context/App/types"
 
 export interface RosterContainerProps { // RosterContainer props
@@ -8,8 +7,7 @@ export interface RosterContainerProps { // RosterContainer props
 }
 
 export interface RosterContainerState { // RosterContainer state object
-  hidden: boolean,
-  showDatePicker: boolean,
+  showDatePicker: boolean
   date: string
 }
 

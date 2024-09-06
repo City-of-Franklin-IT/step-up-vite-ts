@@ -21,6 +21,7 @@
 .evenRow {
   background-color: var(--neutralContent);
   line-height: 3rem;
+  touch-action: none;
 }
 
 .oddRow {
@@ -28,14 +29,16 @@
   line-height: 3rem;
 }
 
-.evenRow:hover {
-  color: var(--neutralContent);
-  background-color: var(--neutral);
-}
-
-.oddRow:hover {
-  color: var(--neutralContent);
-  background-color: var(--neutral);
+@media (hover: hover) {
+  .evenRow:hover {
+    color: var(--neutralContent);
+    background-color: var(--neutral);
+  }
+  
+  .oddRow:hover {
+    color: var(--neutralContent);
+    background-color: var(--neutral);
+  }
 }
 
 .employeeCell {

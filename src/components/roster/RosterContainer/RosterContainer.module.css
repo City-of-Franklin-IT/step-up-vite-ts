@@ -2,9 +2,13 @@
 
 .container {
   position: relative;
-  padding: 32px;
+  padding: 12px;
   border: 2px solid var(--neutralContent);
   border-radius: 12px;
+
+  @media (min-width: 1025px) { /* Laptop+ */ 
+    padding: 32px;
+  }
 }
 
 .header {
@@ -13,12 +17,17 @@
   gap: 12px;
   color: var(--warning);
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   font-family: 'Fugaz One', sans-serif;
   font-weight: 400;
-  top: -30px;
-  left: 30px;
+  top: -24px;
+  left: 20px;
   z-index: 10;
+
+  @media (min-width: 1025px) { /* Laptop+ */ 
+    font-size: 2.25rem;
+    top: -30px;
+  }
 }
 
 .tables {
@@ -42,9 +51,13 @@
   flex-grow: 1;
   justify-content: space-around;
   gap: 24px;
-  padding: 24px;
+  padding: 12px;
   padding-bottom: 60px;
   border: 1px dotted var(--neutralContent);
+
+  @media (min-width: 1025px) { /* Laptop+ */ 
+    padding: 24px;
+  }
 }
 
 .rosterLegend {

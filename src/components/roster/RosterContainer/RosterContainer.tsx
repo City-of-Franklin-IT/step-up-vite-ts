@@ -8,7 +8,6 @@ import { RosterContainerProps, RosterContainerState, RosterItem } from "./types"
 
 // Components
 import RosterTable from "../RosterTable/RosterTable"
-import HideBtn from "../../buttons/HideBtn/HideBtn"
 import CalendarIcon from "../../icons/CalendarIcon/CalendarIcon"
 import LoadingIcon from "../../icons/LoadingIcon/LoadingIcon"
 import RosterLegend from "../RosterLegend/RosterLegend"
@@ -16,7 +15,7 @@ import RosterLegend from "../RosterLegend/RosterLegend"
 function RosterContainer({ data }: RosterContainerProps) {
   const { date, dispatch } = useContext(AppContext)
 
-  const [state, setState] = useState<RosterContainerState>({ hidden: false, showDatePicker: false, date: date ? date : '' })
+  const [state, setState] = useState<RosterContainerState>({ showDatePicker: false, date: date ? date : '' })
 
   const selectDate = useSelectDate(state.date, dispatch)
 
@@ -47,12 +46,7 @@ function RosterContainer({ data }: RosterContainerProps) {
             onChange={(e) => handleDateChange(e, setState)} />
         )}
       </div>
-      <div>
-        <HideBtn
-          setState={setState}
-          label={!state.hidden ? 'Hide Rosters' : 'Show Rosters'} />
-      </div>
-      <div className={state.hidden ? 'hidden' : styles.tables}>
+      <div className={styles.tables}>
         {stationGroups.length ? stationGroups.map(obj => {
           return (
             <div data-testid="station-group" key={`station-${ obj.station }`} className="flex flex-col">

@@ -1,33 +1,35 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--primary);
   width: 100%;
   height: fit-content;
-  padding: 4px 30px;
+  padding: 8px 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .title {
   display: flex;
   flex-direction: column;
-  align-items: start;
   letter-spacing: .25rem;
+  line-height: 1.25rem;
 
-  @media (max-width: 1024px) { /* Tablet */ 
-    align-items: center;
+  @media (min-width: 768px) { /* Tablet+ */ 
+    align-items: start;
+    line-height: initial;
   }
 }
 
 .h1 {
   color: var(--primaryContent);
   font-family: 'Play', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   text-align: center;
 
-  @media (max-width: 1024) { /* Tablet */ 
-    font-size: 1rem;
+  @media (min-width: 768px) { /* Tablet+ */ 
+    font-size: 1.25rem;
   }
 }
 
@@ -36,11 +38,9 @@
   font-family: 'Play', sans-serif;
   font-size: .85rem;
   text-align: center;
-  text-indent: 2rem;
 
-  @media (max-width: 1024px) { /* Tablet */ 
-    font-size: .60rem;
-    text-indent: initial;
+  @media (min-width: 768px) { /* Tablet+ */ 
+    text-indent: 2rem;
   }
 }
 
@@ -68,18 +68,24 @@
 }
 
 .rosterBtn {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  color: var(--neutralContent);
-  font-family: 'Play', sans-serif;
+  color: #FFFFFF;
   text-transform: uppercase;
-  padding: 0 12px;
-  margin: 4px 0;
-  border: 1px solid var(--neutralContent);
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: .85rem;
+  padding: 12px;
+  white-space: nowrap;
+  background-color: transparent;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, .1);
+
+  @media screen and (min-width: 1920px) {
+    font-size: 1rem;
+  }
 }
 
 .rosterBtn:hover {
-  color: var(--primary);
-  background-color: var(--neutralContent);
+  cursor: pointer;
+  color: var(--neutralContent);
+  background-color: var(--neutral);
 }

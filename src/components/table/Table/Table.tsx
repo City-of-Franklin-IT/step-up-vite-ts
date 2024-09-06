@@ -19,8 +19,8 @@ function Table({ data }: TableProps) {
         <thead>
           <tr className={styles.header}>
             <th className="px-4">Employee</th>
-            <th className="text-center">Total Step-Up HRs.</th>
-            <th className="text-center">Recent Step Up Shifts</th>
+            <th className="text-center -translate-x-10 rounded-tr-lg whitespace-nowrap lg:rounded-none">Total Step-Up HRs.</th>
+            <th className="text-center hidden lg:block">Recent Step Up Shifts</th>
           </tr>
         </thead>
         <tbody>
@@ -33,13 +33,15 @@ function Table({ data }: TableProps) {
                 onMouseLeave={() => setState({ hovered: undefined })}>
                 <td>
                   <div className={styles.employeeCell}>
+
                     <div className="flex gap-2">
                       <div className={styles.rank}>{obj.rank}</div>
                       {isParamedic(obj.skills)}
                     </div>
+
                     <div className="flex flex-col items-center">
                       <div className="flex gap-1 items-center">
-                        <div className="indent-5 text-lg font-bold">{obj.fullName}</div>
+                        <div className="font-bold whitespace-nowrap md:indent-5 md:text-lg">{obj.fullName}</div>
                         {obj.phone && (
                           <PhoneIcon 
                             width={20} 
@@ -56,6 +58,7 @@ function Table({ data }: TableProps) {
                         )}
                       </div>
                     </div>
+
                     <div className="flex flex-col indent-10 gap-1 leading-none">
                       {obj.skills.split(',').map((skill, index) => {
                         return (
@@ -63,15 +66,16 @@ function Table({ data }: TableProps) {
                         )
                       })}
                     </div>
+
                   </div>
                 </td>
                 <td>
-                  <div className="flex flex-col items-center px-6">
+                  <div className="flex flex-col items-center px-6 transform -translate-x-10">
                     <div className={styles.hours}>{handleHours(obj.hours)} <span className="text-sm">HRs.</span></div>
                     <progress className={`progress ${ obj.hours > 72 ? 'progress-success' : 'progress-warning' } bg-warning/20 h-4 shadow-lg`} value={obj.hours} max={73}></progress>
                   </div>
                 </td>
-                <td>
+                <td className="hidden lg:block">
                   <div className={styles.schedule}>
                     <SchedulesTable data={obj.Schedules} />
                   </div>

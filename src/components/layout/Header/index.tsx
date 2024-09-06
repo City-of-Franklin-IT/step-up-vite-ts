@@ -14,7 +14,7 @@ export const handleBtn = (location: HandleBtnProps['location']) => {
   }
 
   return ( // On roster page
-    <Link to={'/'} className={styles.rosterBtn}>
+    <Link to={'/home'} className={styles.rosterBtn}>
       View Step Up
     </Link>
   )
