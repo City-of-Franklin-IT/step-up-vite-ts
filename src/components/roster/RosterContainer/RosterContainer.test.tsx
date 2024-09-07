@@ -3,7 +3,7 @@ import "@testing-library/jest-dom"
 
 // Types
 import { RosterEntry } from "../../../context/App/types"
-import { RosterContainerProps, RosterContainerState } from "./types"
+import { RosterContainerProps } from "./types"
 
 // Components
 import RosterContainer from "./RosterContainer"

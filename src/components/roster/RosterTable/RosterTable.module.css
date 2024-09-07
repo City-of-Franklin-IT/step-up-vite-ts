@@ -22,6 +22,20 @@
   background-color: var(--accent);
 }
 
+.dateHeader {
+  display: none;
+
+  @media (min-width: 768px) { /* Tablet+ */ 
+    display: block;
+    color: var(--primaryContent);
+    font-family: 'Play', sans-serif;
+    font-size: .75rem;
+    text-transform: uppercase;
+    padding: 2px 14px;
+    background-color: var(--accent);
+  }
+}
+
 .tableData {
   color: var(--neutralContent);
   font-family: 'Play', sans-serif;

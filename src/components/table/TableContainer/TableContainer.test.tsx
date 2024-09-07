@@ -10,7 +10,6 @@ import { TableContainerProps } from "./types"
 
 // Components
 import TableContainer from "./TableContainer"
-import Search from "../../search/Search/Search"
 
 describe('TableContainer component', () => {
   const dispatchMock = vi.fn()

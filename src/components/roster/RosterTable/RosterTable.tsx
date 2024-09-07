@@ -16,9 +16,9 @@ function RosterTable({ data, label }: RosterTableProps) {
           <tr>
             <th className={styles.header}>Name</th>
             <th className={styles.header}>Rank</th>
-            <th className={styles.header}>Start Date</th>
+            <th className={styles.dateHeader}>Start Date</th>
             <th className={styles.header}>Start Time</th>
-            <th className={styles.header}>End Date</th>
+            <th className={styles.dateHeader}>End Date</th>
             <th className={styles.header}>End Time</th>
           </tr>
         </thead>
@@ -28,9 +28,9 @@ function RosterTable({ data, label }: RosterTableProps) {
               <tr key={`${ obj.employeeId }-${ obj.station }-${ obj.staffStart }`} className={handleActive(obj.staffStart, obj.staffEnd)}>
                 <td>{handleRank(obj)}</td>
                 <td>{obj.rankAbrv}</td>
-                <td>{obj.staffStart.toString().split('T')[0]}</td>
+                <td className="hidden md:block">{obj.staffStart.toString().split('T')[0]}</td>
                 <td>{handleTime(obj.staffStart.toString())}</td>
-                <td>{obj.staffEnd.toString().split('T')[0]}</td>
+                <td className="hidden md:block">{obj.staffEnd.toString().split('T')[0]}</td>
                 <td>{handleTime(obj.staffEnd.toString())}</td>
               </tr>
             )

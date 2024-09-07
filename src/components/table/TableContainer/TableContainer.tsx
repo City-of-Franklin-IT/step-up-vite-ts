@@ -32,7 +32,8 @@ function TableContainer({ data }: TableContainerProps) {
 
   return (
     <div data-testid="table-container" ref={topRef} className={styles.container}>
-      <div className="flex flex-col gap-14">
+
+      <section className="flex flex-col gap-14">
         <div className="ml-10 w-3/4">
           <Search
             searchValue={state.searchValue}
@@ -43,7 +44,8 @@ function TableContainer({ data }: TableContainerProps) {
         <SkillsFilterContainer
           skills={skills} 
           handleResetSearchBtn={() => handleResetSearchBtn(setState, dispatch)} />
-      </div>
+      </section>
+
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 ml-auto items-center w-fit">
           <label className="text-white uppercase text-sm">Include Staff With 0 Hours</label>
@@ -51,7 +53,9 @@ function TableContainer({ data }: TableContainerProps) {
         </div>
         <Table data={tableData} />
       </div>
+
       <BackToTopBtn handleClick={() => scrollToTop(topRef)} />
+
     </div>
   )
 }

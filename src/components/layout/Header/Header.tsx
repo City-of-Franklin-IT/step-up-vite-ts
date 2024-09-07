@@ -21,7 +21,7 @@ function Header() {
           <h2 className={styles.h2}>{APP_TITLE}</h2>
         </div>
       </Link>
-      {user && (
+      {user?.email && (
         <div className="flex gap-4">
           {handleBtn(location)}
           <LogoutBtn />

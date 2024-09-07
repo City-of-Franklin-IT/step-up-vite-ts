@@ -1,9 +1,15 @@
 // Types
-import { IsParamedicProps } from './types'
+import { HandleRowHoverProps, IsParamedicProps } from './types'
 
 // Components
 import ParamedicIcon from '../../icons/ParamedicIcon/ParamedicIcon'
 import { ReactElement } from 'react'
+
+export const handleRowHover = (setState: HandleRowHoverProps['setState'], windowSize: HandleRowHoverProps['windowSize'], index: HandleRowHoverProps['index']) => { // Disable row hover on mobile
+  if(windowSize > 768) {
+    setState({ hovered: index })
+  } 
+}
 
 export const handleHours = (hours: number): string => { // Handle hours worked
   if(hours > 72) {

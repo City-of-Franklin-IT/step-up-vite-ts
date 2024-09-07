@@ -21,11 +21,13 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
   return (
     <div data-testid="skills-filter-container" className={styles.container}>
       <div className={styles.header}>Filter Skills</div>
+
       <div className="absolute -top-5 right-5">
         <HideBtn 
           setState={setState}
           hidden={state.hidden} />
       </div>
+
       {skillsFilter ? (
         <div className="flex gap-6">
           <SkillsBtn
@@ -48,6 +50,7 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
           })}
         </div>
       )}
+      
       {skillsFilter && (
         <div data-testid="skills-filter-container-label" className={styles.footer}>Showing { skillsFilter }</div>
       )}

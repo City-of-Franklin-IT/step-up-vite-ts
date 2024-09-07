@@ -34,6 +34,6 @@ export interface User {
   department: string
 }
 
-type Role =
+export type Role =
   | "Super User"
   | "Viewer"

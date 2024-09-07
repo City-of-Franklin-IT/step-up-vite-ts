@@ -21,7 +21,6 @@
 .evenRow {
   background-color: var(--neutralContent);
   line-height: 3rem;
-  touch-action: none;
 }
 
 .oddRow {
