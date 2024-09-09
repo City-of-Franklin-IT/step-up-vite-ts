@@ -6,4 +6,4 @@ https://api.franklin-gov.com/api/v1/ffd | <a href="https://github.com/City-of-Fr
 https://dev.franklintn.gov/api/v1/ffd <em>Proxy</em>
 
 <h1>Database</h1>
-[COFDBV08].[scratch]
+[COFDBV08].[ffd_step_up]
