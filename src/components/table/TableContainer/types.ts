@@ -50,5 +50,5 @@ export interface TableData {
   email: string,
   hours: number,
   Schedules: Schedule[]
-  [key: string]: any
+  [key: string]: string | Rank | number | Schedule[]
 }

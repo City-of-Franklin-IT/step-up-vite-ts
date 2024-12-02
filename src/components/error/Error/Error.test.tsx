@@ -19,7 +19,7 @@ describe('Error', () => {
         if(state.countdown === 0) {
           navigate('/home')
         }
-      }, [state.countdown])
+      }, [state.countdown, navigate])
 
       useEffect(() => {
         const interval = setInterval(() => {

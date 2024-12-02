@@ -5,31 +5,35 @@ import styles from './RosterTable.module.css'
 import { RosterItem } from '../RosterContainer/types'
 import { OrderRanksProps, HandleRankProps, HandleActiveProps } from './types'
 
-export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => useMemo(() => { // Order by rank
-  return data.sort((a, b) => {
-    const rankOrder = ['BC', 'OFF', 'ENG', 'FF']
+export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => { // Order staff by rank
+  const array = useMemo(() => {
+    return data.sort((a, b) => {
+      const rankOrder = ['BC', 'OFF', 'ENG', 'FF']
+  
+      const rankA = rankOrder.indexOf(a.rankAbrv)
+      const rankB = rankOrder.indexOf(b.rankAbrv)
+    
+      if(rankA !== rankB) {
+        return rankA - rankB
+      }
+    
+      const startA = new Date(a.staffStart) // If ranks are the same, sort by staffStart
+      const startB = new Date(b.staffStart)
+    
+      if(startA > startB) {
+        return 1
+      }
+    
+      if(startA < startB) {
+        return -1
+      }
+    
+      return 0
+    })
+  }, [data])
 
-    const rankA = rankOrder.indexOf(a.rankAbrv)
-    const rankB = rankOrder.indexOf(b.rankAbrv)
-  
-    if(rankA !== rankB) {
-      return rankA - rankB
-    }
-  
-    const startA = new Date(a.staffStart) // If ranks are the same, sort by staffStart
-    const startB = new Date(b.staffStart)
-  
-    if(startA > startB) {
-      return 1
-    }
-  
-    if(startA < startB) {
-      return -1
-    }
-  
-    return 0
-  })
-}, [data])
+  return array
+} 
 
 export const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle rank indicators
   switch(data.rank) {

@@ -28,7 +28,7 @@ function TableContainer({ data }: TableContainerProps) {
 
   useEffect(() => { // Set searchValue to ctx
     handleSearch()
-  }, [state.searchValue])
+  }, [handleSearch])
 
   return (
     <div data-testid="table-container" ref={topRef} className={styles.container}>

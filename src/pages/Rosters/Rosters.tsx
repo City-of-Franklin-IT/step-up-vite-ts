@@ -23,7 +23,7 @@ function Rosters() {
     if(date) {
       queryClient.invalidateQueries(['roster', date])
     }
-  }, [date])
+  }, [date, queryClient])
 
   return (
     <Layout>

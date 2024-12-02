@@ -42,12 +42,11 @@ describe('Header component', () => {
 
     const { getByText } = render(
       <BrowserRouter>
-        <Header />
         {handleBtn(location)}
       </BrowserRouter>
     )
 
-    const text = getByText('View Rosters')
+    const text = getByText('View Step Up')
 
     expect(text).toBeInTheDocument()
   })

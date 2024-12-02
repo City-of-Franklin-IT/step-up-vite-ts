@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
-import { useRosterGroups, useSelectDate, setGroups, handleDateChange } from "."
+import { useRosterGroups, useSelectDate, useSetGroups, handleDateChange } from "."
 import styles from './RosterContainer.module.css'
 
 // Types
@@ -21,11 +21,11 @@ function RosterContainer({ data }: RosterContainerProps) {
 
   const groups = useRosterGroups(data)
 
-  const stationGroups = setGroups(groups)
+  const stationGroups = useSetGroups(groups)
 
   useEffect(() => { // Set selected date to ctx
     selectDate()
-  }, [state.date])
+  }, [selectDate])
 
   return (
     <div data-testid="roster-container" className={styles.container}>

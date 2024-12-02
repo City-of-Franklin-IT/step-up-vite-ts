@@ -3,82 +3,94 @@ import { useMemo, useCallback } from "react"
 // Types
 import { UseSetTableDataProps, UseSearchProps, UseSetSkills, FilterQualifiedProps, HandleResetSearchBtnProps, ScrollToTopProps, TableData } from './types'
 
-export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], skillsFilter: UseSetTableDataProps['skillsFilter'], showAllStaff: UseSetTableDataProps['showAllStaff'], searchValue: UseSetTableDataProps['searchValue']): TableData[] => useMemo(() => { // Set table data
-  let array: TableData[] = []
-
-  if(filter) { // Handle qualified filter
-    array = filterQualified(data, filter)
-  } else {
-    array = data.map(x => {
-      let hours = 0
-
-      x.StepUps.forEach(y => hours += y.hours) // Sum hours
-
-      const entry: TableData = {
-        employeeId: x.employeeId,
-        rank: x.rank,
-        fullName: x.fullName,
-        skills: x.skills,
-        phone: x.phone,
-        email: x.email,
-        hours,
-        Schedules: x.Schedules
-      }
-      
-      return entry
-    })
-  }
-
-  if(skillsFilter) { // Handle skills filter
-    array = array.filter(obj => {
-      const skills = obj.skills.split(',').map(skill => skill.trim())
-
-      return skills.includes(skillsFilter)
-    })
-  }
-
-  if(searchValue) { // Handle search 
-    const regex = new RegExp(searchValue, 'i')
-
-    array = array.filter(obj => {
-      for(const prop in obj) {
-        if(typeof obj[prop] === 'string' && regex.test(obj[prop])) {
-          return true
+export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], skillsFilter: UseSetTableDataProps['skillsFilter'], showAllStaff: UseSetTableDataProps['showAllStaff'], searchValue: UseSetTableDataProps['searchValue']): TableData[] => { // Set table data
+  const array = useMemo(() => {
+    let array: TableData[] = []
+  
+    if(filter) { // Handle qualified filter
+      array = filterQualified(data, filter)
+    } else {
+      array = data.map(x => {
+        let hours = 0
+  
+        x.StepUps.forEach(y => hours += y.hours) // Sum hours
+  
+        const entry: TableData = {
+          employeeId: x.employeeId,
+          rank: x.rank,
+          fullName: x.fullName,
+          skills: x.skills,
+          phone: x.phone,
+          email: x.email,
+          hours,
+          Schedules: x.Schedules
         }
-      }
-    })
-  }
-
-  if(!showAllStaff) {
-    return array.filter(obj => obj.hours > 0)
-  }
+        
+        return entry
+      })
+    }
+  
+    if(skillsFilter) { // Handle skills filter
+      array = array.filter(obj => {
+        const skills = obj.skills.split(',').map(skill => skill.trim())
+  
+        return skills.includes(skillsFilter)
+      })
+    }
+  
+    if(searchValue) { // Handle search 
+      const regex = new RegExp(searchValue, 'i')
+  
+      array = array.filter(obj => {
+        for(const prop in obj) {
+          if(typeof obj[prop] === 'string' && regex.test(obj[prop])) {
+            return true
+          }
+        }
+      })
+    }
+  
+    if(!showAllStaff) {
+      return array.filter(obj => obj.hours > 0)
+    }
+  
+    return array
+  }, [data, filter, skillsFilter, showAllStaff, searchValue])
 
   return array
-}, [data, filter, skillsFilter, showAllStaff, searchValue])
+} 
 
-export const useSearch = (searchValue: UseSearchProps['searchValue'], dispatch: UseSearchProps['dispatch']): () => void => useCallback(() => { // Set search value to ctx
-  const cleanTimeout = setTimeout(() => {
-    if(searchValue) {
-      dispatch({ type: 'SET_SEARCH_VALUE', payload: searchValue })
-    }
-  }, 1000)
-
-  return () => clearTimeout(cleanTimeout)
-}, [searchValue])
-
-export const useSetSkills = (data: UseSetSkills['data']): string[] => useMemo(() => {
-  const skills: string[] = []
-
-  data.forEach(obj => {
-    obj.skills.split(',').forEach(x => {
-      if(!skills.includes(x.trim())) {
-        skills.push(x.trim())
+export const useSearch = (searchValue: UseSearchProps['searchValue'], dispatch: UseSearchProps['dispatch']): () => void => { // Set search value to ctx
+  const cb = useCallback(() => {
+    const cleanTimeout = setTimeout(() => {
+      if(searchValue) {
+        dispatch({ type: 'SET_SEARCH_VALUE', payload: searchValue })
       }
-    })
-  })
+    }, 1000)
+  
+    return () => clearTimeout(cleanTimeout)
+  }, [searchValue, dispatch])
 
-  return skills.filter(obj => obj !== '')
-}, [data])
+  return cb
+}
+
+export const useSetSkills = (data: UseSetSkills['data']): string[] => { // Set employee skills
+  const array = useMemo(() => {
+    const skills: string[] = []
+  
+    data.forEach(obj => {
+      obj.skills.split(',').forEach(x => {
+        if(!skills.includes(x.trim())) {
+          skills.push(x.trim())
+        }
+      })
+    })
+  
+    return skills.filter(obj => obj !== '')
+  }, [data])
+
+  return array
+}
 
 export const handleResetSearchBtn = (setState: HandleResetSearchBtnProps['setState'], dispatch: HandleResetSearchBtnProps['dispatch']): void => {
   setState({ searchValue: '' })

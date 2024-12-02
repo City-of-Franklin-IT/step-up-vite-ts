@@ -20,11 +20,7 @@ export interface AppState { // App context initial state object
 
 export interface AppReducerProps { // AppReducer props
   state: AppState,
-  action: ReducerAction
-}
-
-export interface ReducerAction {
-  type: string, payload: any
+  action: Action
 }
 
 export interface AppProviderProps {
@@ -40,7 +36,7 @@ export interface Staff {
   email: string,
   StepUps: StepUps[],
   Schedules: Schedule[],
-  [key: string]: any
+  [key: string]: string | Rank | StepUps[] | Schedule[]
 }
 
 export interface Schedule {
