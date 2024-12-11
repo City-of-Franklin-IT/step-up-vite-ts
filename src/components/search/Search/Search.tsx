@@ -1,12 +1,17 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import AppContext from '../../../context/App/AppContext'
+import { useSearch } from '.'
 import styles from './Search.module.css'
 
 // Types
-import { SearchProps } from './types'
+import { SearchState } from './types'
 
-function Search({ searchValue, setSearchValue }: SearchProps) {
-  const { searchValue: searchValue_ctx, dispatch } = useContext(AppContext)
+function Search() {
+  const { searchValue: searchValue_ctx } = useContext(AppContext)
+
+  const [state, setState] = useState<SearchState>({ searchValue: '' })
+
+  useSearch(state.searchValue)
 
   return (
     <div data-testid="search" className={styles.container}>
@@ -14,16 +19,13 @@ function Search({ searchValue, setSearchValue }: SearchProps) {
       <input 
         data-testid="search-input"
         type="text" 
-        value={searchValue} 
+        value={state.searchValue} 
         placeholder="by employee name.." 
-        onChange={(e) => setSearchValue(prevState => ({ ...prevState, searchValue: e.target.value }))} 
+        onChange={(e) => setState(({ searchValue: e.target.value }))} 
         className="input bg-white rounded-r-none w-full" />
       <button 
         type="button" 
-        onClick={() => {
-          dispatch({ type: 'SET_SEARCH_VALUE', payload: '' })
-          setSearchValue(prevState => ({ ...prevState, searchValue: '' }))
-        }}
+        onClick={() => setState({ searchValue: '' })}
         disabled={!searchValue_ctx && true}
         className="btn btn-primary uppercase rounded-l-none">
         Clear

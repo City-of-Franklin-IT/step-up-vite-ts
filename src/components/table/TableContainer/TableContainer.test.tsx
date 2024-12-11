@@ -22,6 +22,7 @@ describe('TableContainer component', () => {
       skills: "Driver, Tech Rescue, Officer, Swiftwater, Rope Rescue, AEMT, Hazmat",
       phone: "615-533-6887",
       email: "andy.adams@franklintn.gov",
+      shift: "A",
       StepUps: [],
       Schedules: []
     },{
@@ -40,6 +41,7 @@ describe('TableContainer component', () => {
     date: '2024-08-05',
     filter: '',
     searchValue: '',
+    shiftFilter: null,
     showAllStaff: true,
     skillsFilter: ''
   }

@@ -1,9 +1,12 @@
-import { useMemo, useCallback } from "react"
+import { useMemo, useContext } from "react"
+import AppContext from "../../../context/App/AppContext"
 
 // Types
-import { UseSetTableDataProps, UseSearchProps, UseSetSkills, FilterQualifiedProps, HandleResetSearchBtnProps, ScrollToTopProps, TableData } from './types'
+import { UseSetTableDataProps, UseSetSkills, FilterQualifiedProps, ScrollToTopProps, TableData } from './types'
 
-export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseSetTableDataProps['filter'], skillsFilter: UseSetTableDataProps['skillsFilter'], showAllStaff: UseSetTableDataProps['showAllStaff'], searchValue: UseSetTableDataProps['searchValue']): TableData[] => { // Set table data
+export const useSetTableData = (data: UseSetTableDataProps['data']): TableData[] => { // Set table data
+  const { filter, skillsFilter, showAllStaff, searchValue, shiftFilter } = useContext(AppContext)
+
   const array = useMemo(() => {
     let array: TableData[] = []
   
@@ -23,10 +26,17 @@ export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseS
           phone: x.phone,
           email: x.email,
           hours,
+          shift: x.shift,
           Schedules: x.Schedules
         }
         
         return entry
+      })
+    }
+
+    if(shiftFilter) { // Handle shift filter
+      array = array.filter(obj => {
+        return obj.shift === shiftFilter
       })
     }
   
@@ -37,6 +47,7 @@ export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseS
         return skills.includes(skillsFilter)
       })
     }
+
   
     if(searchValue) { // Handle search 
       const regex = new RegExp(searchValue, 'i')
@@ -55,24 +66,10 @@ export const useSetTableData = (data: UseSetTableDataProps['data'], filter: UseS
     }
   
     return array
-  }, [data, filter, skillsFilter, showAllStaff, searchValue])
+  }, [data, filter, skillsFilter, showAllStaff, searchValue, shiftFilter])
 
   return array
 } 
-
-export const useSearch = (searchValue: UseSearchProps['searchValue'], dispatch: UseSearchProps['dispatch']): () => void => { // Set search value to ctx
-  const cb = useCallback(() => {
-    const cleanTimeout = setTimeout(() => {
-      if(searchValue) {
-        dispatch({ type: 'SET_SEARCH_VALUE', payload: searchValue })
-      }
-    }, 1000)
-  
-    return () => clearTimeout(cleanTimeout)
-  }, [searchValue, dispatch])
-
-  return cb
-}
 
 export const useSetSkills = (data: UseSetSkills['data']): string[] => { // Set employee skills
   const array = useMemo(() => {
@@ -90,11 +87,6 @@ export const useSetSkills = (data: UseSetSkills['data']): string[] => { // Set e
   }, [data])
 
   return array
-}
-
-export const handleResetSearchBtn = (setState: HandleResetSearchBtnProps['setState'], dispatch: HandleResetSearchBtnProps['dispatch']): void => {
-  setState({ searchValue: '' })
-  dispatch({ type: 'SET_SEARCH_VALUE', payload: '' })
 }
 
 const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQualifiedProps['filter']): TableData[] => { // Filter staff by qualification
@@ -125,7 +117,7 @@ const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQuali
       hours += x.hours
     })
 
-    if(employeeId && hours > 72) {
+    if(employeeId && hours >= 72) {
       const employee: TableData = {
         employeeId: obj.employeeId,
         rank: obj.rank,
@@ -134,6 +126,7 @@ const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQuali
         phone: obj.phone,
         email: obj.email,
         hours,
+        shift: obj.shift,
         Schedules: obj.Schedules
       }
 

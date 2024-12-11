@@ -1,4 +1,4 @@
-@import '../../../animations.css';
+@import '../../../../animations.css';
 
 .container {
   position: relative;
@@ -10,7 +10,7 @@
   padding: 32px;
   border: 2px solid var(--neutralContent);
   border-radius: 12px;
-  animation: 250ms fade-in-right ease-in;
+  animation: 250ms fade-in-left ease-in;
 }
 
 .header {

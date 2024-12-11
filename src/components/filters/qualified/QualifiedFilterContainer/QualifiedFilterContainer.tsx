@@ -1,18 +1,17 @@
 import { useContext, useState } from "react"
-import AppContext from "../../../context/App/AppContext"
-import { useGetWindowSize } from "../../../helpers"
+import AppContext from "../../../../context/App/AppContext"
+import { useGetWindowSize } from "../../../../helpers"
 import styles from './QualifiedFilterContainer.module.css'
 
 // Types
-import { QualifiedFilterContainerProps, QualifiedFilterContainerState } from "./types"
+import { QualifiedFilterContainerState } from "./types"
 
 // Components
-import QualifiedBtn from "../../buttons/QualifiedBtn/QualifiedBtn"
-import ResetSearchBtn from "../../buttons/ResetSearchBtn/ResetSearchBtn"
-import HideBtn from "../../buttons/HideBtn/HideBtn"
+import QualifiedBtn from "../../../buttons/QualifiedBtn/QualifiedBtn"
+import HideBtn from "../../../buttons/HideBtn/HideBtn"
 
-function QualifiedFilterContainer({ handleResetSearchBtn }: QualifiedFilterContainerProps) {
-  const { filter, searchValue } = useContext(AppContext)
+function QualifiedFilterContainer() {
+  const { filter } = useContext(AppContext)
 
   const window = useGetWindowSize()
 
@@ -31,10 +30,6 @@ function QualifiedFilterContainer({ handleResetSearchBtn }: QualifiedFilterConta
           <QualifiedBtn
             label={'Remove Filter'}
             type={''} />
-          {searchValue ? (
-            <ResetSearchBtn 
-              handleResetSearchBtn={() => handleResetSearchBtn()} />
-          ) : null}
         </div>
         ) : (
           <div className={state.hidden ? 'hidden' : 'flex flex-col justify-around w-full gap-8 md:flex-row'}>
@@ -50,10 +45,6 @@ function QualifiedFilterContainer({ handleResetSearchBtn }: QualifiedFilterConta
             <QualifiedBtn
               type={'BC'}
               label={'BC'} />
-            {searchValue ? (
-              <ResetSearchBtn 
-                handleResetSearchBtn={() => handleResetSearchBtn()} />
-            ) : null}
           </div>
         )}
         {filter && (

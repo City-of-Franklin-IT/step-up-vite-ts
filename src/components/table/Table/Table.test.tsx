@@ -19,6 +19,7 @@ describe('Table component', () => {
       phone: "615-533-6887",
       email: "andy.adams@franklintn.gov",
       hours: 72,
+      shift: "A",
       Schedules: []
     }] as TableData[]
   }

@@ -1,26 +1,13 @@
 // Types
-import { Dispatch, SetStateAction, RefObject } from "react"
-import { Staff, Action, Rank, Schedule } from "../../../context/App/types"
+import { RefObject } from "react"
+import { Staff, Rank, Schedule, Shift } from "../../../context/App/types"
 
 export interface TableContainerProps { // TableContainer props
   data: Staff[]
 }
 
-export interface TableContainerState { // TableContainer state obj
-  searchValue: string
-}
-
 export interface UseSetTableDataProps { // useSetTableTable hook props
-  data: Staff[],
-  filter: string,
-  skillsFilter: string,
-  showAllStaff: boolean,
-  searchValue: string
-}
-
-export interface UseSearchProps { // useSearch hook props
-  searchValue: string,
-  dispatch: Dispatch<Action>
+  data: Staff[]
 }
 
 export interface UseSetSkills { // useSetSkills hook props
@@ -28,13 +15,8 @@ export interface UseSetSkills { // useSetSkills hook props
 }
 
 export interface FilterQualifiedProps { // filterQualified fn props
-  data: Staff[],
+  data: Staff[]
   filter: string
-}
-
-export interface HandleResetSearchBtnProps { // handleResetSearchBtn fn props
-  setState: Dispatch<SetStateAction<TableContainerState>>,
-  dispatch: Dispatch<Action>
 }
 
 export interface ScrollToTopProps { // scrollToTop fn props
@@ -42,13 +24,14 @@ export interface ScrollToTopProps { // scrollToTop fn props
 }
 
 export interface TableData {
-  employeeId: string,
-  rank: Rank,
-  fullName: string,
-  skills: string,
-  phone: string,
-  email: string,
-  hours: number,
+  employeeId: string
+  rank: Rank
+  fullName: string
+  skills: string
+  phone: string
+  email: string
+  hours: number
+  shift: Shift | null
   Schedules: Schedule[]
-  [key: string]: string | Rank | number | Schedule[]
+  [key: string]: string | Rank | number | Schedule[] | null
 }

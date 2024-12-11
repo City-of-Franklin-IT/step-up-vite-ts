@@ -1,5 +1,5 @@
 export interface QualifiedBtnProps { // QualifiedBtn props
-  type: Type | '',
+  type: Type | ''
   label: Type | 'Remove Filter'
 }
 

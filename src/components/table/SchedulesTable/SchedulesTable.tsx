@@ -1,8 +1,10 @@
-import { handleTime } from '../../../helpers'
 import styles from './SchedulesTable.module.css'
 
 // Types
 import { SchedulesTableProps } from './types'
+
+// Components
+import { TableRow } from '.'
 
 function SchedulesTable({ data }: SchedulesTableProps) {
   if(!data.length) {
@@ -12,30 +14,25 @@ function SchedulesTable({ data }: SchedulesTableProps) {
   }
 
   return (
-    <table data-testid="schedules-table">
+    <table data-testid="schedules-table" className={styles.schedulesTable}>
 
       <thead>
         <tr>
-          <th className={styles.header}>Start Date</th>
-          <th className={styles.header}>Start Time</th>
-          <th className={styles.header}>End Date</th>
-          <th className={styles.header}>End Time</th>
-          <th className={styles.header}>Hours</th>
-          <th className={styles.header}>Detail Code</th>
+          <th>Start Date</th>
+          <th>Start Time</th>
+          <th>End Date</th>
+          <th>End Time</th>
+          <th>Hours</th>
+          <th>Detail Code</th>
         </tr>
       </thead>
 
       <tbody>
         {data.map((obj, index) => {
           return (
-            <tr key={`${ index }`} className={styles.tableData}>
-              <td>{obj.startDate.toString()}</td>
-              <td>{handleTime(obj.startTime)}</td>
-              <td>{obj.endDate.toString()}</td>
-              <td>{handleTime(obj.endTime)}</td>
-              <td>{obj.hours}</td>
-              <td>{obj.detailCode}</td>
-            </tr>
+            <TableRow 
+              schedule={obj}
+              index={index} />
           )
         })}
       </tbody>

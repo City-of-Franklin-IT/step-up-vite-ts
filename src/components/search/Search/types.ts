@@ -1,8 +1,7 @@
-// Types
-import { Dispatch, SetStateAction } from "react"
-import { TableContainerState } from "../../table/TableContainer/types"
+export interface SearchState {
+  searchValue: string
+}
 
-export interface SearchProps {
-  searchValue: string,
-  setSearchValue: Dispatch<SetStateAction<TableContainerState>>
+export interface UseSearchProps { // useSearch hook props
+  searchValue: string
 }

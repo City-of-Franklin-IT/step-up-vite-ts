@@ -28,6 +28,11 @@ const appReducer = (state: AppReducerProps['state'], action: AppReducerProps['ac
         ...state,
         showAllStaff: action.payload
       }
+    case 'SET_SHIFT_FILTER':
+      return {
+        ...state,
+        shiftFilter: action.payload
+      }
     default:
       return state
   }

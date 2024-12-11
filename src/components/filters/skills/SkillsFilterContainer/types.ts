@@ -1,6 +1,5 @@
 export interface SkillsFilterContainerProps { // SkillsFilterContainer props
-  skills: string[],
-  handleResetSearchBtn: () => void
+  skills: string[]
 }
 
 export interface SkillsFilterContainerState { // SkillsFilterContainer state object

@@ -24,6 +24,7 @@ describe('Search component', () => {
     date: '',
     filter: '',
     searchValue: 'Southern',
+    shiftFilter: null,
     showAllStaff: false,
     skillsFilter: ''    
   }

@@ -1,18 +1,17 @@
 import { useContext, useState } from 'react'
-import AppContext from '../../../context/App/AppContext'
-import { useGetWindowSize } from '../../../helpers'
+import AppContext from '../../../../context/App/AppContext'
+import { useGetWindowSize } from '../../../../helpers'
 import styles from './SkillsFilterContainer.module.css'
 
 // Types
 import { SkillsFilterContainerProps, SkillsFilterContainerState } from './types'
 
 // Components
-import SkillsBtn from '../../buttons/SkillsBtn/SkillsBtn'
-import ResetSearchBtn from '../../buttons/ResetSearchBtn/ResetSearchBtn'
-import HideBtn from '../../buttons/HideBtn/HideBtn'
+import SkillsBtn from '../../../buttons/SkillsBtn/SkillsBtn'
+import HideBtn from '../../../buttons/HideBtn/HideBtn'
 
-function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterContainerProps) {
-  const { skillsFilter, searchValue } = useContext(AppContext)
+function SkillsFilterContainer({ skills }: SkillsFilterContainerProps) {
+  const { skillsFilter } = useContext(AppContext)
 
   const window = useGetWindowSize()
 
@@ -20,7 +19,7 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
 
   return (
     <div data-testid="skills-filter-container" className={styles.container}>
-      <div className={styles.header}>Filter Skills</div>
+      <div className={styles.header}>Filter <small className="italic">by</small> Skill</div>
 
       <div className="absolute -top-5 right-5">
         <HideBtn 
@@ -33,10 +32,6 @@ function SkillsFilterContainer({ skills, handleResetSearchBtn }: SkillsFilterCon
           <SkillsBtn
             label={'Remove Filter'}
             type={''} />
-          {searchValue ? (
-              <ResetSearchBtn 
-                handleResetSearchBtn={() => handleResetSearchBtn()} />
-            ) : null}
         </div>
       ) : (
         <div className={state.hidden ? 'hidden' : 'flex flex-col justify-around w-full gap-8 md:flex-row md:flex-wrap'}>

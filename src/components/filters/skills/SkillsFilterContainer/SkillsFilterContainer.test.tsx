@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react"
 import { vi } from "vitest"
 import "@testing-library/jest-dom"
-import AppContext from "../../../context/App/AppContext"
+import AppContext from "../../../../context/App/AppContext"
 
 // Types
-import { AppContextObj } from "../../../context/App/types"
+import { AppContextObj } from "../../../../context/App/types"
 import { SkillsFilterContainerProps } from "./types"
 import SkillsFilterContainer from "./SkillsFilterContainer"
 
@@ -22,6 +22,7 @@ describe('SkillsFilterContainer component', () => {
     date: '',
     filter: '',
     searchValue: 'Southern',
+    shiftFilter: null,
     showAllStaff: false,
     skillsFilter: 'Driver'    
   }

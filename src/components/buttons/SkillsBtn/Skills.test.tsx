@@ -23,6 +23,7 @@ describe('SkillsBtn component', () => {
     date: '2024-08-05',
     filter: '',
     searchValue: '',
+    shiftFilter: null,
     showAllStaff: false,
     skillsFilter: ''
   }

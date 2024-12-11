@@ -1,22 +1,22 @@
 import { useContext } from 'react'
 import AppContext from '../../../context/App/AppContext'
-import styles from './QualifiedBtn.module.css'
+import styles from './ShiftBtn.module.css'
 
 // Types
-import { QualifiedBtnProps } from './types'
+import { ShiftBtnProps } from './types'
 
-function QualifiedBtn({ type, label }: QualifiedBtnProps) {
+function ShiftBtn({ shift, label }: ShiftBtnProps) {
   const { dispatch } = useContext(AppContext)
 
   return (
     <button
       type="button"
-      data-testid="qualified-btn"
-      onClick={() => dispatch({ type: 'SET_FILTER', payload: type || '' })}
+      data-testid="shift-btn"
+      onClick={() => dispatch({ type: 'SET_SHIFT_FILTER', payload: shift || null })}
       className={styles.button}>
         <p className={styles.label}>{label}</p>
     </button>
   )
 }
 
-export default QualifiedBtn
+export default ShiftBtn

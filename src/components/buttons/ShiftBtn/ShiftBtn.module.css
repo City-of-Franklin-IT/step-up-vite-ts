@@ -1,14 +1,15 @@
+@import '../../../animations.css';
+
 .button {
-  display: flex;
-  justify-content: center;
-  color: var(--warning);
+  color: var(--neutralContent);
   text-transform: uppercase;
   font-family: 'Jura', sans-serif;
   padding: 12px;
-  outline: 1px solid var(--b3);
+  outline: 1px solid var(--neutralContent);
   width: 100%;
   border-radius: 5px;
-  box-shadow: 6px 6px 0 var(--b3);
+  box-shadow: 6px 6px 0 var(--neutralContent);
+  animation: 250ms fade-in linear;
 
   @media (min-width: 768px) { /* Tablet+ */ 
     width: 160px;
@@ -17,8 +18,7 @@
 
 .button:hover {
   cursor: pointer;
-  color: var(--neutralContent);
-  background-color: var(--warning);
+  outline-color: var(--warning);
   box-shadow: 6px 6px 0 var(--warning);
 }
 
@@ -27,5 +27,4 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
 }

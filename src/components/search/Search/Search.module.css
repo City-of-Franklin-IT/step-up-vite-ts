@@ -55,7 +55,7 @@
   font-family: 'Fugaz One', sans-serif;
   font-weight: 400;
   top: -70%;
-  left: -8%;
+  left: -4%;
   z-index: 10;  
 
   @media (max-width: 1024px) { /* Tablet */ 

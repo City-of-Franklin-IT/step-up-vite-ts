@@ -2,10 +2,10 @@ import { render } from "@testing-library/react"
 import { vi } from "vitest"
 import "@testing-library/jest-dom"
 import { BrowserRouter } from "react-router-dom"
-import AppContext from "../../../context/App/AppContext"
+import AppContext from "../../../../context/App/AppContext"
 
 // Types
-import { AppContextObj } from "../../../context/App/types"
+import { AppContextObj } from "../../../../context/App/types"
 import { QualifiedFilterContainerProps } from "./types"
 
 // Components
@@ -25,6 +25,7 @@ describe('QualifiedFilterContainer component', () => {
     date: '2024-08-05',
     filter: '',
     searchValue: '',
+    shiftFilter: null,
     showAllStaff: false,
     skillsFilter: ''
   }

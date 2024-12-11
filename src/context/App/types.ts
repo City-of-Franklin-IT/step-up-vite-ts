@@ -3,18 +3,20 @@ import { Dispatch, ReactNode } from "react"
 
 export interface AppContextObj { // AppContext
   dispatch: Dispatch<Action>,
-  date: string,
-  filter: string,
-  searchValue: string,
-  showAllStaff: boolean,
+  date: string
+  filter: string
+  searchValue: string
+  shiftFilter: Shift | null
+  showAllStaff: boolean
   skillsFilter: string
 }
 
 export interface AppState { // App context initial state object
-  date: string,
-  filter: string,
-  searchValue: string,
-  showAllStaff: boolean,
+  date: string
+  filter: string
+  searchValue: string
+  shiftFilter: Shift | null
+  showAllStaff: boolean
   skillsFilter: string
 }
 
@@ -28,15 +30,16 @@ export interface AppProviderProps {
 }
 
 export interface Staff {
-  employeeId: string,
-  rank: Rank,
-  fullName: string,
-  skills: string,
-  phone: string,
-  email: string,
-  StepUps: StepUps[],
-  Schedules: Schedule[],
-  [key: string]: string | Rank | StepUps[] | Schedule[]
+  employeeId: string
+  rank: Rank
+  fullName: string
+  skills: string
+  phone: string
+  email: string
+  shift: Shift | null
+  StepUps: StepUps[]
+  Schedules: Schedule[]
+  [key: string]: string | Rank | StepUps[] | Schedule[] | Shift | null
 }
 
 export interface Schedule {
@@ -69,6 +72,7 @@ export type Action =
   | { type: 'SET_SKILLS_FILTER', payload: string }
   | { type: 'SET_DATE', payload: string }
   | { type: 'TOGGLE_SHOW_ALL_STAFF', payload: boolean }
+  | { type: 'SET_SHIFT_FILTER', payload: Shift | null }
 
 export interface ServerResponse { // Server response object
   success: boolean
