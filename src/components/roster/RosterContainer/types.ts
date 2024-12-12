@@ -29,6 +29,10 @@ export interface HandleDateChangeProps { // handleDateChange fn props
   setState: Dispatch<SetStateAction<RosterContainerState>>
 }
 
+export interface SetDateProps { // setDate fn props
+  date: string
+}
+
 export interface RosterItem {
   employeeId: string,
   name: string,

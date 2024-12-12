@@ -9,12 +9,10 @@ import { SkillsFilterContainerProps } from "./types"
 import SkillsFilterContainer from "./SkillsFilterContainer"
 
 describe('SkillsFilterContainer component', () => {
-  const handleResetSearchBtnMock = vi.fn()
   const dispatchMock = vi.fn()
 
   const defaultProps: SkillsFilterContainerProps = {
     skills: ['Driver', 'AEMT', 'Tech Rescue'],
-    handleResetSearchBtn: handleResetSearchBtnMock
   }
 
   const ctx: AppContextObj = {

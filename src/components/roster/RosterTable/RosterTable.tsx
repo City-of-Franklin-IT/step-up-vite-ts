@@ -1,9 +1,11 @@
-import { handleTime } from '../../../helpers'
-import { useOrderRanks, handleRank, handleActive } from '.'
+import { useOrderRanks } from '.'
 import styles from './RosterTable.module.css'
 
 // Types
 import { RosterTableProps } from "./types"
+
+// Components
+import { TableBody } from '.'
 
 function RosterTable({ data, label }: RosterTableProps) {
   const ordered = useOrderRanks(data)
@@ -22,20 +24,7 @@ function RosterTable({ data, label }: RosterTableProps) {
             <th className={styles.header}>End Time</th>
           </tr>
         </thead>
-        <tbody>
-          {ordered.map(obj => {
-            return (
-              <tr key={`${ obj.employeeId }-${ obj.station }-${ obj.staffStart }`} className={handleActive(obj.staffStart, obj.staffEnd)}>
-                <td>{handleRank(obj)}</td>
-                <td>{obj.rankAbrv}</td>
-                <td className="hidden md:block">{obj.staffStart.toString().split('T')[0]}</td>
-                <td>{handleTime(obj.staffStart.toString())}</td>
-                <td className="hidden md:block">{obj.staffEnd.toString().split('T')[0]}</td>
-                <td>{handleTime(obj.staffEnd.toString())}</td>
-              </tr>
-            )
-          })}
-        </tbody>
+        <TableBody ordered={ordered} />
       </table>
     </div>
   )

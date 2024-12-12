@@ -28,7 +28,7 @@ const validateUser = async (): Promise<ValidateTokenResponse> => {
   return result
 }
 
-export const useGetWindowSize = () => { // Get window size
+export const useGetWindowSize = (): boolean => { // Get window size
   const [state, setState] = useState<{ width: number }>({ width: window.innerWidth })
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export const useGetWindowSize = () => { // Get window size
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return state.width
+  return state.width < 1025
 }
 
 export const handleTime = (time: HandleTimeProps['time']): string => { // Format and return time

@@ -27,7 +27,9 @@ export const TableRow = ({ employee, index }: TableRowProps): ReactElement => { 
 
         <td className="hidden lg:table-cell">
           <div className={styles.schedule}>
-            <SchedulesTable data={employee.Schedules} />
+            <SchedulesTable 
+              data={employee.Schedules}
+              employeeId={employee.employeeId} />
           </div>
         </td>
     </tr>

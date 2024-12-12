@@ -1,17 +1,20 @@
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import UserContext from '../../../context/User/UserContext'
+import { handleLogoutClick } from '.'
 import styles from './LogoutBtn.module.css'
 
-// Types
-import { useHandleLogout } from '.'
-
 function LogoutBtn() {
-  const handleLogout = useHandleLogout()
+  const { dispatch } = useContext(UserContext)
+
+  const navigate = useNavigate()
 
   return (
     <button
       data-testid="header-btn"
       type="button"
       className={styles.btn}
-      onClick={handleLogout}>
+      onClick={() => handleLogoutClick(navigate, dispatch)}>
         Logout
     </button>
   )

@@ -6,18 +6,11 @@ import AppContext from "../../../../context/App/AppContext"
 
 // Types
 import { AppContextObj } from "../../../../context/App/types"
-import { QualifiedFilterContainerProps } from "./types"
 
 // Components
 import QualifiedFilterContainer from "./QualifiedFilterContainer"
 
 describe('QualifiedFilterContainer component', () => {
-  const handleResetSearchBtnMock = vi.fn()
-
-  const defaultProps: QualifiedFilterContainerProps = {
-    handleResetSearchBtn: handleResetSearchBtnMock
-  }
-
   const dispatchMock = vi.fn()
 
   const ctx: AppContextObj = { // Context state
@@ -33,7 +26,7 @@ describe('QualifiedFilterContainer component', () => {
   test('Component renders correctly', () => {
     const { getByTestId } = render(
       <BrowserRouter>
-        <QualifiedFilterContainer { ...defaultProps } />
+        <QualifiedFilterContainer />
       </BrowserRouter>
     )
 
@@ -46,7 +39,7 @@ describe('QualifiedFilterContainer component', () => {
     const { getAllByTestId, unmount } = render(
       <BrowserRouter>
         <AppContext.Provider value={{ ...ctx }}>
-          <QualifiedFilterContainer { ...defaultProps } />
+          <QualifiedFilterContainer />
         </AppContext.Provider>
       </BrowserRouter>
     )
@@ -63,7 +56,7 @@ describe('QualifiedFilterContainer component', () => {
     render(
       <BrowserRouter>
         <AppContext.Provider value={{ ...ctx }}>
-          <QualifiedFilterContainer { ...defaultProps } />
+          <QualifiedFilterContainer />
         </AppContext.Provider>
       </BrowserRouter>
     )

@@ -5,10 +5,10 @@ import styles from './SchedulesTable.module.css'
 import { ReactElement } from "react"
 import { TableRowProps } from "./types"
 
-export const TableRow = ({ schedule, index }: TableRowProps): ReactElement => {
+export const TableRow = ({ schedule }: TableRowProps): ReactElement => {
 
   return (
-    <tr key={`schedule-table-row-${ index }`} className={styles.tableData}>
+    <tr className={styles.tableData}>
       <td>{schedule.startDate.toString()}</td>
       <td>{handleTime(schedule.startTime)}</td>
       <td>{schedule.endDate.toString()}</td>

@@ -6,7 +6,7 @@ import { SchedulesTableProps } from './types'
 // Components
 import { TableRow } from '.'
 
-function SchedulesTable({ data }: SchedulesTableProps) {
+function SchedulesTable({ data, employeeId }: SchedulesTableProps) {
   if(!data.length) {
     return (
       <div data-testid="no-recent-shifts" className="text-center italic my-auto">No Recent Step-Up Shifts</div>
@@ -30,9 +30,9 @@ function SchedulesTable({ data }: SchedulesTableProps) {
       <tbody>
         {data.map((obj, index) => {
           return (
-            <TableRow 
-              schedule={obj}
-              index={index} />
+            <TableRow
+              key={`schedules-table-row-${ employeeId }-${ index }`} 
+              schedule={obj} />
           )
         })}
       </tbody>

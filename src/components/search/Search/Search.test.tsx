@@ -5,7 +5,6 @@ import AppContext from "../../../context/App/AppContext"
 
 // Types
 import { AppContextObj } from "../../../context/App/types"
-import { SearchProps } from "./types"
 
 // Components
 import Search from "./Search"
@@ -13,11 +12,6 @@ import Search from "./Search"
 describe('Search component', () => {
   const setSearchValueMock = vi.fn()
   const dispatchMock = vi.fn()
-
-  const defaultProps: SearchProps = {
-    searchValue: 'Southern',
-    setSearchValue: setSearchValueMock
-  }
 
   const ctx: AppContextObj = {
     dispatch: dispatchMock,
@@ -30,7 +24,7 @@ describe('Search component', () => {
   }
 
   test('Component renders correctly', () => {
-    const { getByTestId } = render(<Search { ...defaultProps } />)
+    const { getByTestId } = render(<Search />)
     const component = getByTestId('search')
 
     expect(component).toBeInTheDocument()
@@ -39,7 +33,7 @@ describe('Search component', () => {
   test('setSearchValue called on button click', () => {
     const { getByRole, unmount } = render(
       <AppContext.Provider value={ctx}>
-        <Search { ...defaultProps } />)
+        <Search />)
       </AppContext.Provider>
     )
 
@@ -53,7 +47,7 @@ describe('Search component', () => {
 
     render(
       <AppContext.Provider value={{ ...ctx, searchValue: '' }}>
-        <Search { ...defaultProps } />)
+        <Search />)
       </AppContext.Provider>
     )
 
@@ -65,7 +59,7 @@ describe('Search component', () => {
   test('setSearchValue called on change', () => {
     const { getByRole } = render(
       <AppContext.Provider value={ctx}>
-        <Search { ...defaultProps } />)
+        <Search />)
       </AppContext.Provider>
     )
     const input = getByRole('textbox')

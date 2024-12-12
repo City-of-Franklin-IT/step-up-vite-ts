@@ -1,10 +1,102 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useEffect, ReactElement } from "react"
+import styles from './RosterContainer.module.css'
 
 // Types
-import { Apparatus, Station } from "../../../context/App/types"
-import { UseRosterGroupsProps, UseSelectDateProps, SetGroupsProps, HandleDateChangeProps, RosterItem, RosterGroup, StationGroup } from "./types"
+import { ChangeEvent } from "react"
+import { Apparatus, Station, RosterEntry } from "../../../context/App/types"
+import { UseRosterGroupsProps, UseSelectDateProps, SetGroupsProps, HandleDateChangeProps, SetDateProps, RosterItem, RosterGroup, StationGroup } from "./types"
 
-export const useRosterGroups = (data: UseRosterGroupsProps['data']): RosterGroup[] => { // Set roster groups by station
+// Components
+import CalendarIcon from "../../icons/CalendarIcon/CalendarIcon"
+import RosterLegend from "../RosterLegend/RosterLegend"
+import RosterTable from "../RosterTable/RosterTable"
+import LoadingIcon from "../../icons/LoadingIcon/LoadingIcon" 
+
+export const useSelectDate = (date: UseSelectDateProps['date'], dispatch: UseSelectDateProps['dispatch']): void => { // Set date to ctx
+  const cb = useCallback(() => {
+    if(date) {
+      dispatch({ type: 'SET_DATE', payload: date })
+    }
+  }, [date, dispatch])
+
+  useEffect(() => {
+    cb()
+  }, [cb])
+} 
+
+export const handleDateChange = (event: HandleDateChangeProps['event'], setState: HandleDateChangeProps['setState']): void => {
+  const date = new Date(event.target.value)
+
+  if(!isNaN(date.getTime()) && date.getFullYear().toString().length === 4) { // Valid date/time
+    return setState(prevState => ({ ...prevState, showDatePicker: false, date: event.target.value }))
+  }
+}
+
+export const setDate = (date: SetDateProps['date']): string => {
+  return date ? new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toDateString() : new Date().toDateString()
+}
+
+export const CalendarBtn = ({ handleClick }: { handleClick: () => void }): ReactElement => {
+
+  return (
+    <button
+      data-testid="calendar-btn" 
+      type="button"
+      className={styles.calendarBtn}
+      onClick={handleClick}>
+        <CalendarIcon width={28} height={28} />
+    </button>
+  )
+}
+
+export const DatePicker = ({ showDatePicker, handleChange }: { showDatePicker: boolean, handleChange: (e: ChangeEvent<HTMLInputElement>) => void }): ReactElement => {
+
+  return (
+    <>
+      {showDatePicker && (
+        <input
+          data-testid="date-picker" 
+          type="date"
+          className="input text-warning-content bg-warning"
+          onChange={(e) => handleChange(e)} />
+      )}
+    </>
+  )
+}
+
+export const Tables = ({ data }: { data: RosterEntry[] }): ReactElement => {
+  const groups = useRosterGroups(data)
+
+  const stationGroups = useSetGroups(groups)
+
+  return (
+    <div className={styles.tables}>
+      {stationGroups.length ? stationGroups.map(obj => {
+          return (
+            <div data-testid="station-group" key={`station-${ obj.station }`} className="flex flex-col">
+              <div className={styles.stationHeader}>Station {obj.station}</div>
+              <div className={styles.stationGroup}>
+                {obj.units.map(unit => {
+                  return (
+                    <RosterTable
+                      key={unit.unit}
+                      data={unit.roster as RosterItem[]}
+                      label={unit.unit} />
+                  )
+                })} 
+                <div className={styles.rosterLegend}><RosterLegend /></div>
+              </div>
+            </div>
+          )
+        }) : (
+          <LoadingIcon width={200} height={200} />
+        )
+      }
+    </div>
+  )
+}
+
+const useRosterGroups = (data: UseRosterGroupsProps['data']): RosterGroup[] => { // Set roster groups by station
   const array = useMemo(() => {
     const rosterMap = new Map<string, RosterItem[]>()
   
@@ -59,19 +151,9 @@ export const useRosterGroups = (data: UseRosterGroupsProps['data']): RosterGroup
   }, [data])
 
   return array
-} 
+}
 
-export const useSelectDate = (date: UseSelectDateProps['date'], dispatch: UseSelectDateProps['dispatch']): () => void => { // Set date to ctx
-  const cb = useCallback(() => {
-    if(date) {
-      dispatch({ type: 'SET_DATE', payload: date })
-    }
-  }, [date, dispatch])
-
-  return cb
-} 
-
-export const useSetGroups = (rosters: SetGroupsProps['rosters']): { station: string, units: StationGroup[] }[] => {
+const useSetGroups = (rosters: SetGroupsProps['rosters']): { station: string, units: StationGroup[] }[] => {
   const obj = useMemo(() => {
     const stationsMap = new Map<string, StationGroup[]>()
   
@@ -102,12 +184,4 @@ export const useSetGroups = (rosters: SetGroupsProps['rosters']): { station: str
   }, [rosters])
 
   return obj
-} 
-
-export const handleDateChange = (event: HandleDateChangeProps['event'], setState: HandleDateChangeProps['setState']): void => {
-  const date = new Date(event.target.value)
-
-  if(!isNaN(date.getTime()) && date.getFullYear().toString().length === 4) { // Valid date/time
-    return setState(prevState => ({ ...prevState, showDatePicker: false, date: event.target.value }))
-  }
 }

@@ -23,6 +23,7 @@
   font-weight: 400;
   top: -24px;
   left: 20px;
+  white-space: nowrap;
   z-index: 10;
 
   @media (min-width: 1025px) { /* Laptop+ */ 
@@ -41,10 +42,11 @@
   bottom: -20px;
   right: 20px;
   z-index: 10;
+  white-space: nowrap;
   animation: 250ms fade-in linear;
 
   @media (min-width: 1025px) { /* Laptop+ */ 
-    font-size: 2.25rem;
-    bottom: -28px;
+    font-size: 1.85rem;
+    bottom: -22px;
   }
 }

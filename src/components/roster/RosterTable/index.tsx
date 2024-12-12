@@ -1,4 +1,5 @@
 import { ReactElement, useMemo } from 'react'
+import { handleTime } from '../../../helpers'
 import styles from './RosterTable.module.css'
 
 // Types
@@ -35,7 +36,42 @@ export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => { 
   return array
 } 
 
-export const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle rank indicators
+export const TableBody = ({ ordered }: { ordered: RosterItem[] }): ReactElement => {
+  return (
+    <tbody>
+      {ordered.map(roster => {
+        return (
+          <TableRow roster={roster} />
+        )
+      })}
+    </tbody>
+  )
+}
+
+const TableRow = ({ roster }: { roster: RosterItem }): ReactElement => {
+  return (
+    <tr className={handleActive(roster.staffStart, roster.staffEnd)}>
+      <td>{handleRank(roster)}</td>
+      <td>{roster.rankAbrv}</td>
+      <td className="hidden md:block">{roster.staffStart.toString().split('T')[0]}</td>
+      <td>{handleTime(roster.staffStart.toString())}</td>
+      <td className="hidden md:block">{roster.staffEnd.toString().split('T')[0]}</td>
+      <td>{handleTime(roster.staffEnd.toString())}</td>
+    </tr>
+  )
+}
+
+const handleActive = (start: HandleActiveProps['start'], end: HandleActiveProps['end']) => { // Handle row styling for active / inactive rows
+  const startDateTime = new Date(start)
+  const endDateTime = new Date(end)
+  const now = new Date()
+
+  if(startDateTime < now && endDateTime > now) {
+    return styles.tableData
+  } else return styles.tableDataInactive
+}
+
+const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle rank indicators
   switch(data.rank) {
     case 'FireCapt':
       return (
@@ -77,14 +113,4 @@ export const handleRank = (data: HandleRankProps['data']): ReactElement => { // 
         </div>
       )
   }
-}
-
-export const handleActive = (start: HandleActiveProps['start'], end: HandleActiveProps['end']) => { // Handle row styling for active / inactive rows
-  const startDateTime = new Date(start)
-  const endDateTime = new Date(end)
-  const now = new Date()
-
-  if(startDateTime < now && endDateTime > now) {
-    return styles.tableData
-  } else return styles.tableDataInactive
 }

@@ -23,6 +23,7 @@ function Table({ data }: TableProps) {
           {data.map((obj, index) => {
             return (
               <TableRow
+                key={`table-row-${ obj.employeeId }`}
                 employee={obj}
                 index={index} />
             )
