@@ -1,8 +1,9 @@
+import { BrowserRouter } from "react-router-dom"
+import AppContext from "../../../context/App/AppContext"
 import { render, cleanup, fireEvent } from "@testing-library/react"
 import { vi } from "vitest"
 import "@testing-library/jest-dom"
-import { BrowserRouter } from "react-router-dom"
-import AppContext from "../../../context/App/AppContext"
+import { mock, instance } from 'ts-mockito'
 
 // Types
 import { Staff, AppContextObj } from "../../../context/App/types"
@@ -14,26 +15,11 @@ import TableContainer from "./TableContainer"
 describe('TableContainer component', () => {
   const dispatchMock = vi.fn()
 
+  const staffMock = mock<Staff>()
+  const staffArrayMock = Array.from({ length: 10 }).map(_ => instance(staffMock))
+
   const defaultProps: TableContainerProps = {
-    data: [{
-      rank: "Firefighter",
-      employeeId: "0789",
-      fullName: "Adams, Andrew",
-      skills: "Driver, Tech Rescue, Officer, Swiftwater, Rope Rescue, AEMT, Hazmat",
-      phone: "615-533-6887",
-      email: "andy.adams@franklintn.gov",
-      shift: "A",
-      StepUps: [],
-      Schedules: []
-    },{
-      rank: "Captain",
-      employeeId: "0687",
-      fullName: "Almon, William",
-      skills: "Officer, Swiftwater, Rope Rescue, AEMT, Hazmat",
-      phone: null,
-      email: "billa@franklintn.gov",
-      StepUps: [],
-      Schedules: []}] as Staff[]
+    data: staffArrayMock
   }
 
   const ctx: AppContextObj = { // Context state

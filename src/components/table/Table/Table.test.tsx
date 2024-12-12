@@ -1,6 +1,7 @@
+import { BrowserRouter } from "react-router-dom"
 import { render } from "@testing-library/react"
 import "@testing-library/jest-dom"
-import { BrowserRouter } from "react-router-dom"
+import { mock, instance } from 'ts-mockito'
 
 // Types
 import { TableData } from "../TableContainer/types"
@@ -10,18 +11,11 @@ import { TableProps } from "./types"
 import Table from "./Table"
 
 describe('Table component', () => {
+  const tableDataMock = mock<TableData>()
+  const tableDataArrayMock = Array.from({ length: 10 }).map(_ => instance(tableDataMock))
+
   const defaultProps: TableProps = {
-    data: [{
-      employeeId: "0789",
-      rank: "Firefighter",
-      fullName: "Adams, Andrew",
-      skills: "Driver, Tech Rescue, Officer, Swiftwater, Rope Rescue, AEMT, Hazmat",
-      phone: "615-533-6887",
-      email: "andy.adams@franklintn.gov",
-      hours: 72,
-      shift: "A",
-      Schedules: []
-    }] as TableData[]
+    data: tableDataArrayMock
   }
 
   test('Component renders correctly', () => {
