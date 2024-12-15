@@ -15,7 +15,7 @@ describe('Table component', () => {
   const tableDataArrayMock = Array.from({ length: 10 }).map(_ => instance(tableDataMock))
 
   const defaultProps: TableProps = {
-    data: tableDataArrayMock
+    employees: tableDataArrayMock
   }
 
   test('Component renders correctly', () => {
@@ -37,8 +37,8 @@ describe('Table component', () => {
     )
     const rows = getAllByRole('row')
 
-    console.log(defaultProps.data.length)
+    console.log(defaultProps.employees.length)
 
-    expect(rows.length).toBe(defaultProps.data.length + 1) // Header row + body
+    expect(rows.length).toBe(defaultProps.employees.length + 1) // Header row + body
   })
 })

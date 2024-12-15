@@ -14,7 +14,7 @@ describe('SchedulesTable component', () => {
   const scheduleArrayMock = Array.from({ length: 10 }).map(_ => instance(scheduleMock))
 
   const defaultProps: SchedulesTableProps = {
-    data: scheduleArrayMock,
+    schedules: scheduleArrayMock,
     employeeId: '1234'
   }
 
