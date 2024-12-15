@@ -1,6 +1,6 @@
 import { render, renderHook } from "@testing-library/react"
 import "@testing-library/jest-dom"
-import { useOrderRanks, handleActive } from "."
+import { useOrderRanks, handleActive } from "./components"
 import styles from './RosterTable.module.css'
 
 // Types

@@ -1,6 +1,6 @@
 // Types
 import { Dispatch, SetStateAction } from "react"
-import { RosterEntry, Shift, Apparatus, RankAbrv, RankWFD, Action } from "../../../context/App/types"
+import { RosterEntry, Shift, Apparatus, RankAbrv, RankWFD } from "../../../context/App/types"
 
 export interface RosterContainerProps { // RosterContainer props
   data: RosterEntry[]
@@ -16,8 +16,7 @@ export interface UseRosterGroupsProps { // useRosterGroups hook props
 }
 
 export interface UseSelectDateProps { // useSelectDate hook props
-  date: string,
-  dispatch: Dispatch<Action>
+  date: string
 }
 
 export interface SetGroupsProps { // setGroups fn props
@@ -54,6 +53,6 @@ export interface RosterGroup {
 }
 
 export interface StationGroup {
-  unit: Apparatus,
+  unit: Apparatus
   roster: RosterItem[]
 }

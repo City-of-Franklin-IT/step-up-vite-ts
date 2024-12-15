@@ -1,22 +1,8 @@
-import { useFormContext } from 'react-hook-form'
-import { loginUser } from '../../../context/User/UserActions'
-import { authPopup, errorPopup } from '../../../utils/Toast/Toast'
+import { useFormContext } from "react-hook-form"
 import styles from './LoginForm.module.css'
 
 // Types
-import { OnSubmitProps, LoginFormUseFormState } from './types'
-
-export const onSubmit = async (formData: OnSubmitProps['formData'], navigate: OnSubmitProps['navigate']): Promise<void> => {
-  const result = await loginUser(formData)
-  
-  if(result.success) { // On success
-    setTimeout(() => {
-      navigate('/home')
-    }, 500)
-
-    return authPopup()
-  } else errorPopup(result.msg)
-}
+import { LoginFormUseFormState } from "./types"
 
 export const Email = () => {
   const methods = useFormContext<LoginFormUseFormState>()

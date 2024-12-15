@@ -1,8 +1,8 @@
-import { useMemo, useContext, ReactElement } from "react"
+import { useMemo, useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
 
 // Types
-import { UseSetTableDataProps, UseSetSkills, FilterQualifiedProps, ScrollToTopProps, TableData } from './types'
+import { UseSetTableDataProps, UseSetSkills, TableData, FilterQualifiedProps } from './types'
 
 export const useSetTableData = (data: UseSetTableDataProps['data']): TableData[] => { // Set table data
   const { filter, skillsFilter, showAllStaff, searchValue, shiftFilter } = useContext(AppContext)
@@ -89,17 +89,6 @@ export const useSetSkills = (data: UseSetSkills['data']): string[] => { // Set e
   return array
 }
 
-export const Checkbox = (): ReactElement => { // Show all staff checkbox
-  const { showAllStaff, dispatch } = useContext(AppContext)
-
-  return (
-    <div className="flex gap-2 ml-auto items-center w-fit">
-      <label className="text-white uppercase text-sm">Include Staff With 0 Hours</label>
-      <input type="checkbox" className="toggle toggle-success" checked={showAllStaff} onChange={() => dispatch({ type: 'TOGGLE_SHOW_ALL_STAFF', payload: !showAllStaff })}></input>
-    </div>
-  )
-}
-
 const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQualifiedProps['filter']): TableData[] => { // Filter staff by qualification
   const qualified: TableData[] = []
 
@@ -146,8 +135,4 @@ const filterQualified = (data: FilterQualifiedProps['data'], filter: FilterQuali
   })
 
   return qualified
-}
-
-export const scrollToTop = (topRef: ScrollToTopProps['topRef']): void => { // Scroll to top
-  topRef.current?.scrollIntoView({ behavior: 'smooth' })
 }

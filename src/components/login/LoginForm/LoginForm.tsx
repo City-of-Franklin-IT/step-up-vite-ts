@@ -1,25 +1,18 @@
 import { useNavigate } from "react-router-dom"
-import { useForm, FormProvider } from "react-hook-form"
+import { FormProvider } from "react-hook-form"
 import image from '../../../assets/icons/cof/cof.jpeg'
-import { onSubmit } from '.'
+import { useLoginForm } from "./hooks"
+import { onSubmit } from './utils'
 import styles from './LoginForm.module.css'
-
-// Types
-import { LoginFormUseFormState } from './types'
 
 // Components
 import LoginBtn from '../../buttons/LoginBtn/LoginBtn'
-import { Email, Password } from "."
+import { Email, Password } from "./components"
 
 function LoginForm() {
   const navigate = useNavigate()
 
-  const methods = useForm<LoginFormUseFormState>({
-      defaultValues: {
-        email :'',
-        password: ''
-      }
-    })
+  const methods = useLoginForm()
 
   return (
     <div data-testid="login-form" className={styles.container}>

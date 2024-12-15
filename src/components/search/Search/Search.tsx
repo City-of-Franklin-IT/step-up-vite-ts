@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { useSearch } from '.'
+import { useSearch } from './hooks'
 import styles from './Search.module.css'
 
 // Types
 import { SearchState } from './types'
 
 // Components
-import { SearchInput, ClearBtn } from '.'
+import { SearchInput, ClearBtn } from './components'
 
 function Search() {
   const [state, setState] = useState<SearchState>({ searchValue: '' })

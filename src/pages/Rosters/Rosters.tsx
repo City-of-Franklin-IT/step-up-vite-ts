@@ -3,7 +3,7 @@ import { useQueryClient } from "react-query"
 import AppContext from "../../context/App/AppContext"
 import UserContext from "../../context/User/UserContext"
 import { useValidateUser } from "../../helpers"
-import { useGetRoster } from "."
+import { useGetRoster } from "./hooks"
 
 // Components
 import Layout from "../../components/layout/Layout/Layout"

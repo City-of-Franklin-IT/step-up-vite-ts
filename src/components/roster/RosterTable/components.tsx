@@ -1,49 +1,25 @@
-import { ReactElement, useMemo } from 'react'
+import { ReactElement } from 'react'
 import { handleTime } from '../../../helpers'
+import { handleActive } from './utils'
 import styles from './RosterTable.module.css'
 
 // Types
 import { RosterItem } from '../RosterContainer/types'
-import { OrderRanksProps, HandleRankProps, HandleActiveProps } from './types'
 
-export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => { // Order staff by rank
-  const array = useMemo(() => {
-    return data.sort((a, b) => {
-      const rankOrder = ['BC', 'OFF', 'ENG', 'FF']
-  
-      const rankA = rankOrder.indexOf(a.rankAbrv)
-      const rankB = rankOrder.indexOf(b.rankAbrv)
-    
-      if(rankA !== rankB) {
-        return rankA - rankB
-      }
-    
-      const startA = new Date(a.staffStart) // If ranks are the same, sort by staffStart
-      const startB = new Date(b.staffStart)
-    
-      if(startA > startB) {
-        return 1
-      }
-    
-      if(startA < startB) {
-        return -1
-      }
-    
-      return 0
-    })
-  }, [data])
+export const Header = () => {
 
-  return array
-}
-
-export const handleActive = (start: HandleActiveProps['start'], end: HandleActiveProps['end']) => { // Handle row styling for active / inactive rows
-  const startDateTime = new Date(start)
-  const endDateTime = new Date(end)
-  const now = new Date()
-
-  if(startDateTime < now && endDateTime > now) {
-    return styles.tableData
-  } else return styles.tableDataInactive
+  return (
+    <thead>
+      <tr>
+        <th className={styles.header}>Name</th>
+        <th className={styles.header}>Rank</th>
+        <th className={styles.dateHeader}>Start Date</th>
+        <th className={styles.header}>Start Time</th>
+        <th className={styles.dateHeader}>End Date</th>
+        <th className={styles.header}>End Time</th>
+      </tr>
+    </thead>
+  )
 }
 
 export const TableBody = ({ ordered }: { ordered: RosterItem[] }): ReactElement => {
@@ -61,7 +37,7 @@ export const TableBody = ({ ordered }: { ordered: RosterItem[] }): ReactElement 
 const TableRow = ({ roster }: { roster: RosterItem }): ReactElement => {
   return (
     <tr className={handleActive(roster.staffStart, roster.staffEnd)}>
-      <td>{handleRank(roster)}</td>
+      <td><Rank roster={roster} /></td>
       <td>{roster.rankAbrv}</td>
       <td className="hidden md:block">{roster.staffStart.toString().split('T')[0]}</td>
       <td>{handleTime(roster.staffStart.toString())}</td>
@@ -71,14 +47,15 @@ const TableRow = ({ roster }: { roster: RosterItem }): ReactElement => {
   )
 }
 
-const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle rank indicators
-  switch(data.rank) {
+const Rank = ({ roster }: { roster: RosterItem }): ReactElement => { // Handle rank indicators
+
+  switch(roster.rank) {
     case 'FireCapt':
       return (
         <div data-testid="fire-capt" className="flex gap-1 items-center">
-          {data.name}
+          {roster.name}
           <div className="bg-error w-[10px] h-[10px] rounded-full" title="Captain"></div>
-          {data.isParamedic && (
+          {roster.isParamedic && (
             <div className="bg-info w-[10px] h-[10px] rounded-full" title="Paramedic"></div>
           )}
         </div>
@@ -86,9 +63,9 @@ const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle 
     case 'FireLT':
       return (
         <div data-testid="fire-lt" className="flex gap-1 items-center">
-          {data.name}
+          {roster.name}
           <div className="bg-warning w-[10px] h-[10px] rounded-full" title="Lieutenant"></div>
-          {data.isParamedic && (
+          {roster.isParamedic && (
             <div className="bg-info w-[10px] h-[10px] rounded-full" title="Paramedic"></div>
           )}
         </div>
@@ -96,9 +73,9 @@ const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle 
     case 'FireE':
       return (
         <div data-testid="fire-e" className="flex gap-1 items-center">
-          {data.name}
+          {roster.name}
           <div className="bg-success w-[10px] h-[10px] rounded-full" title="Engineer"></div>
-          {data.isParamedic && (
+          {roster.isParamedic && (
             <div className="bg-info w-[10px] h-[10px] rounded-full" title="Paramedic"></div>
           )}
         </div>
@@ -106,8 +83,8 @@ const handleRank = (data: HandleRankProps['data']): ReactElement => { // Handle 
     default:
       return (
         <div className="flex gap-1 items-center">
-          {data.name}
-          {data.isParamedic && (
+          {roster.name}
+          {roster.isParamedic && (
             <div className="bg-info w-[10px] h-[10px] rounded-full" title="Paramedic"></div>
           )}
         </div>

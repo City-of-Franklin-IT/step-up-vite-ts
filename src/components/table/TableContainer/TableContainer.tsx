@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import { useSetTableData, useSetSkills, scrollToTop } from '.'
+import { useSetTableData, useSetSkills } from './hooks'
+import { scrollToTop } from './utils'
 import styles from './TableContainer.module.css'
 
 // Types
@@ -10,7 +11,7 @@ import FiltersContainer from '../../filters/FiltersContainer/FiltersContainer'
 import Table from '../Table/Table'
 import Search from '../../search/Search/Search'
 import BackToTopBtn from '../../buttons/BackToTopBtn/BackToTopBtn'
-import { Checkbox } from '.'
+import { Checkbox } from './components'
 
 function TableContainer({ data }: TableContainerProps) {
   const topRef = useRef<HTMLDivElement>(null)
@@ -21,16 +22,16 @@ function TableContainer({ data }: TableContainerProps) {
 
   return (
     <div data-testid="table-container" ref={topRef} className={styles.container}>
-      <section className="flex flex-col gap-14">
+      <div className="flex flex-col gap-14">
         <div className="ml-10 w-3/4">
           <Search />
         </div>
         <FiltersContainer skills={skills} />
-      </section>
+      </div>
 
       <div className="flex flex-col gap-3">
         <Checkbox />
-        <Table data={tableData} />
+        <Table employees={tableData} />
       </div>
 
       <BackToTopBtn handleClick={() => scrollToTop(topRef)} />

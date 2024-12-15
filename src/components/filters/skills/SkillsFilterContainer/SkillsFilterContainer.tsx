@@ -7,7 +7,7 @@ import { SkillsFilterContainerProps, SkillsFilterContainerState } from './types'
 
 // Components
 import HideBtn from '../../../buttons/HideBtn/HideBtn'
-import { Header, Buttons, Footer } from '.'
+import { Header, Buttons, Footer } from './components'
 
 function SkillsFilterContainer({ skills }: SkillsFilterContainerProps) {
   const hidden = useGetWindowSize()

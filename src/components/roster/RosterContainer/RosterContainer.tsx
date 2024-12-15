@@ -1,20 +1,21 @@
 import { useState, useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
-import { useSelectDate, handleDateChange, setDate } from "."
+import { useSelectDate } from "./hooks"
+import { handleDateChange, setDate } from "./utils"
 import styles from './RosterContainer.module.css'
 
 // Types
 import { RosterContainerProps, RosterContainerState } from "./types"
 
 // Components
-import { CalendarBtn, DatePicker, Tables } from "."
+import { CalendarBtn, DatePicker, Tables } from "./components"
 
 function RosterContainer({ data }: RosterContainerProps) {
-  const { date, dispatch } = useContext(AppContext)
+  const { date } = useContext(AppContext)
 
   const [state, setState] = useState<RosterContainerState>({ showDatePicker: false, date: date || '' })
 
-  useSelectDate(state.date, dispatch) // Set selected date to ctx
+  useSelectDate(state.date) // Set selected date to ctx
 
   return (
     <div data-testid="roster-container" className={styles.container}>

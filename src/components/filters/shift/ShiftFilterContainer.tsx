@@ -7,7 +7,7 @@ import { ShiftfilterContainerState } from './types'
 
 // Components
 import HideBtn from "../../buttons/HideBtn/HideBtn"
-import { Header, Buttons, Footer } from "."
+import { Header, Buttons, Footer } from "./components"
 
 function ShiftFilterContainer() {
   const hidden = useGetWindowSize()

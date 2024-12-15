@@ -4,9 +4,10 @@ import styles from './Table.module.css'
 import { TableProps } from './types'
 
 // Components
-import { TableRow } from '.'
+import { TableBody } from './components'
 
-function Table({ data }: TableProps) {
+function Table({ employees }: TableProps) {
+
   return (
     <div data-testid="table" className={styles.container}>
       <table>
@@ -19,16 +20,7 @@ function Table({ data }: TableProps) {
           </tr>
         </thead>
 
-        <tbody>
-          {data.map((obj, index) => {
-            return (
-              <TableRow
-                key={`table-row-${ obj.employeeId }`}
-                employee={obj}
-                index={index} />
-            )
-          })}
-        </tbody>
+        <TableBody employees={employees} />
         
       </table>
     </div>
