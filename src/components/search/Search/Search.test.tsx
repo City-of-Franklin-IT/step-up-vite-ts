@@ -7,7 +7,7 @@ import AppContext from "../../../context/App/AppContext"
 import { AppContextObj } from "../../../context/App/types"
 
 // Components
-import Search from "./Search"
+import Search from "."
 
 describe('Search component', () => {
   const setSearchValueMock = vi.fn()

@@ -5,7 +5,7 @@ import "@testing-library/jest-dom"
 import { ParamedicIconProps } from "./types"
 
 // Components
-import ParamedicIcon from "./ParamedicIcon"
+import ParamedicIcon from "."
 
 describe('ParamedicIcon component', () => {
   const defaultProps: ParamedicIconProps = {

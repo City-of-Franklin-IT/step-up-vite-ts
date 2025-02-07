@@ -8,7 +8,7 @@ import AppContext from "../../../../context/App/AppContext"
 import { AppContextObj } from "../../../../context/App/types"
 
 // Components
-import QualifiedFilterContainer from "./QualifiedFilterContainer"
+import QualifiedFilterContainer from "."
 
 describe('QualifiedFilterContainer component', () => {
   const dispatchMock = vi.fn()

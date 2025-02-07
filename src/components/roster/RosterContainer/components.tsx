@@ -7,10 +7,10 @@ import { RosterEntry } from '../../../context/App/types'
 import { RosterItem, StationGroup } from './types'
 
 // Components
-import CalendarIcon from '../../icons/CalendarIcon/CalendarIcon'
-import RosterTable from '../RosterTable/RosterTable'
-import RosterLegend from '../RosterLegend/RosterLegend'
-import LoadingIcon from '../../icons/LoadingIcon/LoadingIcon'
+import CalendarIcon from '../../icons/CalendarIcon'
+import RosterTable from '../RosterTable'
+import RosterLegend from '../RosterLegend'
+import LoadingIcon from '../../icons/LoadingIcon'
 
 export const CalendarBtn = ({ handleClick }: { handleClick: () => void }) => {
 

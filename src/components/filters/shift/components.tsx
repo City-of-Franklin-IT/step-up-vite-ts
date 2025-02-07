@@ -6,7 +6,7 @@ import styles from './ShiftFilter.module.css'
 import { ReactElement } from "react"
 
 // Components
-import ShiftBtn from "../../buttons/ShiftBtn/ShiftBtn"
+import ShiftBtn from "../../buttons/ShiftBtn"
 
 export const Header = () => {
   const { shiftFilter } = useContext(AppContext)

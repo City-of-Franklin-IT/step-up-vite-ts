@@ -10,7 +10,7 @@ import { Staff, AppContextObj } from "../../../context/App/types"
 import { TableContainerProps } from "./types"
 
 // Components
-import TableContainer from "./TableContainer"
+import TableContainer from "."
 
 describe('TableContainer component', () => {
   const dispatchMock = vi.fn()

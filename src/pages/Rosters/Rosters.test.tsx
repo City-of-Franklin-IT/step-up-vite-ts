@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from "react-router-dom"
 
 // Components
-import Rosters from "./Rosters"
+import Rosters from "."
 
 const queryClient = new QueryClient()
 

@@ -6,7 +6,7 @@ import styles from './QualifiedFilterContainer.module.css'
 import { ReactElement } from "react"
 
 // Components
-import QualifiedBtn from "../../../buttons/QualifiedBtn/QualifiedBtn"
+import QualifiedBtn from "../../../buttons/QualifiedBtn"
 
 export const Header = (): ReactElement => {
   const { filter } = useContext(AppContext)

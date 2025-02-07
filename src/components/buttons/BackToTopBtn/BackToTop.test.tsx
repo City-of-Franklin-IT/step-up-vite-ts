@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 import { BackToTopBtnProps } from './types'
 
 // Components
-import BackToTopBtn from './BackToTopBtn'
+import BackToTopBtn from '.'
 
 describe('Back to top button', () => {
   const handleClick = vi.fn()

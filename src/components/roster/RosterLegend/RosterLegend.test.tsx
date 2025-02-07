@@ -2,7 +2,7 @@ import { render } from "@testing-library/react"
 import "@testing-library/jest-dom"
 
 // Components
-import RosterLegend from './RosterLegend'
+import RosterLegend from '.'
 
 describe('RosterLegend component', () => {
   test('Component renders correctly', () => {

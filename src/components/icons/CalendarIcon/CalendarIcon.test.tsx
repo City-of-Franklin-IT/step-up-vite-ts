@@ -5,7 +5,7 @@ import "@testing-library/jest-dom"
 import { CalendarIconProps } from "./types"
 
 // Components
-import CalendarIcon from "./CalendarIcon"
+import CalendarIcon from "."
 
 describe('CalendarIcon component', () => {
   const defaultProps: CalendarIconProps = {

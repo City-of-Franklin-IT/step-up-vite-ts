@@ -8,10 +8,10 @@ import { APP_BASE } from './config'
 import 'react-toastify/dist/ReactToastify.css'
 
 // Components
-import Login from "./pages/Login/Login"
-import Home from "./pages/Home/Home"
-import Rosters from "./pages/Rosters/Rosters"
-import NotFound from "./pages/NotFound/NotFound"
+import Login from "./pages/Login"
+import Home from "./pages/Home"
+import Rosters from "./pages/Rosters"
+import NotFound from "./pages/NotFound"
 
 const queryClient = new QueryClient()
 

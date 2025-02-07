@@ -6,7 +6,7 @@ import { RosterEntry } from "../../../context/App/types"
 import { RosterContainerProps } from "./types"
 
 // Components
-import RosterContainer from "./RosterContainer"
+import RosterContainer from "."
 
 describe('RosterContainer component', () => {
   const data: RosterEntry[] = [{

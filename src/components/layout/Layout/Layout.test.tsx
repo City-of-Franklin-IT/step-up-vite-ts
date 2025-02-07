@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom"
 import { ReactNode } from "react"
 
 // Components
-import Layout from "./Layout"
+import Layout from "."
 
 describe('Layout component', () => {
   const defaultProps: { children: ReactNode } = {

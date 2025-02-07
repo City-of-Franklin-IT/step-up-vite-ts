@@ -8,7 +8,7 @@ import { AppContextObj } from "../../../context/App/types"
 import { SkillsBtnProps } from "./types"
 
 // Components
-import SkillsBtn from "./SkillsBtn"
+import SkillsBtn from "."
 
 describe('SkillsBtn component', () => {
   const defaultProps: SkillsBtnProps = {

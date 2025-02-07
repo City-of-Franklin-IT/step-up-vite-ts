@@ -7,7 +7,7 @@ import styles from './EmailIcon.module.css'
 import { EmailIconProps } from "./types"
 
 // Components
-import EmailIcon from "./EmailIcon"
+import EmailIcon from "."
 
 describe('EmailIcon component', () => {
   const defaultProps: EmailIconProps = {

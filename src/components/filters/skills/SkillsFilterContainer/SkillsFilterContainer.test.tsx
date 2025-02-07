@@ -6,7 +6,7 @@ import AppContext from "../../../../context/App/AppContext"
 // Types
 import { AppContextObj } from "../../../../context/App/types"
 import { SkillsFilterContainerProps } from "./types"
-import SkillsFilterContainer from "./SkillsFilterContainer"
+import SkillsFilterContainer from "."
 
 describe('SkillsFilterContainer component', () => {
   const dispatchMock = vi.fn()

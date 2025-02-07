@@ -6,7 +6,7 @@ import styles from './SkillsFilterContainer.module.css'
 import { ReactElement } from "react"
 
 // Components
-import SkillsBtn from "../../../buttons/SkillsBtn/SkillsBtn"
+import SkillsBtn from "../../../buttons/SkillsBtn"
 
 export const Header = () => {
   const { skillsFilter } = useContext(AppContext)

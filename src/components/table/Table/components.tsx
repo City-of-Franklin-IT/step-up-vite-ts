@@ -8,10 +8,10 @@ import { TableData } from '../TableContainer/types'
 import { TableRowProps, SetEmployeeProps } from './types'
 
 // Components
-import SchedulesTable from '../SchedulesTable/SchedulesTable'
-import ParamedicIcon from '../../icons/ParamedicIcon/ParamedicIcon'
-import PhoneIcon from '../../icons/PhoneIcon/PhoneIcon'
-import EmailIcon from '../../icons/EmailIcon/EmailIcon'
+import SchedulesTable from '../SchedulesTable'
+import ParamedicIcon from '../../icons/ParamedicIcon'
+import PhoneIcon from '../../icons/PhoneIcon'
+import EmailIcon from '../../icons/EmailIcon'
 
 export const TableBody = ({ employees }: { employees: TableData[] }) => { // Employee table body
 

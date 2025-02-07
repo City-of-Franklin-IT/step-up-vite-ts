@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from "react-router-dom"
 
 // Components
-import Home from "./Home"
+import Home from "."
 
 const queryClient = new QueryClient()
 

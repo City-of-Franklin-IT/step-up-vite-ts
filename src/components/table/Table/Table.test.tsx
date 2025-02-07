@@ -8,7 +8,7 @@ import { TableData } from "../TableContainer/types"
 import { TableProps } from "./types"
 
 // Components
-import Table from "./Table"
+import Table from "."
 
 describe('Table component', () => {
   const tableDataMock = mock<TableData>()

@@ -1,45 +1,23 @@
-import { useContext } from "react"
-import { Link, useLocation } from "react-router-dom"
-import UserContext from "../../../context/User/UserContext"
+import { Link } from 'react-router-dom'
+import { APP_TITLE } from '../../../config'
 import styles from './Header.module.css'
 
-// Types
-import { ReactElement } from "react"
-import { HandleBtnProps } from "./types"
-
 // Components
-import LogoutBtn from "../../buttons/LogoutBtn/LogoutBtn"
+import { Logout } from './components'
 
-export const handleBtn = (location: HandleBtnProps['location']) => {
-  if(location.pathname !== '/rosters') { // On home page
-    return (
-      <Link to={'/rosters'} className={styles.rosterBtn}>
-        View Rosters
-      </Link>
-    )
-  }
-
-  return ( // On roster page
-    <Link to={'/home'} className={styles.rosterBtn}>
-      View Step Up
-    </Link>
-  )
-}
-
-
-export const Logout = (): ReactElement => {
-  const { user } = useContext(UserContext)
-
-  const location = useLocation()
+function Header() {
 
   return (
-    <>
-      {user?.email && (
-        <div className="flex gap-4">
-          {handleBtn(location)}
-          <LogoutBtn />
+    <header data-testid="header" className={styles.header}>
+      <Link to={'/home'}>
+        <div className={styles.title}>
+          <h1 className={styles.h1}>Franklin Fire Department</h1>
+          <h2 className={styles.h2}>{APP_TITLE}</h2>
         </div>
-      )}
-    </>
+      </Link>
+      <Logout />
+    </header>
   )
 }
+
+export default Header

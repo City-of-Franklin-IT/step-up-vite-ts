@@ -8,7 +8,7 @@ import { AppContextObj } from '../../../context/App/types'
 import { QualifiedBtnProps } from './types'
 
 // Components
-import QualifiedBtn from './QualifiedBtn'
+import QualifiedBtn from '.'
 
 describe('Qualified button', () => {
   const defaultProps: QualifiedBtnProps = {

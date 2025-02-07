@@ -7,7 +7,7 @@ import styles from './PhoneIcon.module.css'
 import { PhoneIconProps } from "./types"
 
 // Components
-import PhoneIcon from "./PhoneIcon"
+import PhoneIcon from "."
 
 describe('PhoneIcon component', () => {
   const defaultProps: PhoneIconProps = {

@@ -5,7 +5,7 @@ import "@testing-library/jest-dom"
 import { LoadingIconProps } from "./types"
 
 // Components
-import LoadingIcon from "./LoadingIcon"
+import LoadingIcon from "."
 
 describe('Loading component', () => {
   const defaultProps: LoadingIconProps = {

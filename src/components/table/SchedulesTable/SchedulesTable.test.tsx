@@ -7,7 +7,7 @@ import { Schedule } from "../../../context/App/types"
 import { SchedulesTableProps } from "./types"
 
 // Components
-import SchedulesTable from "./SchedulesTable"
+import SchedulesTable from "."
 
 describe('SchedulesTable component', () => {
   const scheduleMock = mock<Schedule>()

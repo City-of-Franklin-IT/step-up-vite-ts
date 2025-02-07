@@ -9,7 +9,7 @@ import { RosterItem } from "../RosterContainer/types"
 import { RosterTableProps } from "./types"
 
 // Components
-import RosterTable from "./RosterTable"
+import RosterTable from "."
 
 describe('RosterTable component', () => {
   const defaultProps: RosterTableProps = {

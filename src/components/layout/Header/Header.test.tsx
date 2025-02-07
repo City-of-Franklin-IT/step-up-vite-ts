@@ -2,13 +2,13 @@ import { render } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import { BrowserRouter } from "react-router-dom"
 import { APP_TITLE } from "../../../config"
-import { handleBtn } from "."
+import { handleBtn } from "./utils"
 
 // Types
 import { Location } from "react-router-dom"
 
 // Components
-import Header from "./Header"
+import Header from "."
 
 describe('Header component', () => {
   test('Component renders correctly', () => {
