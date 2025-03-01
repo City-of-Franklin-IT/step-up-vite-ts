@@ -1,9 +1,11 @@
 import { useQuery } from "react-query"
 import { getStaff } from "../../context/App/AppActions"
+import { useValidateUser, useEnableQuery } from "../../helpers"
 
-// Types
-import { UseGetStaffProps } from "./types"
+export const useGetStaff = () => { // Get staff
+  const { isAuthenticated, isLoading } = useValidateUser()
 
-export const useGetStaff = (user: UseGetStaffProps['user']) => { // Get staff
-  return useQuery(['staff'], () => getStaff(), { enabled: !!user })
+  const enabled = useEnableQuery(isAuthenticated, isLoading)
+
+  return useQuery(['staff'], () => getStaff(), { enabled })
 }

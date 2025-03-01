@@ -1,22 +1,18 @@
-import { useContext } from 'react'
-import UserContext from '../../context/User/UserContext'
-import { useValidateUser } from '../../helpers'
 import { useGetStaff } from './hooks'
 
 // Components
 import Layout from '../../components/layout/Layout'
 import TableContainer from '../../components/table/TableContainer'
+import HandleLoading from '../../utils/HandleLoading'
 
 function Home() {
-  const { user, dispatch } = useContext(UserContext)
-
-  const { data } = useGetStaff(user)
-
-  useValidateUser(dispatch)
+  const { data, isSuccess } = useGetStaff()
 
   return (
     <Layout>
-      <TableContainer data={data?.data ?? []} />
+      <HandleLoading isLoaded={isSuccess}>
+        <TableContainer data={data?.data ?? []} />
+      </HandleLoading>
     </Layout>
   )
 }

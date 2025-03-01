@@ -33,3 +33,13 @@ export const validateToken = async (): Promise<ValidateTokenResponse> => {
 
   return await res.json()
 }
+
+// Refresh token
+// GET /api/v1/ldap/refresh
+export const refreshToken = async (): Promise<ValidateTokenResponse> => {
+  const res = await fetch(`${ ldapUrl }/refresh`, {
+    credentials: 'include'
+  })
+
+  return await res.json()
+}
