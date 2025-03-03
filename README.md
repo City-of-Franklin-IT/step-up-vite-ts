@@ -3,7 +3,8 @@
 
 <h1>API</h1>
 https://api.franklin-gov.com/api/v2/ffd | <a href="https://github.com/City-of-Franklin-IT/ffd-api-ts" target="_blank">GitHub</a><br>
-https://dev.franklintn.gov/api/v2/ffd <em>Proxy</em>
+https://dev.franklintn.gov/api/v2/ffd <em>Proxy</em><br>
+<a href="https://dev.franklintn.gov/api/v2/ffd/api-docs" target="_blank"></a>
 
 <h1>Database</h1>
 [COFDBV08].[ffd_step_up]
