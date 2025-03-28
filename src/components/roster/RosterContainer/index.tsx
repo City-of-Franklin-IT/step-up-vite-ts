@@ -1,32 +1,33 @@
 import { useState, useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
 import { useSelectDate } from "./hooks"
-import { handleDateChange, setDate } from "./utils"
+import { handleDateChange } from "./utils"
 import styles from './RosterContainer.module.css'
 
 // Types
-import { RosterContainerProps, RosterContainerState } from "./types"
+import { RosterEntry } from "../../../context/App/types"
+import { RosterContainerState } from "./types"
 
 // Components
-import { CalendarBtn, DatePicker, Tables } from "./components"
+import * as Components from './components'
 
-function RosterContainer({ data }: RosterContainerProps) {
+function RosterContainer({ rosters }: { rosters: RosterEntry[] }) {
   const { date } = useContext(AppContext)
 
-  const [state, setState] = useState<RosterContainerState>({ showDatePicker: false, date: date || '' })
+  const [state, setState] = useState<RosterContainerState>({ showDatePicker: false, pickedDate: date || '' })
 
-  useSelectDate(state.date) // Set selected date to ctx
+  useSelectDate(state.pickedDate) // Set selected date to ctx
 
   return (
     <div data-testid="roster-container" className={styles.container}>
       <div className={styles.header}>
-        {setDate(state.date)}
-        <CalendarBtn handleClick={() => setState(prevState => ({ ...prevState, showDatePicker: !prevState.showDatePicker }))} />
-        <DatePicker 
+        <Components.PickedDate pickedDate={state.pickedDate} />
+        <Components.CalendarBtn onClick={() => setState(prevState => ({ ...prevState, showDatePicker: !prevState.showDatePicker }))} />
+        <Components.DatePicker 
           showDatePicker={state.showDatePicker}
           handleChange={(e) => handleDateChange(e, setState)} />
       </div>
-      <Tables data={data} />
+      <Components.Tables rosters={rosters} />
     </div>
   )
 }

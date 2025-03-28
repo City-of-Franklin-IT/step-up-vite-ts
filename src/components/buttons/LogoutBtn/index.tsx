@@ -1,20 +1,22 @@
-import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import UserContext from '../../../context/User/UserContext'
-import { handleLogoutClick } from './utils'
+import { useMsal } from "@azure/msal-react"
+import useHandleLogoutRedirect from "../../../context/Auth/hooks/useHandleLogoutRedirect"
 import styles from './LogoutBtn.module.css'
 
 function LogoutBtn() {
-  const { dispatch } = useContext(UserContext)
+  const { instance } = useMsal()
+  const activeAccount = instance.getActiveAccount()
 
-  const navigate = useNavigate()
+  const handleLogoutRedirect = useHandleLogoutRedirect()
+
+  const visible = !!activeAccount
+
+  if(!visible) return null
 
   return (
-    <button
-      data-testid="header-btn"
+    <button 
       type="button"
-      className={styles.btn}
-      onClick={() => handleLogoutClick(navigate, dispatch)}>
+      onClick={handleLogoutRedirect}
+      className={styles.btn}>
         Logout
     </button>
   )

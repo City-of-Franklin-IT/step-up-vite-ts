@@ -1,15 +1,17 @@
 import styles from './BackToTopBtn.module.css'
 
 // Types
-import { BackToTopBtnProps } from './types'
+import { ButtonHTMLAttributes, MouseEventHandler } from 'react'
 
-function BackToTopBtn({ handleClick }: BackToTopBtnProps) {
+type BackToTopBtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & { onClick: MouseEventHandler<HTMLButtonElement> }
+
+function BackToTopBtn(props: BackToTopBtnProps) {
   
   return (
     <button
       type="button"
       data-testid="back-to-top-btn" 
-      onClick={() => handleClick()}
+      onClick={props.onClick}
       className={styles.btn}>
         Back To Top
     </button>

@@ -2,20 +2,46 @@ import { handleTime } from "../../../helpers"
 import styles from './SchedulesTable.module.css'
 
 // Types
-import { ReactElement } from "react"
 import { Schedule } from "../../../context/App/types"
-import { TableRowProps } from "./types"
 
-export const NoRecentShifts = ({ noRecentShifts }: { noRecentShifts: boolean }) => {
+export const NoRecentShifts = ({ visible }: { visible: boolean }) => {
+  if(!visible) return null
 
-  if(noRecentShifts) {
-    return (
-      <div data-testid="no-recent-shifts" className="text-center italic my-auto">No Recent Step-Up Shifts</div>
-    )
-  }
+  return (
+    <div data-testid="no-recent-shifts" className="text-center italic my-auto">No Recent Step-Up Shifts</div>
+  )
 }
 
-export const TableBody = ({ schedules, employeeId }: { schedules: Schedule[], employeeId: string }) => {
+export const Table = ({ visible, schedules, employeeId }: { visible: boolean, schedules: Schedule[], employeeId: string }) => {
+  if(!visible) return null
+
+  return (
+    <table data-testid="schedules-table" className={styles.schedulesTable}>
+      <Headers />
+      <TableBody
+        schedules={schedules}
+        employeeId={employeeId} />
+    </table>
+  )
+}
+
+const Headers = () => {
+
+  return (
+    <thead>
+      <tr>
+        <th>Start Date</th>
+        <th>Start Time</th>
+        <th>End Date</th>
+        <th>End Time</th>
+        <th>Hours</th>
+        <th>Detail Code</th>
+      </tr>
+    </thead>
+  )
+}
+
+const TableBody = ({ schedules, employeeId }: { schedules: Schedule[], employeeId: string }) => {
 
   return (
     <tbody>
@@ -30,7 +56,7 @@ export const TableBody = ({ schedules, employeeId }: { schedules: Schedule[], em
   )
 }
 
-const TableRow = ({ schedule }: TableRowProps): ReactElement => {
+const TableRow = ({ schedule }: { schedule: Schedule }) => {
 
   return (
     <tr className={styles.tableData}>

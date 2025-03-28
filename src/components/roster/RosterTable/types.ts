@@ -1,11 +1,6 @@
 // Types
 import { RosterItem } from "../RosterContainer/types"
 
-export interface RosterTableProps { // RosterTable props
-  data: RosterItem[]
-  label: string
-}
-
 export interface OrderRanksProps { // orderRanks fn props
   data: RosterItem[]
 }

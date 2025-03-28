@@ -13,6 +13,19 @@ import ParamedicIcon from '../../icons/ParamedicIcon'
 import PhoneIcon from '../../icons/PhoneIcon'
 import EmailIcon from '../../icons/EmailIcon'
 
+export const Headers = () => {
+
+  return (
+    <thead>
+      <tr className={styles.header}>
+        <th className="px-4">Employee</th>
+        <th className="text-center rounded-tr-lg whitespace-nowrap lg:rounded-none md:transform md:-translate-x-10">Step-Up HRs.</th>
+        <th className="text-center hidden lg:block">Recent Step Up Shifts</th>
+      </tr>
+    </thead>
+  )
+}
+
 export const TableBody = ({ employees }: { employees: TableData[] }) => { // Employee table body
 
   return (

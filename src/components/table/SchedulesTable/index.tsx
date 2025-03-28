@@ -1,37 +1,20 @@
-import styles from './SchedulesTable.module.css'
-
 // Types
-import { SchedulesTableProps } from './types'
+import { Schedule } from '../../../context/App/types'
 
 // Components
-import { NoRecentShifts, TableBody } from './components'
+import * as Components from './components'
 
-function SchedulesTable({ schedules, employeeId }: SchedulesTableProps) {
-  const noRecentShifts = !schedules.length ? true : false
+function SchedulesTable({ schedules, employeeId }: { schedules: Schedule[], employeeId: string }) {
+  const noRecentShifts = !schedules.length
 
   return (
     <>
-      <NoRecentShifts noRecentShifts={noRecentShifts} />
-      <table data-testid="schedules-table" className={!noRecentShifts ? styles.schedulesTable : 'hidden'}>
-
-        <thead>
-          <tr>
-            <th>Start Date</th>
-            <th>Start Time</th>
-            <th>End Date</th>
-            <th>End Time</th>
-            <th>Hours</th>
-            <th>Detail Code</th>
-          </tr>
-        </thead>
-
-        <TableBody 
-          schedules={schedules}
-          employeeId={employeeId} />
-
-      </table>
+      <Components.NoRecentShifts visible={noRecentShifts} />
+      <Components.Table
+        visible={!noRecentShifts}
+        schedules={schedules}
+        employeeId={employeeId} />
     </>
-    
   )
 }
 

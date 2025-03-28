@@ -1,6 +1,6 @@
 // Types
-import { ScrollToTopProps } from "./types"
+import { RefObject } from "react"
 
-export const scrollToTop = (topRef: ScrollToTopProps['topRef']): void => { // Scroll to top
+export const scrollToTop = (topRef: RefObject<HTMLElement>): void => { // Scroll to top
   topRef.current?.scrollIntoView({ behavior: 'smooth' })
 }

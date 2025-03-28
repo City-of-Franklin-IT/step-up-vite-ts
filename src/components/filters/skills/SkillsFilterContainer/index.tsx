@@ -3,29 +3,27 @@ import { useGetWindowSize } from '../../../../helpers'
 import styles from './SkillsFilterContainer.module.css'
 
 // Types
-import { SkillsFilterContainerProps, SkillsFilterContainerState } from './types'
+import { SkillsFilterContainerState } from './types'
 
 // Components
 import HideBtn from '../../../buttons/HideBtn'
-import { Header, Buttons, Footer } from './components'
+import * as Components from './components'
 
-function SkillsFilterContainer({ skills }: SkillsFilterContainerProps) {
+function SkillsFilterContainer({ skills }: { skills: string[] }) {
   const hidden = useGetWindowSize()
 
   const [state, setState] = useState<SkillsFilterContainerState>({ hidden })
 
   return (
     <div data-testid="skills-filter-container" className={styles.container}>
-      <Header />
+      <Components.Header />
       <div className="absolute -top-5 right-5">
         <HideBtn 
-          setState={setState}
+          onClick={() => setState(prevState => ({ ...prevState,  hidden: !prevState.hidden }))}
           hidden={state.hidden} />
       </div>
-      <Buttons 
-        hidden={state.hidden}
-        skills={skills} />
-      <Footer />
+      <Components.Buttons skills={skills} />
+      <Components.Footer />
     </div>
   )
 }

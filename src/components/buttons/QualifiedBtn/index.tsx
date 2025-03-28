@@ -1,20 +1,19 @@
-import { useContext } from 'react'
-import AppContext from '../../../context/App/AppContext'
 import styles from './QualifiedBtn.module.css'
 
 // Types
-import { QualifiedBtnProps } from './types'
+import { ButtonHTMLAttributes, MouseEventHandler } from 'react'
 
-function QualifiedBtn({ type, label }: QualifiedBtnProps) {
-  const { dispatch } = useContext(AppContext)
+type QualifiedBtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & { onClick: MouseEventHandler<HTMLButtonElement>, label: string }
+
+function QualifiedBtn(props: QualifiedBtnProps) {
 
   return (
     <button
       type="button"
       data-testid="qualified-btn"
-      onClick={() => dispatch({ type: 'SET_FILTER', payload: type || '' })}
+      onClick={props.onClick}
       className={styles.button}>
-        <p className={styles.label}>{label}</p>
+        <p className={styles.label}>{props.label}</p>
     </button>
   )
 }

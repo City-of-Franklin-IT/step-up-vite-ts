@@ -17,7 +17,7 @@ export const Header = (): ReactElement => {
 }
 
 export const Buttons = ({ hidden }: { hidden: boolean }): ReactElement => {
-  const { filter } = useContext(AppContext)
+  const { filter, dispatch } = useContext(AppContext)
 
   return (
     <>
@@ -25,22 +25,22 @@ export const Buttons = ({ hidden }: { hidden: boolean }): ReactElement => {
         <div className="flex gap-6">
           <QualifiedBtn
             label={'Remove Filter'}
-            type={''} />
+            onClick={() => dispatch({ type: 'SET_FILTER', payload: '' })} />
         </div>
         ) : (
           <div className={hidden ? 'hidden' : 'flex flex-col justify-around w-full gap-8 md:flex-row'}>
             <QualifiedBtn
-              type={'Engineer'}
-              label={'Engineer'} />
+              label={'Engineer'}
+              onClick={() => dispatch({ type: 'SET_FILTER', payload: 'Engineer' })} />
             <QualifiedBtn
-              type={'Lieutenant'}
-              label={'Lieutenant'} />
+              label={'Lieutenant'}
+              onClick={() => dispatch({ type: 'SET_FILTER', payload: 'Lieutenant' })} />
             <QualifiedBtn
-              type={'Captain'}
-              label={'Captain'} />
+              label={'Captain'}
+              onClick={() => dispatch({ type: 'SET_FILTER', payload: 'Captain' })} />
             <QualifiedBtn
-              type={'BC'}
-              label={'BC'} />
+              label={'BC'}
+              onClick={() => dispatch({ type: 'SET_FILTER', payload: 'BC' })} />
           </div>
         )}
     </>

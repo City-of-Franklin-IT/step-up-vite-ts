@@ -2,21 +2,18 @@ import { useOrderRanks } from './hooks'
 import styles from './RosterTable.module.css'
 
 // Types
-import { RosterTableProps } from "./types"
+import { RosterItem } from '../RosterContainer/types'
 
 // Components
-import { Header, TableBody } from './components'
+import * as Components from './components'
 
-function RosterTable({ data, label }: RosterTableProps) {
-  const ordered = useOrderRanks(data)
+function RosterTable({ rosters, label }: { rosters: RosterItem[], label: string }) {
+  const ordered = useOrderRanks(rosters)
 
   return (
     <div data-testid="roster-table" className={styles.rosterTable}>
       <div className={styles.label}>{label}</div>
-      <table className="w-full">
-        <Header />
-        <TableBody ordered={ordered} />
-      </table>
+      <Components.Table ordered={ordered} />
     </div>
   )
 }

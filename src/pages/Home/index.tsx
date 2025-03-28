@@ -11,7 +11,7 @@ function Home() {
   return (
     <Layout>
       <HandleLoading isLoaded={isSuccess}>
-        <TableContainer data={data?.data ?? []} />
+        <TableContainer staff={data?.data ?? []} />
       </HandleLoading>
     </Layout>
   )

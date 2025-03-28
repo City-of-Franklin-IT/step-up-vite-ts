@@ -3,17 +3,19 @@ import openEyeIcon from '../../../assets/icons/open-eye/open-eye.svg'
 import styles from './HideBtn.module.css'
 
 // Types
-import { HideBtnProps } from './types'
+import { ButtonHTMLAttributes, MouseEventHandler } from 'react'
 
-function HideBtn({ setState, hidden }: HideBtnProps) {
+type HideBtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & { onClick: MouseEventHandler<HTMLButtonElement>, hidden: boolean }
+
+function HideBtn(props: HideBtnProps) {
   
   return (
     <button 
       type="button"
       data-testid="hide-btn"
       className={styles.hideBtn}
-      onClick={() => setState(prevState => ({ ...prevState,  hidden: !prevState.hidden }))}>
-        <img src={hidden ? openEyeIcon : closedEyeIcon} alt="hiden btn icon" className={styles.icon} />
+      onClick={props.onClick}>
+        <img src={props.hidden ? openEyeIcon : closedEyeIcon} alt="hiden btn icon" className={styles.icon} />
     </button>
   )
 }

@@ -92,6 +92,7 @@ export type Rank =
   | "Engineer"
   | "Lieutenant"
   | "Captain"
+  | "BC"
 
 export type Station =
   | "S1"

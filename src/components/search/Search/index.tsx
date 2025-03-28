@@ -6,7 +6,7 @@ import styles from './Search.module.css'
 import { SearchState } from './types'
 
 // Components
-import { SearchInput, ClearBtn } from './components'
+import * as Components from './components'
 
 function Search() {
   const [state, setState] = useState<SearchState>({ searchValue: '' })
@@ -15,11 +15,12 @@ function Search() {
 
   return (
     <div data-testid="search" className={styles.container}>
-      <div className={styles.header}>Search</div>
-      <SearchInput 
-        searchValue={state.searchValue}
-        handleChange={(e) => setState(({ searchValue: e.target.value }))} />
-      <ClearBtn resetState={() => setState({ searchValue: '' })} />
+      <h2 className={styles.header}>Search</h2>
+      
+      <Components.SearchInput 
+        value={state.searchValue}
+        onChange={(e) => setState(({ searchValue: e.target.value }))} />
+      <Components.ClearBtn onClick={() => setState({ searchValue: '' })} />
     </div>
   )
 }

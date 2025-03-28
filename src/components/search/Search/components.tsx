@@ -1,26 +1,33 @@
-import { useContext, ReactElement, ChangeEvent } from "react"
+import { useContext, ChangeEvent } from "react"
 import AppContext from "../../../context/App/AppContext"
 
-export const SearchInput = ({ searchValue, handleChange }: { searchValue: string, handleChange: (e: ChangeEvent<HTMLInputElement>) => void }): ReactElement => {
+// Types
+import { InputHTMLAttributes, ButtonHTMLAttributes, MouseEventHandler } from "react"
+
+type SearchInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> & { value: string, onChange: (e: ChangeEvent<HTMLInputElement>) => void }
+
+export const SearchInput = (props: SearchInputProps) => {
   return (
     <input 
       data-testid="search-input"
       type="text" 
-      value={searchValue} 
+      value={props.value} 
       placeholder="by employee name.." 
-      onChange={(e) => handleChange(e)} 
+      onChange={(e) => props.onChange(e)} 
       className="input bg-white rounded-r-none w-full" />
   )
 }
 
-export const ClearBtn = ({ resetState }: { resetState: () => void }): ReactElement => {
-  const { searchValue: searchValue_ctx } = useContext(AppContext)
+type ClearBtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & { onClick: MouseEventHandler<HTMLButtonElement> }
+
+export const ClearBtn = (props: ClearBtnProps) => {
+  const { searchValue } = useContext(AppContext)
 
   return (
     <button 
       type="button" 
-      onClick={resetState}
-      disabled={!searchValue_ctx && true}
+      onClick={props.onClick}
+      disabled={!searchValue}
       className="btn btn-primary uppercase rounded-l-none">
       Clear
     </button>

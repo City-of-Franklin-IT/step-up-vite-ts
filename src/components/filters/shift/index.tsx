@@ -7,7 +7,7 @@ import { ShiftfilterContainerState } from './types'
 
 // Components
 import HideBtn from "../../buttons/HideBtn"
-import { Header, Buttons, Footer } from "./components"
+import * as Components from './components'
 
 function ShiftFilterContainer() {
   const hidden = useGetWindowSize()
@@ -16,14 +16,14 @@ function ShiftFilterContainer() {
 
   return (
     <div data-testid="shift-filter-container" className={styles.container}>
-      <Header />
+      <Components.Header />
       <div className="absolute -top-5 right-5">
         <HideBtn 
-          setState={setState}
+          onClick={() => setState(prevState => ({ ...prevState,  hidden: !prevState.hidden }))}
           hidden={state.hidden} />
       </div>
-      <Buttons hidden={state.hidden} />
-      <Footer />
+      <Components.Buttons />
+      <Components.Footer />
     </div>
   )
 }

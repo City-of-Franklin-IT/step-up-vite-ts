@@ -2,13 +2,9 @@
 import { Dispatch, SetStateAction } from "react"
 import { RosterEntry, Shift, Apparatus, RankAbrv, RankWFD } from "../../../context/App/types"
 
-export interface RosterContainerProps { // RosterContainer props
-  data: RosterEntry[]
-}
-
 export interface RosterContainerState { // RosterContainer state object
   showDatePicker: boolean
-  date: string
+  pickedDate: string
 }
 
 export interface UseRosterGroupsProps { // useRosterGroups hook props
@@ -26,10 +22,6 @@ export interface SetGroupsProps { // setGroups fn props
 export interface HandleDateChangeProps { // handleDateChange fn props
   event: React.ChangeEvent<HTMLInputElement>,
   setState: Dispatch<SetStateAction<RosterContainerState>>
-}
-
-export interface SetDateProps { // setDate fn props
-  date: string
 }
 
 export interface RosterItem {

@@ -6,7 +6,17 @@ import styles from './RosterTable.module.css'
 // Types
 import { RosterItem } from '../RosterContainer/types'
 
-export const Header = () => {
+export const Table = ({ ordered }: { ordered: RosterItem[] }) => {
+
+  return (
+    <table className="w-full">
+      <Header />
+      <TableBody ordered={ordered} />
+    </table>
+  )
+}
+
+const Header = () => {
 
   return (
     <thead>
@@ -22,7 +32,7 @@ export const Header = () => {
   )
 }
 
-export const TableBody = ({ ordered }: { ordered: RosterItem[] }): ReactElement => {
+const TableBody = ({ ordered }: { ordered: RosterItem[] }): ReactElement => {
   return (
     <tbody>
       {ordered.map(roster => {

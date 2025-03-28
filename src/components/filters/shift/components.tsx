@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
+import { useGetWindowSize } from "../../../helpers"
 import styles from './ShiftFilter.module.css'
 
 // Types
@@ -16,30 +17,12 @@ export const Header = () => {
   )
 }
 
-export const Buttons = ({ hidden }: { hidden: boolean }): ReactElement => {
-  const { shiftFilter } = useContext(AppContext)
+export const Buttons = (): ReactElement => {
 
   return (
     <>
-      {shiftFilter ? (
-        <div className="flex gap-6">
-          <ShiftBtn
-            label={'Remove Filter'}
-            shift={null} />
-        </div>
-        ) : (
-          <div className={hidden ? 'hidden' : 'flex flex-col justify-around w-full gap-8 md:flex-row'}>
-            <ShiftBtn
-              shift={'A'}
-              label={'A'} />
-            <ShiftBtn
-              shift={'B'}
-              label={'B'} />
-            <ShiftBtn
-              shift={'C'}
-              label={'C'} />
-          </div>
-        )}
+      <RemoveFilterBtn />
+      <ShiftBtns />
     </>
   )
 }
@@ -53,5 +36,39 @@ export const Footer = () => {
         <div className={styles.footer}>Showing { shiftFilter } Shift</div>
       )}
     </>
+  )
+}
+
+const RemoveFilterBtn = () => {
+  const { shiftFilter, dispatch } = useContext(AppContext)
+
+  if(!shiftFilter) return null
+
+  return (
+    <ShiftBtn
+      label={'Remove Filter'}
+      onClick={() => dispatch({ type: 'SET_SHIFT_FILTER', payload: null })} />
+  )
+}
+
+const ShiftBtns = () => {
+  const { shiftFilter, dispatch } = useContext(AppContext)
+
+  const hidden = useGetWindowSize()
+
+  if(!!shiftFilter || hidden) return null
+
+  return (
+    <div className={'flex flex-col justify-around w-full gap-8 md:flex-row'}>
+      <ShiftBtn
+        label={'A'}
+        onClick={() => dispatch({ type: 'SET_SHIFT_FILTER', payload: 'A' })} />
+      <ShiftBtn
+        label={'B'}
+        onClick={() => dispatch({ type: 'SET_SHIFT_FILTER', payload: 'B' })} />
+      <ShiftBtn
+        label={'C'}
+        onClick={() => dispatch({ type: 'SET_SHIFT_FILTER', payload: 'C' })} />
+    </div>
   )
 }

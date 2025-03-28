@@ -1,9 +1,7 @@
 import { useContext } from "react"
 import AppContext from "../../../../context/App/AppContext"
+import { useGetWindowSize } from "../../../../helpers"
 import styles from './SkillsFilterContainer.module.css'
-
-// Types
-import { ReactElement } from "react"
 
 // Components
 import SkillsBtn from "../../../buttons/SkillsBtn"
@@ -16,29 +14,12 @@ export const Header = () => {
   )
 }
 
-export const Buttons = ({ hidden, skills }: { hidden: boolean, skills: string[] }): ReactElement => {
-  const { skillsFilter } = useContext(AppContext)
+export const Buttons = ({ skills }: { skills: string[] }) => {
 
   return (
     <>
-      {skillsFilter ? (
-        <div className="flex gap-6">
-          <SkillsBtn
-            label={'Remove Filter'}
-            type={''} />
-        </div>
-      ) : (
-        <div className={hidden ? 'hidden' : 'flex flex-col justify-around w-full gap-8 md:flex-row md:flex-wrap'}>
-          {skills.map(obj => {
-            return (
-              <SkillsBtn
-                key={`${ obj }-skill-button`} 
-                label={obj} 
-                type={obj} />
-            )
-          })}
-        </div>
-      )}
+      <RemoveFilterBtn />
+      <SkillsBtns skills={skills} />
     </>
   )
 }
@@ -46,11 +27,42 @@ export const Buttons = ({ hidden, skills }: { hidden: boolean, skills: string[] 
 export const Footer = () => {
   const { skillsFilter } = useContext(AppContext)
 
+  if(!skillsFilter) return null
+
   return (
-    <>
-      {skillsFilter && (
-        <div data-testid="skills-filter-container-label" className={styles.footer}>Showing { skillsFilter }</div>
-      )}
-    </>
+    <span data-testid="skills-filter-container-label" className={styles.footer}>Showing { skillsFilter }</span>
+  )
+}
+
+const SkillsBtns = ({ skills }: { skills: string[] }) => {
+  const { skillsFilter, dispatch } = useContext(AppContext)
+
+  const hidden = useGetWindowSize()
+
+  if(!!skillsFilter || hidden) return null
+
+  return (
+    <div className={'flex flex-col justify-around w-full gap-8 md:flex-row md:flex-wrap'}>
+      {skills.map(skill => {
+        return (
+          <SkillsBtn
+            key={`${ skill }-skill-button`} 
+            label={skill}
+            onClick={() => dispatch({ type: 'SET_SKILLS_FILTER', payload: skill })} />
+        )
+      })}
+    </div>
+  )
+}
+
+const RemoveFilterBtn = () => {
+  const { skillsFilter, dispatch } = useContext(AppContext)
+
+  if(!skillsFilter) return null
+
+  return (
+    <SkillsBtn
+      label={'Remove Filter'}
+      onClick={() => dispatch({ type: 'SET_SKILLS_FILTER', payload: '' })} />
   )
 }

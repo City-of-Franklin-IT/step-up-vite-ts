@@ -18,8 +18,8 @@ function QualifiedFilterContainer() {
     <div data-testid="qualified-filter-container" className={styles.container}>
       <Header />
       <div className="absolute -top-5 right-5">
-        <HideBtn 
-          setState={setState}
+        <HideBtn
+          onClick={() => setState(prevState => ({ ...prevState,  hidden: !prevState.hidden }))} 
           hidden={state.hidden} />
       </div>
       <Buttons hidden={state.hidden} />

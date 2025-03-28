@@ -4,19 +4,19 @@ import { scrollToTop } from './utils'
 import styles from './TableContainer.module.css'
 
 // Types
-import { TableContainerProps } from './types'
+import { Staff } from '../../../context/App/types'
 
 // Components
 import FiltersContainer from '../../filters/FiltersContainer'
 import Table from '../Table'
 import Search from '../../search/Search'
 import BackToTopBtn from '../../buttons/BackToTopBtn'
-import { Checkbox } from './components'
+import * as Components from './components'
 
-function TableContainer({ data }: TableContainerProps) {
+function TableContainer({ staff }: { staff: Staff[] }) {
   const topRef = useRef<HTMLDivElement>(null)
 
-  const tableData = useSetTableData(data) // Set table data
+  const tableData = useSetTableData(staff) // Set table data
 
   const skills = useSetSkills(tableData) // Set skills for filter
 
@@ -30,11 +30,11 @@ function TableContainer({ data }: TableContainerProps) {
       </div>
 
       <div className="flex flex-col gap-3">
-        <Checkbox />
+        <Components.Checkbox />
         <Table employees={tableData} />
       </div>
 
-      <BackToTopBtn handleClick={() => scrollToTop(topRef)} />
+      <BackToTopBtn onClick={() => scrollToTop(topRef)} />
     </div>
   )
 }

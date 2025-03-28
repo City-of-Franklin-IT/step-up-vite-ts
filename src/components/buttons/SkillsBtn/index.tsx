@@ -1,20 +1,19 @@
-import { useContext } from 'react'
-import AppContext from '../../../context/App/AppContext'
 import styles from './SkillsBtn.module.css'
 
 // Types
-import { SkillsBtnProps } from './types'
+import { ButtonHTMLAttributes, MouseEventHandler } from 'react'
 
-function SkillsBtn({ type, label }: SkillsBtnProps) {
-  const { dispatch } = useContext(AppContext)
+type SkillsBtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & { onClick: MouseEventHandler<HTMLButtonElement>, label: string }
+
+function SkillsBtn(props: SkillsBtnProps) {
 
   return (
     <button
       type="button"
       data-testid="skills-btn"
-      onClick={() => dispatch({ type: 'SET_SKILLS_FILTER', payload: type ? type : '' })}
+      onClick={props.onClick}
       className={styles.button}>
-      <p className={styles.label}>{label}</p>
+      <p className={styles.label}>{props.label}</p>
     </button>
   )
 }

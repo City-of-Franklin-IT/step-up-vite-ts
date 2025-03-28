@@ -3,7 +3,7 @@ import { APP_TITLE } from '../../../config'
 import styles from './Header.module.css'
 
 // Components
-import { Logout } from './components'
+import * as Components from './components'
 
 function Header() {
 
@@ -15,7 +15,7 @@ function Header() {
           <h2 className={styles.h2}>{APP_TITLE}</h2>
         </div>
       </Link>
-      <Logout />
+      <Components.Buttons />
     </header>
   )
 }

@@ -1,20 +1,19 @@
-import { useContext } from 'react'
-import AppContext from '../../../context/App/AppContext'
 import styles from './ShiftBtn.module.css'
 
 // Types
-import { ShiftBtnProps } from './types'
+import { ButtonHTMLAttributes, MouseEventHandler } from 'react'
 
-function ShiftBtn({ shift, label }: ShiftBtnProps) {
-  const { dispatch } = useContext(AppContext)
+type ShiftBtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & { onClick: MouseEventHandler<HTMLButtonElement>, label: string }
+
+function ShiftBtn(props: ShiftBtnProps) {
 
   return (
     <button
       type="button"
       data-testid="shift-btn"
-      onClick={() => dispatch({ type: 'SET_SHIFT_FILTER', payload: shift || null })}
+      onClick={props.onClick}
       className={styles.button}>
-        <p className={styles.label}>{label}</p>
+        <p className={styles.label}>{props.label}</p>
     </button>
   )
 }

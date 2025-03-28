@@ -1,16 +1,12 @@
 import styles from './LoginBtn.module.css'
 
-// Types
-import { LoginBtnProps } from './types'
-
-function LoginBtn({ disabled }: LoginBtnProps) {
+function LoginBtn() {
   
   return (
     <button 
       data-testid="login-btn"
       type="submit"
-      className={styles.btn}
-      disabled={disabled}>
+      className={styles.btn}>
         Login
     </button>
   )
