@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useGetWindowSize } from "../../../helpers"
+import { useGetWindowSize } from "../../../helpers/hooks"
 import styles from './ShiftFilter.module.css'
 
 // Types

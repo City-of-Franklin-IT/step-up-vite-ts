@@ -1,4 +1,4 @@
-import { handleTime } from "../../../helpers"
+import { handleTime } from "../../../helpers/utils"
 import styles from './SchedulesTable.module.css'
 
 // Types

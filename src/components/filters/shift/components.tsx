@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import AppContext from "../../../context/App/AppContext"
-import { useGetWindowSize } from "../../../helpers"
+import { useGetWindowSize } from "../../../helpers/hooks"
 import styles from './ShiftFilter.module.css'
 
 // Types

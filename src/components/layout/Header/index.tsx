@@ -9,7 +9,7 @@ function Header() {
 
   return (
     <header data-testid="header" className={styles.header}>
-      <Link to={'/home'}>
+      <Link to={'/'}>
         <div className={styles.title}>
           <h1 className={styles.h1}>Franklin Fire Department</h1>
           <h2 className={styles.h2}>{APP_TITLE}</h2>

@@ -5,9 +5,9 @@ export default () => {
 
   return () => {
     instance
-      .logoutRedirect({
+      .logoutPopup({
         account: accounts[0],
-        postLogoutRedirectUri: '/step-up/login',
+        postLogoutRedirectUri: '/step-up'
       })
   }
 }

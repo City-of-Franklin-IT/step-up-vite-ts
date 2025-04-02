@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Login from "./pages/Login"
 import Home from "./pages/Home"
 import Rosters from "./pages/Rosters"
-import NotFound from "./pages/NotFound"
+import Redirect from './pages/Redirect'
 
 const queryClient = new QueryClient()
 
@@ -21,10 +21,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Router basename={APP_BASE} future={{ v7_startTransition: true }}>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/rosters" element={<Rosters />} />
-            <Route path={'*'} element={<NotFound />} />
+            <Route path="/*" element={<Redirect />} />
           </Routes>
         </Router>
         <ReactQueryDevtools initialIsOpen={false} />

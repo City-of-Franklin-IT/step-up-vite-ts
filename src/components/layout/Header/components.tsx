@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import { useLocation } from "react-router-dom"
-import styles from './Header.module.css'
 
 // Components
 import LogoutBtn from "../../buttons/LogoutBtn"
@@ -17,24 +16,24 @@ export const Buttons = () => {
 }
 
 const RostersBtn = () => {
-  const location = useLocation()
+  const { pathname } = useLocation()
 
-  if(location.pathname === '/rosters') return null
+  if(pathname === '/rosters' || pathname === '/' ) return null
 
   return (
-    <Link to={'/rosters'} className={styles.rosterBtn}>
+    <Link to={'/rosters'} className="btn rounded-none uppercase hover:btn-primary">
       View Rosters
     </Link>
   )
 }
 
 const StepUpBtn = () => {
-  const location = useLocation()
+  const { pathname } = useLocation()
 
-  if(location.pathname === '/step-up') return null
+  if(pathname === '/home' || pathname === '/') return null
 
   return ( 
-    <Link to={'/home'} className={styles.rosterBtn}>
+    <Link to={'/home'} className="btn rounded-none uppercase hover:btn-primary">
       View Step Up
     </Link>
   )

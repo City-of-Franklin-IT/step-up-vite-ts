@@ -1,12 +1,12 @@
 import styles from './Table.module.css'
 
 // Types
-import { TableProps } from './types'
+import { TableData } from '../TableContainer/types'
 
 // Components
 import * as Components from './components'
 
-function Table({ employees }: TableProps) {
+function Table({ employees }: { employees: TableData[] }) {
 
   return (
     <div data-testid="table" className={styles.container}>

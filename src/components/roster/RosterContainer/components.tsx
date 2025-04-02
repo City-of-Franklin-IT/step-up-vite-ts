@@ -87,7 +87,7 @@ const Group = ({ groups }: { groups: StationGroup[] }) => {
         return (
           <RosterTable
             key={`roster-table-${ group.unit }`}
-            data={group.roster as RosterItem[]}
+            rosters={group.roster as RosterItem[]}
             label={group.unit} />
         )
       })}

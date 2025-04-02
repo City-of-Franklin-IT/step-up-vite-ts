@@ -8,6 +8,7 @@ import Footer from '../Footer'
 import { ReactNode } from 'react'
 
 function Layout({ children }: { children: ReactNode }) {
+  
   return (
     <div data-testid="layout" className={styles.layout}>
       <Header />

@@ -1,6 +1,5 @@
 import { useMsal } from "@azure/msal-react"
 import useHandleLogoutRedirect from "../../../context/Auth/hooks/useHandleLogoutRedirect"
-import styles from './LogoutBtn.module.css'
 
 function LogoutBtn() {
   const { instance } = useMsal()
@@ -16,7 +15,7 @@ function LogoutBtn() {
     <button 
       type="button"
       onClick={handleLogoutRedirect}
-      className={styles.btn}>
+      className="btn rounded-none uppercase hover:btn-primary">
         Logout
     </button>
   )

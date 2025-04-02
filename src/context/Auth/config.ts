@@ -2,10 +2,10 @@ import { LogLevel } from '@azure/msal-browser';
 
 export const msalConfig = {
     auth: {
-        clientId: '9c8d1241-f162-4ff1-b131-7fa92957377b',
+        clientId: 'beec6da4-ba46-45c7-9630-ddb7df68b3da',
         authority: 'https://login.microsoftonline.com/f6644f52-f834-4a2f-a433-e6bc40d7c17f/',
-        redirectUri: 'https://istest.franklintn.gov/step-up/login',
-        postLogoutRedirectUri: '/login',
+        redirectUri: 'https://istest.franklintn.gov/step-up',
+        postLogoutRedirectUri: '/',
         navigateToLoginRequestUrl: false
     },
     cache: {
@@ -37,5 +37,6 @@ export const msalConfig = {
 };
 
 export const loginRequest = {
-    scopes: [],
+    scopes: ["openid", "profile"],
+    redirectUri: "https://istest.franklintn.gov/step-up"
 };

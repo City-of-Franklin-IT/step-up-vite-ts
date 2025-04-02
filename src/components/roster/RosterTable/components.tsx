@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { handleTime } from '../../../helpers'
+import { handleTime } from '../../../helpers/utils'
 import { handleActive } from './utils'
 import styles from './RosterTable.module.css'
 

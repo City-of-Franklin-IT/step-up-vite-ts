@@ -1,11 +1,12 @@
 import { useQuery } from "react-query"
 import { getStaff } from "../../context/App/AppActions"
-import { useValidateUser, useEnableQuery } from "../../helpers"
+import { useGetToken, useEnableQuery } from "../../helpers/hooks"
+import { authHeaders } from "../../helpers/utils"
 
 export const useGetStaff = () => { // Get staff
-  const { isAuthenticated, isLoading } = useValidateUser()
+  const token = useGetToken()
 
-  const enabled = useEnableQuery(isAuthenticated, isLoading)
+  const enabled = useEnableQuery(token)
 
-  return useQuery(['staff'], () => getStaff(), { enabled })
+  return useQuery(['staff'], () => getStaff(authHeaders(token)), { enabled })
 }

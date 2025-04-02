@@ -1,3 +1,4 @@
+import { useRedirect } from "../Redirect/hooks"
 import { useGetRoster } from "./hooks"
 
 // Components
@@ -6,6 +7,8 @@ import RosterContainer from "../../components/roster/RosterContainer"
 import HandleLoading from "../../utils/HandleLoading"
 
 function Rosters() {
+  useRedirect()
+  
   const { data, isSuccess } = useGetRoster()
 
   return (

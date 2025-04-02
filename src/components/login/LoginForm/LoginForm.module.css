@@ -1,46 +1,43 @@
 .container {
   display: flex;
   flex-direction: column;
+  font-family: 'Jura', sans-serif;
   margin-bottom: 12px;
 }
 
 .title {
-  font-size: 2.25rem;
   color: var(--neutral);
-  font-family: 'Teko', sans-serif;
+  font-family: 'Teko', sans-serif;  
+  font-size: 2.25rem;
   font-weight: 400;
-  max-width: 80%;
-  margin: auto;
   text-align: center;
-  line-height: 2.5rem;
+  margin: auto;
+  white-space: nowrap;
 }
 
 .body {
   display: flex;
   flex-direction: column;
   padding: 12px;
-  margin: 18px;
-}
-
-.inputSection {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.label {
-  font-family: 'Jura', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
-  font-size: 1rem;
-  font-style: normal;
-  color: var(--neutral);
-  width: 30%;
-  padding: 10px 0;
 }
 
 .input {
-  width: 100%;
   padding: 12px 0;
   text-indent: 1rem;
+  width: 100%;
+}
+
+.btn {
+  color: var(--neutralContent);
+  text-transform: uppercase;
+  background-color: var(--primary);
+  margin: auto;
+  height: 44px;
+  width: 92%;
+}
+
+.btn:hover {
+  cursor: pointer;
+  color: var(--neutralContent);
+  background-color: var(--neutral);
 }

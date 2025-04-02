@@ -2,11 +2,12 @@ import { useMemo } from "react"
 
 // Types
 import { RosterItem } from "../RosterContainer/types"
-import { OrderRanksProps } from "./types"
 
-export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => { // Order staff by rank
+export const useOrderRanks = (rosters: RosterItem[]): RosterItem[] => { // Order staff by rank
+  console.log(rosters)
+
   const array = useMemo(() => {
-    return data.sort((a, b) => {
+    return rosters.sort((a, b) => {
       const rankOrder = ['BC', 'OFF', 'ENG', 'FF']
   
       const rankA = rankOrder.indexOf(a.rankAbrv)
@@ -29,7 +30,7 @@ export const useOrderRanks = (data: OrderRanksProps['data']): RosterItem[] => { 
     
       return 0
     })
-  }, [data])
+  }, [rosters])
 
   return array
 }

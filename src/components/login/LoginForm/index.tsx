@@ -10,7 +10,7 @@ function LoginForm() {
     <div className={styles.container}>
       <img src={image} alt="cof logo" className="w-fit hidden lg:block" />
       <div className={styles.body}>
-        <h2 className={styles.title}>Franklin Fire Department Login</h2>
+        <h2 className={styles.title}>Fire Department Login</h2>
         
         <div className="p-4">
           <LoginBtn />
