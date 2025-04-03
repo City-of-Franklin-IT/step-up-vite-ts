@@ -7,7 +7,7 @@ export default () => {
   return () => {
     if(inProgress === 'none') {
       instance
-        .loginPopup({
+        .loginRedirect({
           ...loginRequest,
           prompt: 'create'
         })

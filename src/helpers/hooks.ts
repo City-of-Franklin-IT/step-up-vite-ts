@@ -51,7 +51,7 @@ export const useGetToken = () => {
     }
 
     if(!activeAccount) { // !Active account - redirect to login
-      navigate('/login')
+      navigate('/')
     }
   }
 

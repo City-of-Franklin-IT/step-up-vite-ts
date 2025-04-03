@@ -14,7 +14,7 @@ function Rosters() {
   return (
     <Layout>
       <HandleLoading isLoaded={isSuccess}>
-        <RosterContainer rosters={data?.data ?? []} />
+        <RosterContainer rosters={data?.data || []} />
       </HandleLoading>
     </Layout>
   )
