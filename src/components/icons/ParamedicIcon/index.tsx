@@ -1,12 +1,11 @@
-import icon from '../../../assets/icons/paramedic/paramedic.svg'
+import icon from '@/assets/icons/paramedic/paramedic.svg'
 
-// Types
-import { ParamedicIconProps } from './types'
+type ParamedicIconProps = { iconProps: { width: number, height: number } }
 
-function ParamedicIcon({ width, height }: ParamedicIconProps) {
+function ParamedicIcon(props: ParamedicIconProps) {
   
   return (
-    <img data-testid="paramedic-icon" src={icon} width={width} height={height} title={'Paramedic'} />
+    <img src={icon} { ...props.iconProps } title={'Paramedic'} />
   )
 }
 

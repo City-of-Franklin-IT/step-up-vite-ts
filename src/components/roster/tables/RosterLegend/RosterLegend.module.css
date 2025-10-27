@@ -1,0 +1,6 @@
+.label {
+  color: var(--color-neutral-content);
+  font-family: 'Play', sans-serif;
+  font-size: .65rem;
+  text-transform: uppercase;
+}

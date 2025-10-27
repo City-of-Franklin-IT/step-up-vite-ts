@@ -1,18 +1,14 @@
-import { useRedirect } from '../Redirect/hooks'
-import styles from './Login.module.css'
+import { useHandleAuth } from './hooks'
 
 // Components
-import Layout from '../../components/layout/Layout'
-import LoginForm from '../../components/login/LoginForm'
+import Layout from '@/components/layout/Layout'
 
 function Login() {
-  useRedirect('/home')
+  useHandleAuth()
 
   return (
     <Layout>
-      <div className={styles.container}>
-        <LoginForm />
-      </div>
+      <></>
     </Layout>
   )
 }

@@ -1,5 +1,0 @@
-@import '../../../animations.css';
-
-.hovered {
-  animation: 100ms slide-up ease-in-out forwards;
-}

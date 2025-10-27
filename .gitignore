@@ -7,10 +7,23 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build outputs
 dist
 dist-ssr
+build
+lib
 *.local
+
+# TypeScript compiled output
+src/**/*.js
+src/**/*.jsx
+src/**/*.js.map
+*.d.ts.map
+*.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +35,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files
+.env
+.env.local
+.env.*.local

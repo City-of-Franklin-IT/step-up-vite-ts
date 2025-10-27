@@ -1,23 +1,17 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { setVariant } from './utils'
-import styles from './PhoneIcon.module.css'
+import { useHandlePhoneIcon } from './hooks'
 
-// Types
-import { PhoneIconProps, PhoneIconState } from './types'
+type PhoneIconProps = { iconProps: { width: number, height: number, variant: 'normal' | 'light' }, phoneNumber: string }
 
-function PhoneIcon({ width, height, phoneNumber, variant }: PhoneIconProps) {
-  const [state, setState] = useState<PhoneIconState>({ hovered: false })
+function PhoneIcon(props: PhoneIconProps) {
+  const { onMouseEnter, onMouseLeave, icon } = useHandlePhoneIcon(props.iconProps.variant)
 
   return (
-    <Link
-      data-testid="phone-icon" 
-      to={`tel:${ phoneNumber }`}
-      onMouseEnter={() => setState({ hovered: true })}
-      onMouseLeave={() => setState({ hovered: false })}
-      className={state.hovered ? styles.hovered : ''}>
-      <img data-testid="phone-icon-img" src={setVariant(variant, state)} width={width} height={height} title={phoneNumber} />
-    </Link>
+    <a
+      href={`tel:${ props.phoneNumber }`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
+        <img src={icon} { ...props.iconProps } title={props.phoneNumber} />
+    </a>
   )
 }
 

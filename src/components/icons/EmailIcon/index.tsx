@@ -1,23 +1,17 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { setVariant } from './utils'
-import styles from './EmailIcon.module.css'
+import { useHandleEmailIcon } from './hooks'
 
-// Types
-import { EmailIconProps, EmailIconState } from "./types"
+type EmailIconProps = { iconProps: { width: number, height: number, variant: 'normal' | 'light' | 'warning' }, email: string }
 
-function EmailIcon({ width, height, email, variant }: EmailIconProps) {
-  const [state, setState] = useState<EmailIconState>({ hovered: false })
+function EmailIcon(props: EmailIconProps) {
+  const { onMouseEnter, onMouseLeave, icon } = useHandleEmailIcon(props.iconProps.variant)
 
   return (
-    <Link 
-      data-testid="email-icon"
-      to={`mailto:${ email }`}
-      onMouseEnter={() => setState({ hovered: true })}
-      onMouseLeave={() => setState({ hovered: false })}
-      className={state.hovered ? styles.hovered : ''}>
-      <img src={setVariant(variant, state)} width={width} height={height} title={email} />
-    </Link>
+    <a 
+      href={`mailto:${ props.email }`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
+        <img src={icon} { ...props.iconProps } title={props.email} />
+    </a>
   )
 }
 

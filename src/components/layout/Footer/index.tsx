@@ -1,11 +1,9 @@
-import styles from './Footer.module.css'
-
 function Footer() {
+  
   return (
-    <footer data-testid="footer" className={styles.footer}>
-      <p className={styles.text}>Developed by City of Franklin Information Technology</p>
+    <footer className="flex flex-col h-[14vh] bg-neutral mt-auto">
+      <span className="text-neutral-content text-lg font-[Ubuntu Sans] text-bold tracking-[.4rem] text-center m-auto lg:text-xl">Developed by City of Franklin Information Technology</span>
     </footer>
   )
 }
-
 export default Footer

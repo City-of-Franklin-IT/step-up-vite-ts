@@ -1,0 +1,27 @@
+.button {
+  color: var(--color-neutral-content);
+  text-transform: uppercase;
+  font-family: 'Jura', sans-serif;
+  padding: 12px;
+  outline: 1px solid var(--color-neutral-content);
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 6px 6px 0 var(--color-neutral-content);
+
+  @media (min-width: 768px) { /* Tablet+ */ 
+    width: 160px;
+  }
+}
+
+.button:hover {
+  cursor: pointer;
+  outline-color: var(--color-warning);
+  box-shadow: 6px 6px 0 var(--color-warning);
+}
+
+.label {
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

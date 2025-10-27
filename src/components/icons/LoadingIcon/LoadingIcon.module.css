@@ -1,5 +1,0 @@
-@import '../../../animations.css';
-
-.loadingIcon {
-  animation: 250ms fade-in linear;
-}

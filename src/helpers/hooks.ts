@@ -1,18 +1,30 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import { useMsal } from "@azure/msal-react"
+import { NODE_ENV } from "@/config"
 
 export const useGetToken = () => {
-  const [state, setState] = useState<{ token: string | undefined }>({ token: undefined })
+  const [state, setState] = useState<{ token: string | undefined, isLoading: boolean }>({ token: undefined, isLoading: true })
 
-  const { instance, inProgress } = useMsal()
+  const { instance, accounts, inProgress } = useMsal()
 
-  const activeAccount = instance.getActiveAccount()
-
-  const navigate = useNavigate()
+  if(NODE_ENV === 'development') {
+    return { token: 'dev-token', isLoading: false }
+  }
 
   const checkToken = async () => {
-    if(inProgress !== 'none') { // Wait for instance to fully initialize
+    setState(prevState => ({ ...prevState, isLoading: true }))
+
+    const activeAccount = instance.getActiveAccount()
+
+    if(!activeAccount && accounts.length === 0) {
+      setState(prevState => ({ ...prevState, isLoading: false }))
+      window.location.href = '/'
+      return
+    }
+
+    if(!activeAccount && accounts.length > 0) {
+      setState(prevState => ({ ...prevState, isLoading: false }))
+      instance.setActiveAccount(accounts[0])
       return
     }
 
@@ -24,7 +36,7 @@ export const useGetToken = () => {
   
       if(expiresOn > now + 3000000) { // Still valid
         token = activeAccount.idToken
-        setState({ token })
+        setState(({ token, isLoading: false }))
         return
       }
   
@@ -36,7 +48,7 @@ export const useGetToken = () => {
   
       const response = await instance.acquireTokenSilent(request) // Refresh token
 
-      setState({ token: response.idToken })
+      setState(({ token: response.idToken, isLoading: false }))
     }
 
     if(activeAccount && !activeAccount.idTokenClaims) { // Active account but !idTokenClaims
@@ -47,45 +59,39 @@ export const useGetToken = () => {
 
       const response = await instance.acquireTokenSilent(request) // Refresh token
 
-      setState({ token: response.idToken })
+      setState(({ token: response.idToken, isLoading: false }))
     }
 
-    if(!activeAccount) { // !Active account - redirect to login
-      navigate('/')
-    }
+    setState(prevState => ({ ...prevState, isLoading: false }))
   }
 
   useEffect(() => {
+    if(inProgress !== 'none') { // Wait for instance to fully initialize
+      return
+    }
+
     checkToken()
 
     const intervalId = setInterval(checkToken, 4 * 60 * 1000) // Check every 4 minutes
     
     return () => clearInterval(intervalId)
-  }, [inProgress])
+  }, [inProgress, accounts.length])
 
-  return state.token
+  return state
 }
 
-export const useEnableQuery = (token: string | undefined) => {
+export const useEnableQuery = () => {
   const [state, setState] = useState<{ enabled: boolean }>({ enabled: false })
 
+  const { token, isLoading } = useGetToken()
+
   useEffect(() => {
-    let timeout = null
+    if(isLoading) {
+      setState({ enabled: false })
+    } else setState({ enabled: !!token })
+  }, [token, isLoading])
 
-    if(token) {
-      timeout = setTimeout(() => {
-        setState({ enabled: true })
-      }, 300) // 300ms delay
-    } else setState({ enabled: false })
-
-    return () => {
-      if(timeout) {
-        clearTimeout(timeout)
-      }
-    }
-  }, [token])
-
-  return state.enabled
+  return { enabled: state.enabled, token }
 }
 
 export const useGetWindowSize = (): boolean => { // Get window size
@@ -100,4 +106,42 @@ export const useGetWindowSize = (): boolean => { // Get window size
   }, [])
 
   return state.width < 1025
+}
+
+export const useActiveAccount = () => {
+  const [state, setState] = useState<{ authenticated: boolean }>({ authenticated: false })
+  const { instance, inProgress } = useMsal()
+
+  useEffect(() => {
+    if(inProgress === 'none') {
+      const activeAccount = instance.getActiveAccount()
+      setState({ authenticated: !!activeAccount })
+    }
+  }, [instance, inProgress])
+
+  return state.authenticated
+}
+
+export const useRedirectAfterLogin = () => {
+  const { instance, inProgress } = useMsal()
+  const development = NODE_ENV === 'development'
+
+  useEffect(() => {
+    if(development) return
+
+    if(inProgress === 'none') {
+      const activeAccount = instance.getActiveAccount()
+
+      if(activeAccount) {
+        const redirectUrl = sessionStorage.getItem('redirectUrl')
+
+        if(redirectUrl) {        
+          window.location.href = redirectUrl
+          sessionStorage.removeItem('redirectUrl')
+        }
+      } else {
+        window.location.pathname = '/'
+      }
+    }
+  }, [inProgress, development, instance])
 }

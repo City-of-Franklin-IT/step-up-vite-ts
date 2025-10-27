@@ -1,12 +1,10 @@
-import { useQuery } from "react-query"
-import { getStaff } from "../../context/App/AppActions"
-import { useGetToken, useEnableQuery } from "../../helpers/hooks"
-import { authHeaders } from "../../helpers/utils"
+import { useQuery } from "@tanstack/react-query"
+import * as AppActions from '@/context/App/AppActions'
+import { useEnableQuery } from "@/helpers/hooks"
+import { authHeaders } from "@/helpers/utils"
 
 export const useGetStaff = () => { // Get staff
-  const token = useGetToken()
+  const { enabled, token } = useEnableQuery()
 
-  const enabled = useEnableQuery(token)
-
-  return useQuery(['staff'], () => getStaff(authHeaders(token)), { enabled })
+  return useQuery({ queryKey: ['getStaff'], queryFn: () => AppActions.getStaff(authHeaders(token)), enabled, staleTime: Infinity })
 }

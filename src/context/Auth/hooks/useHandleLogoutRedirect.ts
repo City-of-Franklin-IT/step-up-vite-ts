@@ -1,13 +1,11 @@
 import { useMsal } from "@azure/msal-react"
 
 export default () => {
-  const { instance, accounts } = useMsal()
+  const { instance } = useMsal()
 
   return () => {
-    instance
-      .logoutPopup({
-        account: accounts[0],
-        postLogoutRedirectUri: '/step-up'
-      })
+    instance.clearCache()
+    
+    window.location.href = '/'
   }
 }

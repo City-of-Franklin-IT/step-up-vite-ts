@@ -1,5 +1,0 @@
-@import '../../../animations.css';
-
-.calendarIcon {
-  animation: 250ms fade-in linear;
-}

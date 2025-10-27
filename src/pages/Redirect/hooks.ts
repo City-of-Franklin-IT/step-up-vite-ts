@@ -1,23 +1,15 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
-import { useMsal } from "@azure/msal-react"
+import { useActiveAccount } from "@/helpers/hooks"
 
-export const useRedirect = (onAuth?: string) => {
-  const { instance, inProgress } = useMsal()
-  const activeAccount = instance.getActiveAccount()
-
+export const useRedirect = () => {
   const navigate = useNavigate()
 
-  const isReady = instance && inProgress === 'none'
+  const activeAccount = useActiveAccount()
 
   useEffect(() => {
-    if(isReady) {
-      if(activeAccount) {
-        if(onAuth) {
-          navigate(onAuth)
-        } else null
-      } else navigate('/')
-    }
-
-  }, [isReady, activeAccount, navigate, onAuth])
+    if(activeAccount) {
+      navigate('/home')
+    } else navigate('/')
+  }, [activeAccount, navigate])
 }

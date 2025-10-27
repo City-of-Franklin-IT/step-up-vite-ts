@@ -1,12 +1,11 @@
-import icon from '../../../assets/icons/calendar/calendar.svg'
-import styles from './CalendarIcon.module.css'
+import icon from '@/assets/icons/calendar/calendar.svg'
 
-// Types
-import { CalendarIconProps } from './types'
+type CalendarIconProps = { width: number, height: number }
 
-function CalendarIcon({ width, height }: CalendarIconProps) {
+function CalendarIcon(props: CalendarIconProps) {
+  
   return (
-    <img data-testid="calendar-icon" src={icon} width={width} height={height} className={styles.calendarIcon} />
+    <img src={icon} width={props.width} height={props.height} />
   )
 }
 

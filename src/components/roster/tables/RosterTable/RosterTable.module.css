@@ -1,0 +1,55 @@
+.rosterTable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  color: var(--color-neutral-content);
+  font-family: 'Play', sans-serif;
+  font-size: 1.25rem;
+}
+
+.header {
+  color: var(--color-warning-content);
+  font-family: 'Play', sans-serif;
+  font-size: .75rem;
+  text-transform: uppercase;
+  padding: 2px 14px;
+  background-color: var(--color-warning);
+}
+
+.dateHeader {
+  display: none;
+
+  @media (min-width: 768px) { /* Tablet+ */
+    display: block;
+    color: var(--color-warning-content);
+    font-family: 'Play', sans-serif;
+    font-size: .75rem;
+    text-transform: uppercase;
+    padding: 2px 14px;
+    background-color: var(--color-warning);
+  }
+}
+
+.tableData {
+  color: var(--color-neutral-content);
+  font-family: 'Play', sans-serif;
+  font-weight: 100;
+  font-size: .75rem;
+  text-align: center;
+  line-height: 1.2rem;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.tableDataInactive {
+  color: var(--color-neutral-content);
+  font-family: 'Play', sans-serif;
+  font-weight: 100;
+  font-size: .75rem;
+  text-align: center;
+  line-height: 1.2rem;
+  border-bottom: 1px solid var(--color-accent);
+  opacity: .4;
+}

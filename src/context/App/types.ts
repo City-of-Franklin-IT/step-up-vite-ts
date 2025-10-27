@@ -1,100 +1,53 @@
-// Types
-import { Dispatch, ReactNode } from "react"
-
-export interface AppContextObj { // AppContext
-  dispatch: Dispatch<Action>,
-  date: string
-  filter: string
-  searchValue: string
-  shiftFilter: Shift | null
-  showAllStaff: boolean
-  skillsFilter: string
-}
-
-export interface AppState { // App context initial state object
-  date: string
-  filter: string
-  searchValue: string
-  shiftFilter: Shift | null
-  showAllStaff: boolean
-  skillsFilter: string
-}
-
-export interface AppReducerProps { // AppReducer props
-  state: AppState,
-  action: Action
-}
-
-export interface AppProviderProps {
-  children: ReactNode
-}
-
-export interface Staff {
+export interface StaffInterface {
   employeeId: string
-  rank: Rank
+  rank: RankType
   fullName: string
   skills: string
   phone: string
   email: string
-  shift: Shift | null
-  StepUps: StepUps[]
-  Schedules: Schedule[]
-  [key: string]: string | Rank | StepUps[] | Schedule[] | Shift | null
+  shift: ShiftType | null
+  StepUps: StepUpsInterface[]
+  Schedules: ScheduleInterface[]
+  [key: string]: string | RankType | StepUpsInterface[] | ScheduleInterface[] | ShiftType | null
 }
 
-export interface Schedule {
-  startDate: Date,
-  startTime: string,
-  endDate: Date,
-  endTime: string,
-  hours: number,
+export interface ScheduleInterface {
+  startDate: string
+  startTime: string
+  endDate: string
+  endTime: string
+  hours: number
   detailCode: string
 }
 
-export interface RosterEntry {
-  rscEmployeeIDCh: string,
-  rscMasterNameCh: string,
-  stationAbrvCh: Station,
-  shiftAbrvCh: Shift,
-  physicalUnitAbrvCh: Apparatus,
-  posJobAbrvCh: RankAbrv,
-  shiftStartDt: Date,
-  shiftEndDt: Date,
-  staffingStartDt: Date,
-  staffingEndDt: Date,
-  rank: RankWFD,
+export interface RosterEntryInterface {
+  rscEmployeeIDCh: string
+  rscMasterNameCh: string
+  stationAbrvCh: StationType
+  shiftAbrvCh: ShiftType
+  physicalUnitAbrvCh: ApparatusType
+  posJobAbrvCh: RankAbrvType
+  shiftStartDt: string
+  shiftEndDt: string
+  staffingStartDt: string
+  staffingEndDt: string
+  rank: RankWFDType
   isParamedic: boolean
 }
-
-export type Action =
-  | { type: 'SET_FILTER', payload: string }
-  | { type: 'SET_SEARCH_VALUE', payload: string }
-  | { type: 'SET_SKILLS_FILTER', payload: string }
-  | { type: 'SET_DATE', payload: string }
-  | { type: 'TOGGLE_SHOW_ALL_STAFF', payload: boolean }
-  | { type: 'SET_SHIFT_FILTER', payload: Shift | null }
 
 export interface ServerResponse { // Server response object
   success: boolean
   msg?: string
 }
 
-export interface GetStaffResponse extends ServerResponse { // getStaff API call response
-  data: Staff[]
-}
-
-export interface GetRosterResponse extends ServerResponse { // getRoster API call response
-  data: RosterEntry[]
-}
-
-export type Rank =
+export type RankType =
   | "Firefighter"
   | "Engineer"
   | "Lieutenant"
   | "Captain"
   | "BC"
 
-export type Station =
+export type StationType =
   | "S1"
   | "S2"
   | "S3"
@@ -104,12 +57,12 @@ export type Station =
   | "S7"
   | "S8"
 
-export type Shift =
+export type ShiftType =
   | "A"
   | "B"
   | "C"
 
-export type Apparatus =
+export type ApparatusType =
   | "A7FK"
   | "B1FK"
   | "B7FK"
@@ -135,25 +88,25 @@ export type Apparatus =
   | "T2FK"
   | "T6FK"
 
-export type RankAbrv =
+export type RankAbrvType =
   | "FF"
   | "ENG"
   | "OFF"
   | "BC"
 
-export type RankWFD =
+export type RankWFDType =
   | "FireCapt"
   | "FireLT"
   | "FireE"
   | "FireF"
 
-export type DetailCode =
+export type DetailCodeType =
   | "ENG"
   | "LT"
   | "CAP"
   | "BC"
 
-interface StepUps {
-  detailCode: DetailCode,
+interface StepUpsInterface {
+  detailCode: DetailCodeType
   hours: number
 }

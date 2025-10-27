@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Play', sans-serif;
+  border-radius: 6px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.header {
+  color: var(--color-primary-content);
+  text-transform: uppercase;
+  background-color: var(--color-primary);
+  line-height: 3rem;
+  text-align: left;
+}
+
+.evenRow {
+  background-color: var(--color-neutral-content);
+  line-height: 3rem;
+}
+
+.oddRow {
+  background-color: #FFFFFF;
+  line-height: 3rem;
+}
+
+@media (hover: hover) {
+  .evenRow:hover {
+    color: var(--color-neutral-content);
+    background-color: var(--color-neutral);
+  }
+  
+  .oddRow:hover {
+    color: var(--color-neutral-content);
+    background-color: var(--color-neutral);
+  }
+}
+
+.employeeCell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  align-items: start;
+}
+
+.rank {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-primary-content);
+  font-size: .7rem;
+  background-color: var(--color-primary);
+  text-transform: uppercase;
+  padding: 0px 6px;
+  height: 24px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, .2);
+}
+
+.shift {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-secondary-content);
+  font-size: .7rem;
+  background-color: var(--color-secondary);
+  text-transform: uppercase;
+  padding: 0px 6px;
+  height: 24px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, .2);
+}
+
+.hours {
+  font-family: "Squada One", sans-serif;
+  font-size: 1.25rem;
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  line-height: initial;
+  padding: 40px;
+}

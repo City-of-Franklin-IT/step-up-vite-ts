@@ -1,21 +1,23 @@
-import styles from './Layout.module.css'
+import { HeaderProvider } from "../Header/context"
 
 // Components
-import Header from '../Header'
-import Footer from '../Footer'
+import Header from "../Header"
+import Footer from "../Footer"
+import PageWrapper from "@/utils/PageWrapper"
 
-// Types
-import { ReactNode } from 'react'
+function Layout({ children }: { children: React.ReactNode }) {
 
-function Layout({ children }: { children: ReactNode }) {
-  
   return (
-    <div data-testid="layout" className={styles.layout}>
-      <Header />
-      <main data-testid="main">
-        <div className={styles.container}>
-          {children}
-        </div>
+    <div className="flex flex-col w-full h-[100%] min-h-screen">
+      <HeaderProvider>
+        <Header />
+      </HeaderProvider>
+      <main>
+        <PageWrapper>
+          <div className="m-auto w-full h-full xl:w-[90%] 2xl:w-[80%]">
+            {children}
+          </div>
+        </PageWrapper>
       </main>
       <Footer />
     </div>
