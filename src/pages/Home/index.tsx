@@ -5,6 +5,7 @@ import { useGetStaff } from './hooks'
 import Layout from '../../components/layout/Layout'
 import TableContainer from '../../components/step-up/containers/TableContainer'
 import HandleLoading from '../../utils/HandleLoading'
+import ErrorBoundary from '@/utils/ErrorBoundary'
 
 function Home() {
   useRedirectAfterLogin()
@@ -13,9 +14,11 @@ function Home() {
 
   return (
     <Layout>
-      <HandleLoading isLoaded={isSuccess}>
-        <TableContainer staff={data?.data} />
-      </HandleLoading>
+      <ErrorBoundary>
+        <HandleLoading isLoaded={isSuccess}>
+          <TableContainer staff={data?.data} />
+        </HandleLoading>
+      </ErrorBoundary>
     </Layout>
   )
 }

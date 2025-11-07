@@ -5,6 +5,7 @@ import { useGetRoster } from "./hooks"
 import Layout from "@/components/layout/Layout"
 import RosterContainer from "@/components/roster/containers/RosterContainer"
 import HandleLoading from "@/utils/HandleLoading"
+import ErrorBoundary from "@/utils/ErrorBoundary"
 
 function Rosters() {
   useRedirectAfterLogin()
@@ -13,9 +14,11 @@ function Rosters() {
 
   return (
     <Layout>
-      <HandleLoading isLoaded={isSuccess}>
-        <RosterContainer rosters={data?.data} />
-      </HandleLoading>
+      <ErrorBoundary>
+        <HandleLoading isLoaded={isSuccess}>
+          <RosterContainer rosters={data?.data} />
+        </HandleLoading>
+      </ErrorBoundary>
     </Layout>
   )
 }

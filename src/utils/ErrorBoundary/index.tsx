@@ -1,14 +1,13 @@
 import { useNavigate } from 'react-router'
+import { APP_BASE } from '@/config'
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 
-// Types
-import { ErrorBoundaryProps } from './types'
-
-function ErrorBoundary({ href, children }: ErrorBoundaryProps) {
+function ErrorBoundary({ children }: { children: React.ReactElement }) {
   const ErrorFallback = () => {
     const navigate = useNavigate()
 
     setTimeout(() => { // Navigate to href after 50ms
+      const href = APP_BASE
 
       navigate(href)
     }, (50))
