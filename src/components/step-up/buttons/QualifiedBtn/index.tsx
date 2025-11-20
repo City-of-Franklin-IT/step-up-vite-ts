@@ -3,16 +3,15 @@ import styles from './QualifiedBtn.module.css'
 // Types
 import * as AppTypes from '@/context/App/types'
 
-type QualifiedBtnProps = { onClick: React.MouseEventHandler<HTMLButtonElement>, value?: AppTypes.RankType | '', children: React.ReactNode }
+type QualifiedBtnProps = { btnProps: { onClick: React.MouseEventHandler<HTMLButtonElement>, value?: AppTypes.RankType | '' }, children: React.ReactNode }
 
 function QualifiedBtn(props: QualifiedBtnProps) {
 
   return (
     <button
       type="button"
-      onClick={props.onClick}
-      value={props.value}
-      className={styles.button}>
+      className={styles.button}
+      { ...props.btnProps }>
         <p className={styles.label}>{props.children}</p>
     </button>
   )

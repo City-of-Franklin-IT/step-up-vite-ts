@@ -14,17 +14,17 @@ export const useHandleQualifiedFilterContainer = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))
   }
 
-  return { hidden: state.hidden, onHideBtnClick }
+  return { hidden: state.hidden, onClick: onHideBtnClick }
 }
 
 export const useHandleButtons = () => {
-  const { dispatch } = useContext(StepUpCtx)
+  const { filter, dispatch } = useContext(StepUpCtx)
 
-  const onBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const payload = e.currentTarget.value as AppTypes.RankType
 
     dispatch({ type: 'SET_FILTER', payload })
   }
 
-  return { onBtnClick }
+  return { onClick, showRemoveBtn: !!filter }
 }

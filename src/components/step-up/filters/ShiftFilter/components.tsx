@@ -43,33 +43,38 @@ const RemoveFilterBtn = () => {
   if(!visible) return
 
   return (
-    <ShiftBtn 
-      onClick={onClick}>
-        Remove Filter
+    <ShiftBtn btnProps={{ onClick }}>
+      Remove Filter
     </ShiftBtn>
   )
 }
 
 const ShiftBtns = () => {
-  const { visible, onBtnClick } = useHandleShiftBtns()
+  const { visible, onClick } = useHandleShiftBtns()
 
   if(!visible) return
 
   return (
     <div className={'flex flex-col justify-around w-full gap-8 md:flex-row'}>
-      <ShiftBtn 
-        onClick={onBtnClick}
-        value={'A'}>
+      <ShiftBtn
+        btnProps={{
+          onClick,
+          value: 'A'
+        }}> 
           A
       </ShiftBtn>
-      <ShiftBtn 
-        onClick={onBtnClick}
-        value={'B'}>
+      <ShiftBtn
+        btnProps={{
+          onClick,
+          value: 'B'
+        }}> 
           B
       </ShiftBtn>
-      <ShiftBtn 
-        onClick={onBtnClick}
-        value={'C'}>
+      <ShiftBtn
+        btnProps={{
+          onClick,
+          value: 'C'
+        }}> 
           C
       </ShiftBtn>
     </div>

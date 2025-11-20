@@ -11,7 +11,7 @@ export const useHandleSkillsFilterContainer = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))
   }
 
-  return { hidden: state.hidden, onHideBtnClick }
+  return { hidden: state.hidden, onClick: onHideBtnClick }
 }
 
 export const useHandleSkillsBtns = () => {
@@ -21,11 +21,11 @@ export const useHandleSkillsBtns = () => {
 
   const visible = !skillsFilter && !isMobile
 
-  const onBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: 'SET_SKILLS_FILTER', payload: e.currentTarget.value })
   }
 
-  return { visible, onBtnClick }
+  return { visible, onClick }
 }
 
 export const useHandleRemoveFilterBtn = () => {

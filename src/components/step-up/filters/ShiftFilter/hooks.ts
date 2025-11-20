@@ -14,7 +14,7 @@ export const useHandleShiftFilterContainer = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))
   }
 
-  return { hidden: state.hidden, onHideBtnClick }
+  return { hidden: state.hidden, onClick: onHideBtnClick }
 }
 
 export const useHandleShiftBtns = () => {
@@ -24,11 +24,11 @@ export const useHandleShiftBtns = () => {
 
   const visible = !shiftFilter && !isMobile
 
-  const onBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: 'SET_SHIFT_FILTER', payload: e.currentTarget.value as AppTypes.ShiftType })
   }
 
-  return { visible, onBtnClick }
+  return { visible, onClick }
 }
 
 export const useHandleRemoveFilterBtn = () => {

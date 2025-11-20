@@ -1,27 +1,25 @@
 import { useHandleSearch, useHandleClearBtn } from './hooks'
 
 export const SearchInput = () => {
-  const { searchValue, onChange } = useHandleSearch()
+  const searchProps = useHandleSearch()
 
   return (
     <input 
       type="text" 
-      value={searchValue} 
       placeholder="by employee name.." 
-      onChange={onChange} 
-      className="input bg-white rounded-r-none w-full" />
+      className="input bg-white rounded-r-none w-full"
+      { ...searchProps } />
   )
 }
 
 export const ClearBtn = () => {
-  const { disabled, onClick } = useHandleClearBtn()
+  const btnProps = useHandleClearBtn()
 
   return (
     <button 
-      type="button" 
-      disabled={disabled}
-      onClick={onClick}
-      className="btn btn-primary uppercase rounded-l-none">
+      type="button"
+      className="btn btn-primary uppercase rounded-l-none"
+      { ...btnProps }>
         Clear
     </button>
   )

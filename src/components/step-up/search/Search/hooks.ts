@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useContext, useState } from "react"
+import { useEffect, useContext, useState } from "react"
 import StepUpCtx from "../../context"
 
 export const useHandleSearch = () => {
   const { searchValue, dispatch } = useContext(StepUpCtx)
   const [state, setState] = useState<{ searchValue: string }>({ searchValue: '' })
 
-  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange =(e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value
     setState({ searchValue: value })
-  }, [])
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

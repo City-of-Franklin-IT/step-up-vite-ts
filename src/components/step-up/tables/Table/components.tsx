@@ -43,14 +43,12 @@ export const TableBody = ({ employees }: { employees: TableDataType[] }) => { //
 type TableRowProps = { employee: TableDataType, index: number }
 
 export const TableRow = (props: TableRowProps) => { // Table row
-  const { onMouseEnter, onMouseLeave, className, hovered } = useHandleTableRow(props.index)
+  const { rowProps, hovered } = useHandleTableRow(props.index)
 
   return (
     <tr
       key={`table-row-${ props.employee.employeeId }`}
-      className={className}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}>
+      { ...rowProps }>
         <SetEmployee 
           employee={props.employee}
           hovered={hovered} />

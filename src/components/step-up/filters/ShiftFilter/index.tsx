@@ -6,17 +6,15 @@ import HideBtn from "../../buttons/HideBtn"
 import * as Components from './components'
 
 function ShiftFilterContainer() {
-  const { onHideBtnClick, hidden } = useHandleShiftFilterContainer()
+  const btnProps = useHandleShiftFilterContainer()
 
   return (
     <div className={styles.container}>
       <Components.Header />
       <div className="absolute -top-5 right-5">
-        <HideBtn 
-          onClick={onHideBtnClick}
-          hidden={hidden} />
+        <HideBtn { ...btnProps } />
       </div>
-      <Components.Buttons hidden={hidden} />
+      <Components.Buttons hidden={btnProps.hidden} />
       <Components.Footer />
     </div>
   )

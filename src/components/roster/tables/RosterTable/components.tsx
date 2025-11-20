@@ -1,5 +1,4 @@
-import { handleTime } from '@/helpers/utils'
-import { handleActive } from './utils'
+import { handleTableRow } from './utils'
 import styles from './RosterTable.module.css'
 
 // Types
@@ -56,22 +55,16 @@ const TableBody = ({ ordered }: { ordered: RosterItemType[] }) => {
 }
 
 const TableRow = ({ roster }: { roster: RosterItemType }) => {
-  const { staffStart, staffEnd } = roster
-
-  const className = handleActive(staffStart, staffEnd)
-
-  const start = staffStart.split('T')[0]
-
-  const end = staffEnd.split('T')[0]
+  const { className, start, end, rank } = handleTableRow(roster)
 
   return (
     <tr className={className}>
       <RosterNameTableData roster={roster} />
-      <td>{roster.rankAbrv}</td>
-      <td className="hidden md:block">{start}</td>
-      <td>{handleTime(roster.staffStart.toString())}</td>
-      <td className="hidden md:block">{end}</td>
-      <td>{handleTime(roster.staffEnd.toString())}</td>
+      <td>{rank}</td>
+      <td className="hidden md:block">{start.date}</td>
+      <td>{start.time}</td>
+      <td className="hidden md:block">{end.date}</td>
+      <td>{end.time}</td>
     </tr>
   )
 }
@@ -118,7 +111,7 @@ const RosterName = (props: RankIndicatorProps) => {
     <td>
       <div className="flex gap-1 items-center">
         {props.roster.name}
-        <div className={`w-[10px] h-[10px] rounded-full ${ props.bgColor }`} title={props.title}></div>
+        <div className={`w-2.5 h-2.5 rounded-full ${ props.bgColor }`} title={props.title}></div>
         <IsParamedicIndicator isParamedic={props.roster.isParamedic} />
       </div>
     </td>
@@ -129,6 +122,6 @@ const IsParamedicIndicator = ({ isParamedic }: { isParamedic: boolean }) => {
   if(!isParamedic) return
 
   return (
-    <div className="bg-info w-[10px] h-[10px] rounded-full" title="Paramedic"></div>
+    <div className="bg-info w-2.5 h-2.5 rounded-full" title="Paramedic"></div>
   )
 }

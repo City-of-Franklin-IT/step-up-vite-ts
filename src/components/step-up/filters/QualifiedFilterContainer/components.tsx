@@ -17,16 +17,16 @@ export const Header = () => {
 }
 
 export const Buttons = ({ hidden }: { hidden: boolean }) => {
-  const { filter } = useContext(StepUpCtx)
-
-  const { onBtnClick } = useHandleButtons()
+  const { onClick, showRemoveBtn } = useHandleButtons()
 
   if(hidden) return
 
-  if(filter) return (
+  if(showRemoveBtn) return (
     <QualifiedBtn
-      value={''}
-      onClick={onBtnClick}>
+      btnProps={{
+        onClick,
+        value: '',
+      }}>
         Remove Filter
     </QualifiedBtn>
   )
@@ -34,23 +34,31 @@ export const Buttons = ({ hidden }: { hidden: boolean }) => {
   return (
     <div className="flex flex-col justify-around w-full gap-8 md:flex-row">
       <QualifiedBtn
-        value={'Engineer'}
-        onClick={onBtnClick}>
+        btnProps={{
+          onClick,
+          value: 'Engineer'
+        }}>
           Engineer
       </QualifiedBtn>
       <QualifiedBtn
-        value={'Lieutenant'}
-        onClick={onBtnClick}>
+        btnProps={{
+          onClick,
+          value: 'Lieutenant'
+        }}>
           Lieutenant
       </QualifiedBtn>
       <QualifiedBtn
-        value={'Captain'}
-        onClick={onBtnClick}>
+        btnProps={{
+          onClick,
+          value: 'Captain'
+        }}>
           Captain
       </QualifiedBtn>
       <QualifiedBtn
-        value={'BC'}
-        onClick={onBtnClick}>
+        btnProps={{
+          onClick,
+          value: 'BC'
+        }}>
           BC
       </QualifiedBtn>
     </div>

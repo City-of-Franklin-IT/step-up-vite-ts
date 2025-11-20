@@ -6,17 +6,15 @@ import HideBtn from "../../buttons/HideBtn"
 import { Header, Buttons, Footer } from "./components"
 
 function QualifiedFilterContainer() {
-  const { hidden, onHideBtnClick } = useHandleQualifiedFilterContainer()
+  const btnProps = useHandleQualifiedFilterContainer()
 
   return (
     <div className={styles.container}>
       <Header />
       <div className="absolute -top-5 right-5">
-        <HideBtn
-          onClick={onHideBtnClick} 
-          hidden={hidden} />
+        <HideBtn { ...btnProps } />
       </div>
-      <Buttons hidden={hidden} />
+      <Buttons hidden={btnProps.hidden} />
       <Footer />
     </div>
   )

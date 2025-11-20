@@ -38,7 +38,7 @@ export const Footer = () => {
 }
 
 const SkillsBtns = ({ skills }: { skills: string[] }) => {
-  const { visible, onBtnClick } = useHandleSkillsBtns()
+  const { visible, onClick } = useHandleSkillsBtns()
 
   if(!visible) return
 
@@ -47,9 +47,8 @@ const SkillsBtns = ({ skills }: { skills: string[] }) => {
       {skills.map(skill => {
         return (
           <SkillsBtn
-            key={`skills-btn-${ skill }`} 
-            onClick={onBtnClick}
-            value={skill}>
+            key={`skills-btn-${ skill }`}
+            btnProps={{ onClick }}> 
               {skill}
           </SkillsBtn>
         )
@@ -64,9 +63,8 @@ const RemoveFilterBtn = () => {
   if(!visible) return
 
   return (
-    <SkillsBtn
-      onClick={onClick}>
-        Remove Filter
+    <SkillsBtn btnProps={{ onClick }}>
+      Remove Filter
     </SkillsBtn>
   )
 }

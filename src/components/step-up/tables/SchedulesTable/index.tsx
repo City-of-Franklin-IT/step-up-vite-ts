@@ -12,8 +12,10 @@ function SchedulesTable({ schedules, employeeId }: { schedules: ScheduleInterfac
       <Components.NoRecentShifts visible={noRecentShifts} />
       <Components.Table
         visible={!noRecentShifts}
-        schedules={schedules}
-        employeeId={employeeId} />
+        tableBodyProps={{
+          schedules,
+          employeeId
+        }} />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useRef } from "react"
+import { useMemo, useContext, useRef } from "react"
 import StepUpCtx from "../../context"
 
 // Types
@@ -88,7 +88,17 @@ export const useHandleTableContainer = (staff: AppTypes.StaffInterface[] | undef
   const skills = useSetSkills(tableData)
 
   return { tableData, skills, topRef }
-} 
+}
+
+export const useHandleCheckbox = () => {
+  const { showAllStaff, dispatch } = useContext(StepUpCtx)
+
+  const onChange = () => {
+    dispatch({ type: 'TOGGLE_SHOW_ALL_STAFF', payload: !showAllStaff })
+  }
+
+  return { onChange, checked: showAllStaff }
+}
 
 const useSetSkills = (staff: TableData[]): string[] => { // Set employee skills
   const array = useMemo(() => {

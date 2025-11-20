@@ -14,5 +14,11 @@ export const useHandleTableRow = (index: number) => {
 
   const className = index % 2 === 0 ? styles.evenRow : styles.oddRow
 
-  return { onMouseEnter, onMouseLeave, className, hovered: state.hovered }
+  const rowProps = {
+    onMouseEnter,
+    onMouseLeave,
+    className
+  }
+
+  return { rowProps, hovered: state.hovered }
 }

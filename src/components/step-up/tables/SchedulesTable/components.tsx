@@ -12,15 +12,15 @@ export const NoRecentShifts = ({ visible }: { visible: boolean }) => {
   )
 }
 
-export const Table = ({ visible, schedules, employeeId }: { visible: boolean, schedules: ScheduleInterface[], employeeId: string }) => {
-  if(!visible) return null
+type TableProps = { visible: boolean, tableBodyProps: { schedules: ScheduleInterface[], employeeId: string } }
+
+export const Table = (props: TableProps) => {
+  if(!props.visible) return null
 
   return (
     <table data-testid="schedules-table" className={styles.schedulesTable}>
       <Headers />
-      <TableBody
-        schedules={schedules}
-        employeeId={employeeId} />
+      <TableBody { ...props.tableBodyProps } />
     </table>
   )
 }
@@ -41,14 +41,16 @@ const Headers = () => {
   )
 }
 
-const TableBody = ({ schedules, employeeId }: { schedules: ScheduleInterface[], employeeId: string }) => {
+type TableBodyProps = { schedules: ScheduleInterface[], employeeId: string }
+
+const TableBody = (props: TableBodyProps) => {
 
   return (
     <tbody>
-      {schedules.map((schedule, index) => {
+      {props.schedules.map((schedule, index) => {
         return (
           <TableRow
-            key={`schedules-table-row-${ employeeId }-${ schedule.startDate }-${ schedule.endDate }-${ index }`} 
+            key={`schedules-table-row-${ props.employeeId }-${ schedule.startDate }-${ schedule.endDate }-${ index }`} 
             schedule={schedule} />
         )
       })}

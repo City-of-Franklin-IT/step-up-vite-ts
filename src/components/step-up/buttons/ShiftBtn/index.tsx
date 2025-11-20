@@ -1,15 +1,14 @@
 import styles from './ShiftBtn.module.css'
 
-type ShiftBtnProps = { onClick: React.MouseEventHandler<HTMLButtonElement>, value?: 'A' | 'B' | 'C', children: React.ReactNode }
+type ShiftBtnProps = { btnProps: { onClick: React.MouseEventHandler<HTMLButtonElement>, value?: 'A' | 'B' | 'C' }, children: React.ReactNode }
 
 function ShiftBtn(props: ShiftBtnProps) {
 
   return (
     <button
       type="button"
-      value={props.value}
-      onClick={props.onClick}
-      className={styles.button}>
+      className={styles.button}
+      { ...props.btnProps }>
         <p className={styles.label}>{props.children}</p>
     </button>
   )

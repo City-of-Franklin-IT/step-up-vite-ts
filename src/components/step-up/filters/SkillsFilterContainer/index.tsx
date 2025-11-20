@@ -6,19 +6,17 @@ import HideBtn from '../../buttons/HideBtn'
 import * as Components from './components'
 
 function SkillsFilterContainer({ skills }: { skills: string[] }) {
-  const { hidden, onHideBtnClick } = useHandleSkillsFilterContainer()
+  const btnProps = useHandleSkillsFilterContainer()
 
   return (
     <div className={styles.container}>
       <Components.Header />
       <div className="absolute -top-5 right-5">
-        <HideBtn 
-          onClick={onHideBtnClick}
-          hidden={hidden} />
+        <HideBtn { ...btnProps } />
       </div>
       <Components.Buttons 
         skills={skills}
-        hidden={hidden} />
+        hidden={btnProps.hidden} />
       <Components.Footer />
     </div>
   )
