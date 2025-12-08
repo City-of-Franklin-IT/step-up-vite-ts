@@ -28,38 +28,47 @@ export const useGetToken = () => {
       return
     }
 
-    let token: string | undefined = undefined
-
-    if(activeAccount?.idTokenClaims && activeAccount.idTokenClaims.exp) { // Check if token is expired or about to expire
+    if(activeAccount?.idTokenClaims && activeAccount.idTokenClaims.exp) {
       const expiresOn = activeAccount.idTokenClaims.exp * 1000
       const now = Date.now()
-  
-      if(expiresOn > now + 3000000) { // Still valid
-        token = activeAccount.idToken
-        setState(({ token, isLoading: false }))
+
+      if(expiresOn > now + 3000000) {
+        setState({ token: activeAccount.idToken, isLoading: false })
         return
       }
-  
+
       const request = {
         scopes: ["openid", "profile", "email"],
         account: activeAccount,
-        forceRefresh: true
+        forceRefresh: true,
+        redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
       }
-  
-      const response = await instance.acquireTokenSilent(request) // Refresh token
 
-      setState(({ token: response.idToken, isLoading: false }))
+      const isEdge = /Edg/.test(navigator.userAgent)
+      
+      const response = isEdge 
+        ? await instance.acquireTokenPopup(request)
+        : await instance.acquireTokenSilent(request)
+
+      setState({ token: response.idToken, isLoading: false })
+      return
     }
 
-    if(activeAccount && !activeAccount.idTokenClaims) { // Active account but !idTokenClaims
+    if(activeAccount && !activeAccount.idTokenClaims) {
       const request = {
         scopes: ["openid", "profile", "email"],
-        account: activeAccount
+        account: activeAccount,
+        redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
       }
 
-      const response = await instance.acquireTokenSilent(request) // Refresh token
+      const isEdge = /Edg/.test(navigator.userAgent)
+      
+      const response = isEdge
+        ? await instance.acquireTokenPopup(request)
+        : await instance.acquireTokenSilent(request)
 
-      setState(({ token: response.idToken, isLoading: false }))
+      setState({ token: response.idToken, isLoading: false })
+      return
     }
 
     setState(prevState => ({ ...prevState, isLoading: false }))
