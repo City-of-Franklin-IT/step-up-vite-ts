@@ -1,20 +1,26 @@
 import { useState, useEffect } from "react"
 import { useMsal } from "@azure/msal-react"
 import { NODE_ENV } from "@/config"
+import { infoPopup } from "@/utils/Toast/Toast"
+
+// Types
+import { BrowserAuthError } from "@azure/msal-browser"
 
 export const useGetToken = () => {
-  const [state, setState] = useState<{ token: string | undefined, isLoading: boolean }>({ token: undefined, isLoading: true })
+  const [state, setState] = useState<{ token: string | undefined, isLoading: boolean, popupBlocked: boolean }>({ token: undefined, isLoading: true, popupBlocked: false })
 
   const { instance, accounts, inProgress } = useMsal()
 
   if(NODE_ENV === 'development') {
-    return { token: 'dev-token', isLoading: false }
+    return { token: 'dev-token', isLoading: false, popupBlocked: false }
   }
 
   const checkToken = async () => {
     setState(prevState => ({ ...prevState, isLoading: true }))
 
     const activeAccount = instance.getActiveAccount()
+
+    const isEdge = /Edg/.test(navigator.userAgent)
 
     if(!activeAccount && accounts.length === 0) {
       setState(prevState => ({ ...prevState, isLoading: false }))
@@ -33,7 +39,7 @@ export const useGetToken = () => {
       const now = Date.now()
 
       if(expiresOn > now + 3000000) {
-        setState({ token: activeAccount.idToken, isLoading: false })
+        setState({ token: activeAccount.idToken, isLoading: false, popupBlocked: false })
         return
       }
 
@@ -44,13 +50,20 @@ export const useGetToken = () => {
         redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
       }
 
-      const isEdge = /Edg/.test(navigator.userAgent)
-      
-      const response = isEdge 
-        ? await instance.acquireTokenPopup(request)
-        : await instance.acquireTokenSilent(request)
+      if(isEdge) { // Acquire token via popup for Edge users
+        try {
+          const response = await instance.acquireTokenPopup(request)
+          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+        } catch(error) {
+          if(error instanceof BrowserAuthError && (error.errorCode === 'popup_window_error' || error.errorCode === 'empty_window_error')) {
+            setState({ token: undefined, isLoading: false, popupBlocked: true })
+          } else throw error
+        }
+      } else {
+        const response = await instance.acquireTokenSilent(request)
+        setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+      }
 
-      setState({ token: response.idToken, isLoading: false })
       return
     }
 
@@ -60,14 +73,21 @@ export const useGetToken = () => {
         account: activeAccount,
         redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
       }
-
-      const isEdge = /Edg/.test(navigator.userAgent)
       
-      const response = isEdge
-        ? await instance.acquireTokenPopup(request)
-        : await instance.acquireTokenSilent(request)
+      if(isEdge) { // Acquire token via popup for Edge users
+        try {
+          const response = await instance.acquireTokenPopup(request)
+          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+        } catch(error) {
+          if(error instanceof BrowserAuthError && (error.errorCode === 'popup_window_error' || error.errorCode === 'empty_window_error')) {
+            setState({ token: undefined, isLoading: false, popupBlocked: true })
+          } else throw error
+        }
+      } else {
+        const response = await instance.acquireTokenSilent(request)
+        setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+      }
 
-      setState({ token: response.idToken, isLoading: false })
       return
     }
 
@@ -92,13 +112,19 @@ export const useGetToken = () => {
 export const useEnableQuery = () => {
   const [state, setState] = useState<{ enabled: boolean }>({ enabled: false })
 
-  const { token, isLoading } = useGetToken()
+  const { token, isLoading, popupBlocked } = useGetToken()
 
   useEffect(() => {
     if(isLoading) {
       setState({ enabled: false })
     } else setState({ enabled: !!token })
   }, [token, isLoading])
+  
+  useEffect(() => {
+    if(popupBlocked) {
+      infoPopup('Please disable popup blocker for this site')
+    }
+  }, [popupBlocked])
 
   return { enabled: state.enabled, token }
 }
