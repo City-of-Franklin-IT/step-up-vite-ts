@@ -6,6 +6,9 @@ import HeaderCtx from "./context"
 import { PagesType } from "./context"
 import { useActiveAccount } from "@/helpers/hooks"
 
+/**
+* Handles setting activePage in context on page change
+**/
 export const useSetActivePage = () => {
   const { dispatch } = useContext(HeaderCtx)
 
@@ -31,6 +34,9 @@ export const useSetActivePage = () => {
   }, [dispatch, location])
 }
 
+/**
+* Returns visibility boolean for header buttons
+**/
 export const useHandleButtons = () => {
   const { pathname } = useLocation()
 
@@ -39,6 +45,9 @@ export const useHandleButtons = () => {
   return { visible }
 }
 
+/**
+* Returns visibility boolean and className for header button
+**/
 export const useHandleHeaderBtn = (label: string) => {
   const { activePage } = useContext(HeaderCtx)
 
@@ -47,8 +56,9 @@ export const useHandleHeaderBtn = (label: string) => {
   const { pathname } = useLocation()
 
   const visible = activeAccount || pathname !== '/'
-
   const active = activePage === label
+  const textColor = active ? 'text-warning' : 'text-neutral-content'
+  const className = `btn btn-ghost rounded-none uppercase hover:bg-primary hover:shadow-none ${ textColor }`
 
-  return { visible, active }
+  return { visible, className }
 }

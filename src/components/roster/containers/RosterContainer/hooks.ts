@@ -1,38 +1,49 @@
-import { useCallback, useContext, useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import RosterCtx from "../../context"
 
 // Types
 import * as AppTypes from '@/context/App/types'
 import { RosterItemType } from "../../context"
 
+/**
+* Returns visibility boolean and calendar button onClick handler
+**/
 export const useHandleRosterContainer = () => {
   const [state, setState] = useState<{ showDatePicker: boolean }>({ showDatePicker: false })
 
-  const onCalendarBtnClick = useCallback(() => {
+  const onCalendarBtnClick = () => {
     setState(prevState => ({ showDatePicker: !prevState.showDatePicker }))
-  }, [state.showDatePicker])
+  }
 
   return { showDatePicker: state.showDatePicker, onCalendarBtnClick }
 }
 
+/**
+* Returns date picker onChange handler; updates rosterDate in context
+**/
 export const useHandleDatePicker = () => {
-  const { dispatch } = useContext(RosterCtx)
+  const { rosterDate, dispatch } = useContext(RosterCtx)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const payload = e.currentTarget.value
 
-    dispatch({ type: 'SET_ROSTER_DATE', payload })
+    if(payload !== rosterDate) {
+      dispatch({ type: 'SET_ROSTER_DATE', payload })
+    }
   }
 
-  return { onChange }
+  return onChange
 }
 
 type RosterGroupType = { key: string, roster: RosterItemType[] }
 
-export const useRosterGroups = (rosters: AppTypes.RosterEntryInterface[] | undefined): RosterGroupType[] => { // Set roster groups by station
+/**
+* Returns array of roster groups
+**/
+export const useRosterGroups = (rosters: AppTypes.RosterEntryInterface[] | undefined): { station: string, units: StationGroupType[] }[] => {
   if(!rosters) return []
 
-  const array = useMemo(() => {
+  const groups = useMemo(() => {
     const rosterMap = new Map<string, RosterItemType[]>()
   
     const stations: AppTypes.StationType[] = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]
@@ -85,13 +96,31 @@ export const useRosterGroups = (rosters: AppTypes.RosterEntryInterface[] | undef
     return sorted
   }, [rosters])
 
-  return array
+  const stations = useSetStationGroups(groups)
+
+  return stations
+}
+
+/**
+* Returns selected date
+**/
+export const useHandlePickedDate = () => {
+  const { rosterDate } = useContext(RosterCtx)
+
+  const selectedDate = rosterDate ? 
+    new Date(new Date(rosterDate).setDate(new Date(rosterDate).getDate() + 1)).toDateString() 
+    : new Date().toDateString()
+
+  return selectedDate
 }
 
 type StationGroupType = { unit: AppTypes.ApparatusType, roster: RosterItemType[] }
 
-export const useSetGroups = (rosters: RosterGroupType[]): { station: string, units: StationGroupType[] }[] => {
-  const obj = useMemo(() => {
+/**
+* Returns array of objects containing station and units array
+**/
+const useSetStationGroups = (rosters: RosterGroupType[]): { station: string, units: StationGroupType[] }[] => {
+  const stations = useMemo(() => {
     const stationsMap = new Map<string, StationGroupType[]>()
   
     rosters.forEach(obj => {
@@ -120,13 +149,5 @@ export const useSetGroups = (rosters: RosterGroupType[]): { station: string, uni
     return groups
   }, [rosters])
 
-  return obj
-}
-
-export const useHandlePickedDate = () => {
-  const { rosterDate } = useContext(RosterCtx)
-
-  const selectedDate = rosterDate ? new Date(new Date(rosterDate).setDate(new Date(rosterDate).getDate() + 1)).toDateString() : new Date().toDateString()
-
-  return { selectedDate }
+  return stations
 }

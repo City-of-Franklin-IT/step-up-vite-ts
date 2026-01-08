@@ -3,7 +3,10 @@ import { useMemo } from "react"
 // Types
 import { RosterItemType } from "../../context"
 
-export const useOrderRanks = (rosters: RosterItemType[]): RosterItemType[] => { // Order staff by rank
+/**
+* Returns table data ordered by rank and shift start date/time
+**/
+export const useOrderRanks = (rosters: RosterItemType[]): RosterItemType[] => {
 
   const array = useMemo(() => {
     return rosters.sort((a, b) => {

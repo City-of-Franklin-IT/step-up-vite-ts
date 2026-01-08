@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import StepUpCtx from "../../context"
-import styles from './SkillsFilterContainer.module.css'
+import styles from '../QualifiedFilterContainer/QualifiedFilterContainer.module.css'
 import { useHandleSkillsBtns, useHandleRemoveFilterBtn } from './hooks'
 
 // Components
@@ -48,7 +48,10 @@ const SkillsBtns = ({ skills }: { skills: string[] }) => {
         return (
           <SkillsBtn
             key={`skills-btn-${ skill }`}
-            btnProps={{ onClick }}> 
+            btnProps={{ 
+              onClick,
+              value: skill 
+            }}> 
               {skill}
           </SkillsBtn>
         )

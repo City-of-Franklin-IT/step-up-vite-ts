@@ -24,7 +24,7 @@ export const Headers = () => {
   )
 }
 
-export const TableBody = ({ employees }: { employees: TableDataType[] }) => { // Employee table body
+export const TableBody = ({ employees }: { employees: TableDataType[] }) => {
 
   return (
     <tbody>

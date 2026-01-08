@@ -1,6 +1,9 @@
 import { useEffect, useContext, useState } from "react"
 import StepUpCtx from "../../context"
 
+/**
+* Returns searchValue from context and search component onChange handler; updates searchValue in context
+**/
 export const useHandleSearch = () => {
   const { searchValue, dispatch } = useContext(StepUpCtx)
   const [state, setState] = useState<{ searchValue: string }>({ searchValue: '' })
@@ -22,9 +25,12 @@ export const useHandleSearch = () => {
     setState({ searchValue })
   }, [searchValue])
 
-  return { searchValue: state.searchValue, onChange }
+  return { value: state.searchValue, onChange }
 }
 
+/**
+* Returns clear search button props including onClick handler
+**/
 export const useHandleClearBtn = () => {
   const { searchValue, dispatch } = useContext(StepUpCtx)
 

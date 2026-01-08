@@ -3,6 +3,9 @@ import * as AppActions from '@/context/App/AppActions'
 import { useEnableQuery } from "@/helpers/hooks"
 import { authHeaders } from "@/helpers/utils"
 
+/**
+* Returns staff data from server
+**/
 export const useGetStaff = () => { // Get staff
   const { enabled, token } = useEnableQuery()
 

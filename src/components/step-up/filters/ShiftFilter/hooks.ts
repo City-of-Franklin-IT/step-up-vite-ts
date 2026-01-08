@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react"
-import { useGetWindowSize } from "@/helpers/hooks"
 import StepUpCtx from "../../context"
 
 // Types
 import * as AppTypes from '@/context/App/types'
 
+/**
+* Returns shift filter button props and buttons visibility boolean
+**/
 export const useHandleShiftFilterContainer = () => {
-  const isMobile = useGetWindowSize()
-
-  const [state, setState] = useState<{ hidden : boolean }>({ hidden: isMobile })
+  const [state, setState] = useState<{ hidden : boolean }>({ hidden: false })
 
   const onHideBtnClick = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))
@@ -17,12 +17,13 @@ export const useHandleShiftFilterContainer = () => {
   return { hidden: state.hidden, onClick: onHideBtnClick }
 }
 
+/**
+* Returns shift filter button props and visibility boolean
+**/
 export const useHandleShiftBtns = () => {
   const { shiftFilter, dispatch } = useContext(StepUpCtx)
 
-  const isMobile = useGetWindowSize()
-
-  const visible = !shiftFilter && !isMobile
+  const visible = !shiftFilter
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: 'SET_SHIFT_FILTER', payload: e.currentTarget.value as AppTypes.ShiftType })
@@ -31,6 +32,9 @@ export const useHandleShiftBtns = () => {
   return { visible, onClick }
 }
 
+/**
+* Returns remove filter button visibility boolean and onClick handler
+**/
 export const useHandleRemoveFilterBtn = () => {
   const { shiftFilter, dispatch } = useContext(StepUpCtx)
 

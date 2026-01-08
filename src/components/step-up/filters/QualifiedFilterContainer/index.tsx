@@ -1,4 +1,3 @@
-import styles from './QualifiedFilterContainer.module.css'
 import { useHandleQualifiedFilterContainer } from './hooks'
 
 // Components
@@ -9,7 +8,7 @@ function QualifiedFilterContainer() {
   const btnProps = useHandleQualifiedFilterContainer()
 
   return (
-    <div className={styles.container}>
+    <div className="flex-1 flex relative items-center justify-evenly gap-8 p-8 border border-neutral-content rounded-lg">
       <Header />
       <div className="absolute -top-5 right-5">
         <HideBtn { ...btnProps } />

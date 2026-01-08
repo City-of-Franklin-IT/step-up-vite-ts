@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import StepUpCtx from "../../context"
-import styles from './ShiftFilter.module.css'
+import styles from '../QualifiedFilterContainer/QualifiedFilterContainer.module.css'
 import { useHandleShiftBtns, useHandleRemoveFilterBtn } from './hooks'
 
 // Components

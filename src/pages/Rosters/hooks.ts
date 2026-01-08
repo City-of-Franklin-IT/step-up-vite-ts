@@ -5,6 +5,9 @@ import { authHeaders } from '@/helpers/utils'
 import * as AppActions from '@/context/App/AppActions'
 import RosterCtx from '@/components/roster/context'
 
+/**
+* Returns roster data from Telestaff API
+**/
 export const useGetRoster = () => { // Get roster from Telestaff API
   const { rosterDate } = useContext(RosterCtx)
 

@@ -1,10 +1,13 @@
-import { useState, useCallback } from "react"
+import { useState } from "react"
 
 // Icons
 import iconDark from '@/assets/icons/email/email.svg'
 import iconLight from '@/assets/icons/email/emailLight.svg'
 import iconWarning from '@/assets/icons/email/emailWarning.svg'
 
+/**
+* 
+**/
 export const useHandleEmailIcon = (variant: 'light' | 'normal' | 'warning') => {
   const [state, setState] = useState<{ hovered: boolean }>({ hovered: false })
 
@@ -16,17 +19,15 @@ export const useHandleEmailIcon = (variant: 'light' | 'normal' | 'warning') => {
     setState({ hovered: false })
   }
 
-  const setIcon = useCallback(() => {
+  const setIcon = () => {
     if(state.hovered) {
       return iconWarning
     }
 
-    if(variant === 'light') {
-      return iconLight
-    }
-
-    return iconDark
-  }, [state.hovered, variant])
+    return variant === 'light' ?
+      iconLight :
+      iconDark
+  }
 
   const icon = setIcon()
 

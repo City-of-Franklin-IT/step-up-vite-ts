@@ -1,11 +1,11 @@
 import { useContext, useState } from "react"
-import { useGetWindowSize } from "@/helpers/hooks"
 import StepUpCtx from "../../context"
 
+/**
+* Returns hide button props and buttons visibility boolean
+**/
 export const useHandleSkillsFilterContainer = () => {
-  const isMobile = useGetWindowSize()
-
-  const [state, setState] = useState<{ hidden: boolean }>({ hidden: isMobile })
+  const [state, setState] = useState<{ hidden: boolean }>({ hidden: false })
 
   const onHideBtnClick = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))
@@ -14,12 +14,13 @@ export const useHandleSkillsFilterContainer = () => {
   return { hidden: state.hidden, onClick: onHideBtnClick }
 }
 
+/**
+* Returns skills buttons visibility boolean and onClick handler
+**/
 export const useHandleSkillsBtns = () => {
   const { skillsFilter, dispatch } = useContext(StepUpCtx)
 
-  const isMobile = useGetWindowSize()
-
-  const visible = !skillsFilter && !isMobile
+  const visible = !skillsFilter
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: 'SET_SKILLS_FILTER', payload: e.currentTarget.value })
@@ -28,6 +29,9 @@ export const useHandleSkillsBtns = () => {
   return { visible, onClick }
 }
 
+/**
+* Returns remove filter button visibility boolean and onClick handler
+**/
 export const useHandleRemoveFilterBtn = () => {
   const { skillsFilter, dispatch } = useContext(StepUpCtx)
 

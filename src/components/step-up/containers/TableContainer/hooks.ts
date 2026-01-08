@@ -1,5 +1,6 @@
 import { useMemo, useContext, useRef } from "react"
 import StepUpCtx from "../../context"
+import { filterQualified } from "./utils"
 
 // Types
 import * as AppTypes from '@/context/App/types'
@@ -17,6 +18,9 @@ export interface TableData {
   [key: string]: string | AppTypes.RankType | number | AppTypes.ScheduleInterface[] | null
 }
 
+/**
+* Returns step up table data, skills array, and container ref
+**/
 export const useHandleTableContainer = (staff: AppTypes.StaffInterface[] | undefined): { tableData: TableData[], skills: string[], topRef: React.RefObject<HTMLDivElement|null> } => { // Set table data
   const { filter, skillsFilter, showAllStaff, searchValue, shiftFilter } = useContext(StepUpCtx)
 
@@ -90,6 +94,9 @@ export const useHandleTableContainer = (staff: AppTypes.StaffInterface[] | undef
   return { tableData, skills, topRef }
 }
 
+/**
+* Returns show all employees checkbox props
+**/
 export const useHandleCheckbox = () => {
   const { showAllStaff, dispatch } = useContext(StepUpCtx)
 
@@ -100,8 +107,11 @@ export const useHandleCheckbox = () => {
   return { onChange, checked: showAllStaff }
 }
 
+/**
+* Returns array of unique skills for filter component
+**/
 const useSetSkills = (staff: TableData[]): string[] => { // Set employee skills
-  const array = useMemo(() => {
+  const skills = useMemo(() => {
     const skills: string[] = []
   
     staff.forEach(employee => {
@@ -115,53 +125,5 @@ const useSetSkills = (staff: TableData[]): string[] => { // Set employee skills
     return skills.filter(obj => obj !== '')
   }, [staff])
 
-  return array
-}
-
-const filterQualified = (staff: AppTypes.StaffInterface[], filter: string): TableData[] => { // Filter staff by qualification
-  const qualified: TableData[] = []
-
-  staff.forEach(employee => {
-    let employeeId
-
-    if(filter === 'Engineer' && employee.rank === 'Firefighter') { // Engineer filter
-      employeeId = employee.employeeId
-    }
-
-    if(filter === 'Lieutenant' && (employee.rank === 'Firefighter' || employee.rank === 'Engineer')) { // Lieutenant filter
-      employeeId = employee.employeeId
-    }
-
-    if(filter === 'Captain' && employee.rank === 'Lieutenant') { // Captain filter
-      employeeId = employee.employeeId
-    }
-
-    if(filter === 'BC' && employee.rank === 'Captain') { // BC filter
-      employeeId = employee.employeeId
-    }
-
-    let hours = 0
-
-    employee.StepUps.forEach(x => {
-      hours += x.hours
-    })
-
-    if(employeeId && hours >= 72) {
-      const item: TableData = {
-        employeeId: employee.employeeId,
-        rank: employee.rank,
-        fullName: employee.fullName,
-        skills: employee.skills,
-        phone: employee.phone,
-        email: employee.email,
-        hours,
-        shift: employee.shift,
-        Schedules: employee.Schedules
-      }
-
-      qualified.push(item)
-    }
-  })
-
-  return qualified
+  return skills
 }

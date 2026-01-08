@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import StepUpCtx from "../../context"
-import styles from './QualifiedFilterContainer.module.css'
 import { useHandleButtons } from './hooks'
+import styles from './QualifiedFilterContainer.module.css'
 
 // Components
 import QualifiedBtn from "../../buttons/QualifiedBtn"

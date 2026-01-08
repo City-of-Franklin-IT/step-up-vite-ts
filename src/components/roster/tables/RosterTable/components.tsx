@@ -95,10 +95,10 @@ const RosterNameTableData = ({ roster }: { roster: RosterItemType }) => {
       )
     default:
       return (
-        <div className="flex gap-1 items-center">
+        <td className="flex gap-1 items-center">
           {roster.name}
           <IsParamedicIndicator isParamedic={roster.isParamedic} />
-        </div>
+        </td>
       )
   }
 }

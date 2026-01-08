@@ -1,5 +1,5 @@
 import styles from './RosterContainer.module.css'
-import { useRosterGroups, useSetGroups, useHandleDatePicker, useHandlePickedDate } from './hooks'
+import { useRosterGroups, useHandleDatePicker, useHandlePickedDate } from './hooks'
 
 // Types
 import * as AppTypes from '@/context/App/types'
@@ -24,7 +24,7 @@ export const CalendarBtn = ({ onClick }: { onClick: React.MouseEventHandler<HTML
 }
 
 export const DatePicker = ({ showDatePicker }: { showDatePicker: boolean }) => {
-  const { onChange } = useHandleDatePicker()
+  const onChange = useHandleDatePicker()
 
   if(!showDatePicker) return null
 
@@ -37,7 +37,7 @@ export const DatePicker = ({ showDatePicker }: { showDatePicker: boolean }) => {
 }
 
 export const PickedDate = () => {
-  const { selectedDate } = useHandlePickedDate()
+  const selectedDate = useHandlePickedDate()
 
   return (
     <span>{selectedDate}</span>
@@ -45,9 +45,7 @@ export const PickedDate = () => {
 }
 
 export const Tables = ({ rosters }: { rosters: AppTypes.RosterEntryInterface[] | undefined }) => {
-  const groups = useRosterGroups(rosters)
-
-  const stations = useSetGroups(groups)
+  const stations = useRosterGroups(rosters)
 
   return (
     <div className={styles.tables}>

@@ -1,6 +1,9 @@
 import { useState } from "react"
 import styles from './Table.module.css'
 
+/**
+* Returns table row props and hovered boolean
+**/
 export const useHandleTableRow = (index: number) => {
   const [state, setState] = useState<{ hovered: boolean }>({ hovered: false })
 
