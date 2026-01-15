@@ -2,7 +2,7 @@ import styles from './RosterContainer.module.css'
 import { useHandleRosterContainer } from './hooks'
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 // Components
 import * as Components from './components'

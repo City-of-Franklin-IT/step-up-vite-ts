@@ -1,7 +1,7 @@
 import styles from './QualifiedBtn.module.css'
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 type QualifiedBtnProps = { btnProps: { onClick: React.MouseEventHandler<HTMLButtonElement>, value?: AppTypes.RankType | '' }, children: React.ReactNode }
 

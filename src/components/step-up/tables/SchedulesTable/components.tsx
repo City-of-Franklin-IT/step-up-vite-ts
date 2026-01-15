@@ -1,8 +1,8 @@
-import { handleTime } from "../../../../helpers/utils"
+import { handleTime } from "@/helpers/utils"
 import styles from './SchedulesTable.module.css'
 
 // Types
-import { ScheduleInterface } from "../../../../context/App/types"
+import * as AppTypes from '@/context/App/AppTypes'
 
 export const NoRecentShifts = ({ visible }: { visible: boolean }) => {
   if(!visible) return null
@@ -12,7 +12,7 @@ export const NoRecentShifts = ({ visible }: { visible: boolean }) => {
   )
 }
 
-type TableProps = { visible: boolean, tableBodyProps: { schedules: ScheduleInterface[], employeeId: string } }
+type TableProps = { visible: boolean, tableBodyProps: { schedules: AppTypes.ScheduleInterface[], employeeId: string } }
 
 export const Table = (props: TableProps) => {
   if(!props.visible) return null
@@ -41,7 +41,7 @@ const Headers = () => {
   )
 }
 
-type TableBodyProps = { schedules: ScheduleInterface[], employeeId: string }
+type TableBodyProps = { schedules: AppTypes.ScheduleInterface[], employeeId: string }
 
 const TableBody = (props: TableBodyProps) => {
 
@@ -58,7 +58,7 @@ const TableBody = (props: TableBodyProps) => {
   )
 }
 
-const TableRow = ({ schedule }: { schedule: ScheduleInterface }) => {
+const TableRow = ({ schedule }: { schedule: AppTypes.ScheduleInterface }) => {
 
   return (
     <tr className={styles.tableData}>

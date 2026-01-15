@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react"
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 export type RosterItemType = {
   employeeId: string

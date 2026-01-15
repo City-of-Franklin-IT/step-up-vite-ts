@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import StepUpCtx from "../../context"
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 /**
 * Returns shift filter button props and buttons visibility boolean

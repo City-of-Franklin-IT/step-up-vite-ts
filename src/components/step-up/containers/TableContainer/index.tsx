@@ -3,7 +3,7 @@ import { scrollToTop } from './utils'
 import styles from './TableContainer.module.css'
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 // Components
 import FiltersContainer from '../../filters/FiltersContainer'

@@ -1,7 +1,7 @@
 import { API_URL as baseUrl } from "../../config"
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 /**
 * Get all staff

@@ -2,7 +2,7 @@ import styles from './RosterContainer.module.css'
 import { useRosterGroups, useHandleDatePicker, useHandlePickedDate } from './hooks'
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 import { RosterItemType } from '../../context'
 
 // Components

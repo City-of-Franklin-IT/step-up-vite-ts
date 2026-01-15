@@ -1,5 +1,5 @@
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 import { TableData } from "./hooks"
 
 export const scrollToTop = (topRef: React.RefObject<HTMLElement | null>) => { // Scroll to top

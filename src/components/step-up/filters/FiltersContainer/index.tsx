@@ -3,7 +3,7 @@ import QualifiedFilterContainer from '../QualifiedFilterContainer'
 import ShiftFilterContainer from '../ShiftFilter'
 import SkillsFilterContainer from '../SkillsFilterContainer'
 
-function FiltersContainer({ skills }: { skills: string[] }) {;
+function FiltersContainer({ skills }: { skills: string[] }) {
   
   return (
     <div className="flex flex-col gap-14">

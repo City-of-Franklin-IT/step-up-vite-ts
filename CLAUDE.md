@@ -134,6 +134,12 @@ Core data types are defined in `src/context/App/types.ts`:
 - Dev server runs on port 6000 and allows specific hosts for cross-domain development
 - Props should be written inline rather than each on a new line (per user preference)
 
-## README.md Generation
+## Standards
 
-When creating README files use the template at /opt/claude-standards/README_TEMPLATE.md as a guide
+Follow the coding standards defined in `/opt/claude-standards/`:
+
+- **TYPESCRIPT_STYLE.md** - TypeScript formatting (no semicolons, double quotes, ternary style)
+- **REACT_CONVENTIONS.md** - Component patterns, exports, useState conventions
+- **IMPORT_ORGANIZATION.md** - Import ordering and comment conventions
+- **VERSION_CONTROL.md** - Git workflow, npm audit, sensitive data handling
+- **README_TEMPLATE.md** - README structure and style guidelines

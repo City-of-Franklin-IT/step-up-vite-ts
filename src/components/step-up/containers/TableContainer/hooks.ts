@@ -3,7 +3,7 @@ import StepUpCtx from "../../context"
 import { filterQualified } from "./utils"
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 
 export interface TableData {
   employeeId: string

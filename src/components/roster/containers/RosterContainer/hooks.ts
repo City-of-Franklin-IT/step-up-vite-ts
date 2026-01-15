@@ -2,7 +2,7 @@ import { useContext, useMemo, useState } from "react"
 import RosterCtx from "../../context"
 
 // Types
-import * as AppTypes from '@/context/App/types'
+import * as AppTypes from '@/context/App/AppTypes'
 import { RosterItemType } from "../../context"
 
 /**

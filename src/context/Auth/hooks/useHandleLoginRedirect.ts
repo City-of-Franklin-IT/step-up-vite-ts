@@ -11,7 +11,7 @@ export default () => {
           ...loginRequest,
           prompt: 'create'
         })
-        .catch((error) => console.log(error))
-    } else console.log(inProgress)
+        .catch(() => {})
+    }
   }
 }
