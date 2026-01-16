@@ -7,7 +7,7 @@
     "test": "vitest",
     "dev": "vite --port 6000",
     "build": "tsc -b && vite build",
-    "deploy": "scp -r dist andrew@cofasv32:~/apps/builds/step-up-vite-ts",
+    "deploy": "scp -r dist $USER@cofasv32:/opt/builds/step-up-vite-ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
