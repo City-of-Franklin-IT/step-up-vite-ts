@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Login from "./pages/Login"
 import Home from "./pages/Home"
 import Rosters from "./pages/Rosters"
+import Docs from "./pages/Docs"
 import Redirect from './pages/Redirect'
 
 const queryClient = new QueryClient()
@@ -32,6 +33,7 @@ function App() {
               <Rosters />
             </RosterProvider>
           } />
+          <Route path="/docs" element={<Docs />} />
           <Route path="/*" element={<Redirect />} />
         </Routes>
       </Router>
