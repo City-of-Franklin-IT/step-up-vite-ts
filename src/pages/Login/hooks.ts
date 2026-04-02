@@ -14,7 +14,16 @@ export const useHandleAuth = () => {
     const activeAccount = instance.getActiveAccount()
 
     if(accounts.length === 0 || !activeAccount) {
-      window.location.href = 'https://fireapps.franklintn.gov/'
+      instance.ssoSilent({ scopes: ["openid", "profile"] })
+        .then((response) => {
+          if(response.account) {
+            instance.setActiveAccount(response.account)
+            navigate('/home')
+          }
+        })
+        .catch(() => {
+          instance.loginRedirect({ scopes: ["openid", "profile"] })
+        })
     } else {
       navigate('/home')
     }

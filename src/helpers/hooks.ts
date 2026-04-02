@@ -60,8 +60,12 @@ export const useGetToken = () => {
           } else throw error
         }
       } else {
-        const response = await instance.acquireTokenSilent(request)
-        setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+        try {
+          const response = await instance.acquireTokenSilent(request)
+          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+        } catch {
+          instance.loginRedirect({ scopes: ["openid", "profile"] })
+        }
       }
 
       return
@@ -73,7 +77,7 @@ export const useGetToken = () => {
         account: activeAccount,
         redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
       }
-      
+
       if(isEdge) { // Acquire token via popup for Edge users
         try {
           const response = await instance.acquireTokenPopup(request)
@@ -84,8 +88,12 @@ export const useGetToken = () => {
           } else throw error
         }
       } else {
-        const response = await instance.acquireTokenSilent(request)
-        setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+        try {
+          const response = await instance.acquireTokenSilent(request)
+          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
+        } catch {
+          instance.loginRedirect({ scopes: ["openid", "profile"] })
+        }
       }
 
       return
