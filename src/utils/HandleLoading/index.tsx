@@ -1,17 +1,10 @@
-// Types
-import { HandleLoadingProps } from './types'
-
 // Components
 import Loading from '../../components/loading/Loading'
 
-function HandleLoading({ children, isLoaded }: HandleLoadingProps) {
-  return (
-    <>
-      {isLoaded ? (
-        children
-      ) : <Loading />}
-    </>
-  )
+function HandleLoading({ isLoading, children }: { isLoading: boolean, children: React.ReactElement }) {
+  if(isLoading) return <Loading />
+
+  return children
 }
 
 export default HandleLoading

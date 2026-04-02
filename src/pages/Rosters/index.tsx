@@ -10,12 +10,12 @@ import ErrorBoundary from "@/utils/ErrorBoundary"
 function Rosters() {
   useRedirectAfterLogin()
 
-  const { data, isSuccess } = useGetRoster()
+  const { data, isLoading } = useGetRoster()
 
   return (
     <Layout>
       <ErrorBoundary>
-        <HandleLoading isLoaded={isSuccess}>
+        <HandleLoading isLoading={isLoading}>
           <RosterContainer rosters={data?.data} />
         </HandleLoading>
       </ErrorBoundary>

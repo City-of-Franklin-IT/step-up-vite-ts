@@ -8,14 +8,14 @@ import HandleLoading from '../../utils/HandleLoading'
 import ErrorBoundary from '@/utils/ErrorBoundary'
 
 function Home() {
-  useRedirectAfterLogin()
+  const { data, isLoading } = useGetStaff()
 
-  const { data, isSuccess } = useGetStaff()
+  useRedirectAfterLogin()
 
   return (
     <Layout>
       <ErrorBoundary>
-        <HandleLoading isLoaded={isSuccess}>
+        <HandleLoading isLoading={isLoading}>
           <TableContainer staff={data?.data} />
         </HandleLoading>
       </ErrorBoundary>
