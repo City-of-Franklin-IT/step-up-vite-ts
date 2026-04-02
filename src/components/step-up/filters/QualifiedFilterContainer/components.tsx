@@ -19,7 +19,9 @@ export const Header = () => {
 export const Buttons = ({ hidden }: { hidden: boolean }) => {
   const { onClick, showRemoveBtn } = useHandleButtons()
 
-  if(hidden) return
+  if(hidden) return (
+    <span className="text-neutral-content/50 font-[jura] italic">Filter hidden..</span>
+  )
 
   if(showRemoveBtn) return (
     <QualifiedBtn

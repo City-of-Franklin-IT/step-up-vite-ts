@@ -95,7 +95,7 @@ export type RankAbrvType =
   | "BC"
 
 export type RankWFDType =
-  | "FireCapt"
+  | "Fire Captain"
   | "FireLT"
   | "FireE"
   | "FireF"

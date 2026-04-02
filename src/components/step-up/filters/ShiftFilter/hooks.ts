@@ -8,7 +8,7 @@ import * as AppTypes from '@/context/App/AppTypes'
 * Returns shift filter button props and buttons visibility boolean
 **/
 export const useHandleShiftFilterContainer = () => {
-  const [state, setState] = useState<{ hidden : boolean }>({ hidden: false })
+  const [state, setState] = useState<{ hidden : boolean }>({ hidden: window.innerWidth < 768 })
 
   const onHideBtnClick = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))

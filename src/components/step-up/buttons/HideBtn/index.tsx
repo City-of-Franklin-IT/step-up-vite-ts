@@ -5,7 +5,9 @@ import styles from './HideBtn.module.css'
 type HideBtnProps = { onClick: React.MouseEventHandler<HTMLButtonElement>, hidden: boolean }
 
 function HideBtn(props: HideBtnProps) {
-  const icon = props.hidden ? openEyeIcon : closedEyeIcon
+  const icon = props.hidden ? 
+    openEyeIcon : 
+    closedEyeIcon
 
   return (
     <button 

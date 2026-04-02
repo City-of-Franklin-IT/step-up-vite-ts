@@ -72,7 +72,7 @@ const TableRow = ({ roster }: { roster: RosterItemType }) => {
 const RosterNameTableData = ({ roster }: { roster: RosterItemType }) => {
 
   switch(roster.rank) {
-    case 'FireCapt':
+    case 'Fire Captain':
       return (
         <RosterName
           roster={roster}

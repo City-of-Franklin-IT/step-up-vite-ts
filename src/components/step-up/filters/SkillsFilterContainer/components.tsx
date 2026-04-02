@@ -17,7 +17,9 @@ export const Header = () => {
 }
 
 export const Buttons = ({ skills, hidden }: { skills: string[], hidden: boolean }) => {
-  if(hidden) return
+  if(hidden) return (
+    <span className="text-neutral-content/50 font-[jura] italic">Filter hidden..</span>
+  )
 
   return (
     <>

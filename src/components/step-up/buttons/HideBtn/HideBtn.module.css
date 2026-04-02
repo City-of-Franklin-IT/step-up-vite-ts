@@ -5,6 +5,7 @@
   font-family: 'Fugaz One', sans-serif;
   font-weight: 400;
   z-index: 10;
+  cursor: pointer;
 
   @media (min-width: 1025px) { /* Laptop+ */ 
     font-size: 2rem;

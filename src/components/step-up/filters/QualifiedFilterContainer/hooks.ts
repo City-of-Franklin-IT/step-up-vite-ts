@@ -8,7 +8,7 @@ import * as AppTypes from '@/context/App/AppTypes'
 * Returns hide button props
 **/
 export const useHandleQualifiedFilterContainer = () => {
-  const [state, setState] = useState<{ hidden : boolean }>({ hidden: false })
+  const [state, setState] = useState<{ hidden : boolean }>({ hidden: window.innerWidth < 768 })
 
   const onHideBtnClick = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))

@@ -5,7 +5,7 @@ import StepUpCtx from "../../context"
 * Returns hide button props and buttons visibility boolean
 **/
 export const useHandleSkillsFilterContainer = () => {
-  const [state, setState] = useState<{ hidden: boolean }>({ hidden: false })
+  const [state, setState] = useState<{ hidden: boolean }>({ hidden: window.innerWidth < 768 })
 
   const onHideBtnClick = () => {
     setState(prevState => ({ hidden: !prevState.hidden }))
