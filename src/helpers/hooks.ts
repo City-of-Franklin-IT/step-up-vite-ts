@@ -1,143 +1,76 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useMsal } from "@azure/msal-react"
+import { useNavigate } from "react-router"
 import { NODE_ENV } from "@/config"
 import { infoPopup } from "@/utils/Toast/Toast"
-
-// Types
-import { BrowserAuthError } from "@azure/msal-browser"
+import { acquireRequest } from "@/context/Auth/config"
 
 export const useGetToken = () => {
-  const [state, setState] = useState<{ token: string | undefined, isLoading: boolean, popupBlocked: boolean }>({ token: undefined, isLoading: true, popupBlocked: false })
+  const isDev = NODE_ENV === 'development'
+  const [state, setState] = useState<{ token: string | undefined, isLoading: boolean }>({
+    token: isDev ? 'dev-token' : undefined,
+    isLoading: !isDev
+  })
 
   const { instance, accounts, inProgress } = useMsal()
 
-  if(NODE_ENV === 'development') {
-    return { token: 'dev-token', isLoading: false, popupBlocked: false }
-  }
-
-  const checkToken = async () => {
-    setState(prevState => ({ ...prevState, isLoading: true }))
-
+  const checkToken = useCallback(async () => {
+    // 1. Check if accounts exist
     const activeAccount = instance.getActiveAccount()
-
-    const isEdge = /Edg/.test(navigator.userAgent)
-
-    if(!activeAccount && accounts.length === 0) {
-      setState(prevState => ({ ...prevState, isLoading: false }))
+    if (!activeAccount && accounts.length === 0) {
+      setState({ token: undefined, isLoading: false })
       window.location.href = '/'
       return
     }
 
-    if(!activeAccount && accounts.length > 0) {
-      setState(prevState => ({ ...prevState, isLoading: false }))
+    // 2. Promote first account if needed
+    if (!activeAccount && accounts.length > 0) {
       instance.setActiveAccount(accounts[0])
+      setState(prev => ({ ...prev, isLoading: false }))
       return
     }
 
-    if(activeAccount?.idTokenClaims && activeAccount.idTokenClaims.exp) {
-      const expiresOn = activeAccount.idTokenClaims.exp * 1000
-      const now = Date.now()
-
-      if(expiresOn > now + 3000000) {
-        setState({ token: activeAccount.idToken, isLoading: false, popupBlocked: false })
-        return
-      }
-
-      const request = {
-        scopes: ["openid", "profile", "email"],
-        account: activeAccount,
-        forceRefresh: true,
-        redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
-      }
-
-      if(isEdge) { // Acquire token via popup for Edge users
-        try {
-          const response = await instance.acquireTokenPopup(request)
-          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
-        } catch(error) {
-          if(error instanceof BrowserAuthError && (error.errorCode === 'popup_window_error' || error.errorCode === 'empty_window_error')) {
-            setState({ token: undefined, isLoading: false, popupBlocked: true })
-          } else throw error
-        }
-      } else {
-        try {
-          const response = await instance.acquireTokenSilent(request)
-          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
-        } catch {
-          instance.loginRedirect({ scopes: ["openid", "profile"] })
-        }
-      }
-
+    // 3. Check if token is still fresh
+    const exp = activeAccount?.idTokenClaims?.exp
+    if (exp && exp * 1000 > Date.now() + 3_000_000) {
+      setState({ token: activeAccount!.idToken, isLoading: false })
       return
     }
 
-    if(activeAccount && !activeAccount.idTokenClaims) {
-      const request = {
-        scopes: ["openid", "profile", "email"],
-        account: activeAccount,
-        redirectUri: "https://fireapps.franklintn.gov/step-up/redirect.html"
-      }
-
-      if(isEdge) { // Acquire token via popup for Edge users
-        try {
-          const response = await instance.acquireTokenPopup(request)
-          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
-        } catch(error) {
-          if(error instanceof BrowserAuthError && (error.errorCode === 'popup_window_error' || error.errorCode === 'empty_window_error')) {
-            setState({ token: undefined, isLoading: false, popupBlocked: true })
-          } else throw error
-        }
-      } else {
-        try {
-          const response = await instance.acquireTokenSilent(request)
-          setState({ token: response.idToken, isLoading: false, popupBlocked: false })
-        } catch {
-          instance.loginRedirect({ scopes: ["openid", "profile"] })
-        }
-      }
-
-      return
+    // 4. Try silent refresh, fall back to redirect
+    try {
+      const response = await instance.acquireTokenSilent(acquireRequest(activeAccount!))
+      setState({ token: response.idToken, isLoading: false })
+    } catch {
+      instance.acquireTokenRedirect(acquireRequest(activeAccount!))
     }
-
-    setState(prevState => ({ ...prevState, isLoading: false }))
-  }
+  }, [instance, accounts])
 
   useEffect(() => {
-    if(inProgress !== 'none') { // Wait for instance to fully initialize
-      return
-    }
+    if (isDev || inProgress !== 'none') return
 
     checkToken()
 
-    const intervalId = setInterval(checkToken, 4 * 60 * 1000) // Check every 4 minutes
-    
-    return () => clearInterval(intervalId)
-  }, [inProgress, accounts.length])
+    // Refresh token every 4 minutes
+    const id = setInterval(checkToken, 4 * 60 * 1000)
+    return () => clearInterval(id)
+  }, [isDev, inProgress, accounts.length, checkToken])
 
   return state
 }
 
 export const useEnableQuery = () => {
   const [state, setState] = useState<{ enabled: boolean }>({ enabled: false })
-
-  const { token, isLoading, popupBlocked } = useGetToken()
+  const { token, isLoading } = useGetToken()
 
   useEffect(() => {
-    if(isLoading) {
-      setState({ enabled: false })
-    } else setState({ enabled: !!token })
+    setState({ enabled: !isLoading && !!token })
   }, [token, isLoading])
-  
-  useEffect(() => {
-    if(popupBlocked) {
-      infoPopup('Please disable popup blocker for this site')
-    }
-  }, [popupBlocked])
 
   return { enabled: state.enabled, token }
 }
 
-export const useGetWindowSize = (): boolean => { // Get window size
+export const useGetWindowSize = (): boolean => {
   const [state, setState] = useState<{ width: number }>({ width: window.innerWidth })
 
   useEffect(() => {
@@ -156,13 +89,28 @@ export const useActiveAccount = () => {
   const { instance, inProgress } = useMsal()
 
   useEffect(() => {
-    if(inProgress === 'none') {
-      const activeAccount = instance.getActiveAccount()
-      setState({ authenticated: !!activeAccount })
+    if (NODE_ENV === 'development') return
+
+    if (inProgress === 'none') {
+      setState({ authenticated: !!instance.getActiveAccount() })
     }
   }, [instance, inProgress])
 
-  return state.authenticated
+  return NODE_ENV === 'development' ? true : state.authenticated
+}
+
+export const useUnauthRedirect = () => {
+  const { instance, inProgress } = useMsal()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (NODE_ENV === 'development') return
+
+    if (inProgress === 'none' && !instance.getActiveAccount()) {
+      infoPopup('Unauthorized: Please Login')
+      navigate('/')
+    }
+  }, [inProgress, instance, navigate])
 }
 
 export const useRedirectAfterLogin = () => {
@@ -170,15 +118,15 @@ export const useRedirectAfterLogin = () => {
   const development = NODE_ENV === 'development'
 
   useEffect(() => {
-    if(development) return
+    if (development) return
 
-    if(inProgress === 'none') {
+    if (inProgress === 'none') {
       const activeAccount = instance.getActiveAccount()
 
-      if(activeAccount) {
+      if (activeAccount) {
         const redirectUrl = sessionStorage.getItem('redirectUrl')
 
-        if(redirectUrl) {        
+        if (redirectUrl) {
           window.location.href = redirectUrl
           sessionStorage.removeItem('redirectUrl')
         }

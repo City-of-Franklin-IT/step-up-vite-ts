@@ -7,38 +7,37 @@ export const msalConfig = {
         authority: 'https://login.microsoftonline.com/f6644f52-f834-4a2f-a433-e6bc40d7c17f/',
         redirectUri: 'https://fireapps.franklintn.gov/step-up',
         postLogoutRedirectUri: 'https://fireapps.franklintn.gov/',
-        navigateToLoginRequestUrl: false
+        navigateToLoginRequestUrl: true,
+        allowRedirectInIframe: true
     },
     cache: {
         cacheLocation: 'localStorage',
         storeAuthStateInCookie: false
     },
     system: {
-        allowRedirectInIframe: true,
         loggerOptions: {
             loggerCallback: (level: LogLevel, message: string, containsPii: boolean) => {
-                if (containsPii) {
-                    return;
-                }
+                if (containsPii) return
                 switch (level) {
                     case LogLevel.Error:
-                        console.error(message);
-                        return;
+                        console.error(message)
+                        return
                     case LogLevel.Verbose:
-                        console.debug(message);
-                        return;
+                        console.debug(message)
+                        return
                     case LogLevel.Warning:
-                        console.warn(message);
-                        return;
+                        console.warn(message)
+                        return
                     default:
-                        return;
+                        return
                 }
-            },
-        },
-    },
-};
+            }
+        }
+    }
+}
 
-export const loginRequest = {
-    scopes: ["openid", "profile"],
-    redirectUri: "https://fireapps.franklintn.gov/step-up"
-};
+export const acquireRequest = (account: any) => ({
+    scopes: ["openid", "profile", "email"],
+    account,
+    redirectUri: 'https://fireapps.franklintn.gov/step-up'
+})
