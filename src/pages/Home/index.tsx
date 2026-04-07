@@ -1,4 +1,3 @@
-import { useRedirectAfterLogin } from '@/helpers/hooks'
 import { useGetStaff } from './hooks'
 
 // Components
@@ -9,8 +8,6 @@ import ErrorBoundary from '@/utils/ErrorBoundary'
 
 function Home() {
   const { data, isLoading } = useGetStaff()
-
-  useRedirectAfterLogin()
 
   return (
     <Layout>
