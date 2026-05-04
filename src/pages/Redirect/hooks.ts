@@ -1,15 +1,18 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
-import { useActiveAccount } from "@/helpers/hooks"
+import { useAuth } from "@/context/Auth"
 
 export const useRedirect = () => {
+  const { isAuthenticated, isLoading } = useAuth()
   const navigate = useNavigate()
 
-  const activeAccount = useActiveAccount()
-
   useEffect(() => {
-    if(activeAccount) {
-      navigate('/home')
-    } else navigate('/')
-  }, [activeAccount, navigate])
+    if (!isLoading) {
+      if (isAuthenticated) {
+        navigate('/home')
+      } else {
+        navigate('/')
+      }
+    }
+  }, [isAuthenticated, isLoading, navigate])
 }

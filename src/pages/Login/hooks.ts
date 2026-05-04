@@ -1,31 +1,19 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router"
-import { useMsal } from "@azure/msal-react"
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { useAuth, MOCK_AUTH } from '@/context/Auth'
 
 export const useHandleAuth = () => {
-  const { instance, accounts, inProgress } = useMsal()
+  const { isAuthenticated, isLoading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(inProgress !== "none") {
+    if(MOCK_AUTH) {
+      navigate('/home')
       return
     }
 
-    const activeAccount = instance.getActiveAccount()
-
-    if(accounts.length === 0 || !activeAccount) {
-      instance.ssoSilent({ scopes: ["openid", "profile"] })
-        .then((response) => {
-          if(response.account) {
-            instance.setActiveAccount(response.account)
-            navigate('/home')
-          }
-        })
-        .catch(() => {
-          instance.loginRedirect({ scopes: ["openid", "profile"] })
-        })
-    } else {
+    if(!isLoading && isAuthenticated) {
       navigate('/home')
     }
-  }, [instance, accounts.length, inProgress, navigate])
+  }, [isAuthenticated, isLoading, navigate])
 }

@@ -4,7 +4,6 @@ import { useGetDocs } from './hooks'
 import { CollectionType } from './utils'
 
 // Components
-import Layout from '@/components/layout/Layout'
 import HandleLoading from '@/utils/HandleLoading'
 import ErrorBoundary from '@/utils/ErrorBoundary'
 import * as Components from './components'
@@ -14,19 +13,17 @@ function Docs() {
   const collection = data as CollectionType
 
   return (
-    <Layout>
-      <ErrorBoundary>
-        <HandleLoading isLoading={isLoading}>
-          <div className="container font-[play] text-primary-content mx-auto mt-4 mb-6 p-6 max-w-5xl">
-            <h1 className="text-3xl font-bold mb-2">{collection?.info.name} API</h1>
-            <p className="italic mb-6 max-w-3/4">{collection?.info.description}</p>
+    <ErrorBoundary>
+      <HandleLoading isLoading={isLoading}>
+        <div className="container font-[play] text-primary-content mx-auto mt-4 mb-6 p-6 max-w-5xl">
+          <h1 className="text-3xl font-bold mb-2">{collection?.info.name} API</h1>
+          <p className="italic mb-6 max-w-3/4">{collection?.info.description}</p>
 
-            <Components.EndpointItems collection={collection} />
-            <Components.CloseDocsBtn />
-          </div>
-        </HandleLoading>
-      </ErrorBoundary>
-    </Layout>
+          <Components.EndpointItems collection={collection} />
+          <Components.CloseDocsBtn />
+        </div>
+      </HandleLoading>
+    </ErrorBoundary>
   )
 }
 
