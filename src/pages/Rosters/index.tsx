@@ -3,19 +3,18 @@ import { useGetRoster } from "./hooks"
 
 // Components
 import RosterContainer from "@/components/roster/containers/RosterContainer"
-import HandleLoading from "@/utils/HandleLoading"
+import Loading from "@/components/loading/Loading"
 import ErrorBoundary from "@/utils/ErrorBoundary"
 
 function Rosters() {
   useRedirectAfterLogin()
-
   const { data, isLoading } = useGetRoster()
+
+  if(isLoading) return <Loading />
 
   return (
     <ErrorBoundary>
-      <HandleLoading isLoading={isLoading}>
-        <RosterContainer rosters={data?.data} />
-      </HandleLoading>
+      <RosterContainer rosters={data?.data} />
     </ErrorBoundary>
   )
 }

@@ -9,10 +9,10 @@ import ShiftBtn from "../../buttons/ShiftBtn"
 export const Header = () => {
   const { shiftFilter } = useContext(StepUpCtx)
 
-  if(shiftFilter) return
+  if(shiftFilter) return null
 
   return (
-    <div className={styles.header}>Filter <small className="italic">by</small> Shift</div>
+    <h2 className={styles.header}>Filter <small className="italic">by</small> Shift</h2>
   )
 }
 
@@ -32,7 +32,7 @@ export const Buttons = ({ hidden }: { hidden: boolean }) => {
 export const Footer = () => {
   const { shiftFilter } = useContext(StepUpCtx)
 
-  if(!shiftFilter) return
+  if(!shiftFilter) return null
 
   return (
     <div className={styles.footer}>Showing { shiftFilter } Shift</div>
@@ -54,7 +54,7 @@ const RemoveFilterBtn = () => {
 const ShiftBtns = () => {
   const { visible, onClick } = useHandleShiftBtns()
 
-  if(!visible) return
+  if(!visible) return null
 
   return (
     <div className={'flex flex-col justify-around w-full gap-8 md:flex-row'}>

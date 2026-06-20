@@ -9,10 +9,10 @@ import QualifiedBtn from "../../buttons/QualifiedBtn"
 export const Header = () => {
   const { filter } = useContext(StepUpCtx)
 
-  if(filter) return
+  if(filter) return null
 
   return (
-    <div className={styles.header}>Filter Qualified</div>
+    <h2 className={styles.header}>Filter Qualified</h2>
   )
 }
 
@@ -70,7 +70,7 @@ export const Buttons = ({ hidden }: { hidden: boolean }) => {
 export const Footer = () => {
   const { filter } = useContext(StepUpCtx)
 
-  if(!filter) return
+  if(!filter) return null
 
   return (
     <div className={styles.footer}>Showing { filter }</div>

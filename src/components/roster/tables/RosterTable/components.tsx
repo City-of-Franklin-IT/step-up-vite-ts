@@ -2,57 +2,48 @@ import { handleTableRow } from './utils'
 import styles from './RosterTable.module.css'
 
 // Types
-import { RosterItemType } from '../../context'
+import type { RosterItemType } from '../../context'
 
-export const Table = ({ ordered }: { ordered: RosterItemType[] }) => {
+export const Table = ({ ordered }: { ordered: RosterItemType[] }) => (
+  <table className="w-full">
+    <TableHeaders />
+    <TableBody ordered={ordered} />
+  </table>
+)
 
-  return (
-    <table className="w-full">
-      <TableHeaders />
-      <TableBody ordered={ordered} />
-    </table>
-  )
+const TableHeaders = () => (
+  <thead>
+    <tr>
+      <Header className={styles.header}>Name</Header>
+      <Header className={styles.header}>Rank</Header>
+      <Header className={styles.dateHeader}>Start Date</Header>
+      <Header className={styles.header}>Start Time</Header>
+      <Header className={styles.dateHeader}>End Date</Header>
+      <Header className={styles.header}>End Time</Header>
+    </tr>
+  </thead>
+)
+
+type HeaderProps = { 
+  className: string
+  children: React.ReactNode 
 }
 
-const TableHeaders = () => {
+const Header = (props: HeaderProps) => (
+  <th className={props.className}>{props.children}</th>
+)
 
-  return (
-    <thead>
-      <tr>
-        <Header className={styles.header}>Name</Header>
-        <Header className={styles.header}>Rank</Header>
-        <Header className={styles.dateHeader}>Start Date</Header>
-        <Header className={styles.header}>Start Time</Header>
-        <Header className={styles.dateHeader}>End Date</Header>
-        <Header className={styles.header}>End Time</Header>
-      </tr>
-    </thead>
-  )
-}
-
-type HeaderProps = { className: string, children: React.ReactNode }
-
-const Header = (props: HeaderProps) => {
-
-  return (
-    <th className={props.className}>{props.children}</th>
-  )
-}
-
-const TableBody = ({ ordered }: { ordered: RosterItemType[] }) => {
-
-  return (
-    <tbody>
-      {ordered.map(roster => {
-        return (
-          <TableRow 
-            key={`roster-table-row-${ roster.employeeId }`}
-            roster={roster} />
-        )
-      })}
-    </tbody>
-  )
-}
+const TableBody = ({ ordered }: { ordered: RosterItemType[] }) => (
+  <tbody>
+    {ordered.map(roster => {
+      return (
+        <TableRow 
+          key={`roster-table-row-${ roster.employeeId }`}
+          roster={roster} />
+      )
+    })}
+  </tbody>
+)
 
 const TableRow = ({ roster }: { roster: RosterItemType }) => {
   const { className, start, end, rank } = handleTableRow(roster)
@@ -70,7 +61,6 @@ const TableRow = ({ roster }: { roster: RosterItemType }) => {
 }
 
 const RosterNameTableData = ({ roster }: { roster: RosterItemType }) => {
-
   switch(roster.rank) {
     case 'Fire Captain':
       return (
@@ -103,23 +93,24 @@ const RosterNameTableData = ({ roster }: { roster: RosterItemType }) => {
   }
 }
 
-type RankIndicatorProps = { roster: RosterItemType, title: 'Captain' | 'Lieutenant' | 'Engineer', bgColor: 'bg-error' | 'bg-warning' | 'bg-success' }
-
-const RosterName = (props: RankIndicatorProps) => {
-
-  return (
-    <td>
-      <div className="flex gap-1 items-center">
-        {props.roster.name}
-        <div className={`w-2.5 h-2.5 rounded-full ${ props.bgColor }`} title={props.title}></div>
-        <IsParamedicIndicator isParamedic={props.roster.isParamedic} />
-      </div>
-    </td>
-  )
+type RankIndicatorProps = { 
+  roster: RosterItemType
+  title: 'Captain' | 'Lieutenant' | 'Engineer'
+  bgColor: 'bg-error' | 'bg-warning' | 'bg-success' 
 }
 
+const RosterName = (props: RankIndicatorProps) => (
+  <td>
+    <div className="flex gap-1 items-center">
+      {props.roster.name}
+      <div className={`w-2.5 h-2.5 rounded-full ${ props.bgColor }`} title={props.title}></div>
+      <IsParamedicIndicator isParamedic={props.roster.isParamedic} />
+    </div>
+  </td>
+)
+
 const IsParamedicIndicator = ({ isParamedic }: { isParamedic: boolean }) => {
-  if(!isParamedic) return
+  if(!isParamedic) return null
 
   return (
     <div className="bg-info w-2.5 h-2.5 rounded-full" title="Paramedic"></div>

@@ -11,36 +11,33 @@ import ParamedicIcon from '../../../icons/ParamedicIcon'
 import PhoneIcon from '../../../icons/PhoneIcon'
 import EmailIcon from '../../../icons/EmailIcon'
 
-export const Headers = () => {
+export const Headers = () => (
+  <thead>
+    <tr className="text-primary-content uppercase bg-primary text-left">
+      <th className="px-4">Employee</th>
+      <th className="text-center rounded-tr-lg whitespace-nowrap lg:rounded-none md:transform md:-translate-x-10">Step-Up HRs.</th>
+      <th className="text-center hidden lg:block">Recent Step Up Shifts</th>
+    </tr>
+  </thead>
+)
 
-  return (
-    <thead>
-      <tr className={styles.header}>
-        <th className="px-4">Employee</th>
-        <th className="text-center rounded-tr-lg whitespace-nowrap lg:rounded-none md:transform md:-translate-x-10">Step-Up HRs.</th>
-        <th className="text-center hidden lg:block">Recent Step Up Shifts</th>
-      </tr>
-    </thead>
-  )
+export const TableBody = ({ employees }: { employees: TableDataType[] }) => (
+  <tbody>
+    {employees.map((employee, index) => {
+      return (
+        <TableRow
+          key={`table-row-${ employee.employeeId }`}
+          employee={employee}
+          index={index} />
+      )
+    })}
+  </tbody>
+)
+
+type TableRowProps = { 
+  employee: TableDataType
+  index: number 
 }
-
-export const TableBody = ({ employees }: { employees: TableDataType[] }) => {
-
-  return (
-    <tbody>
-      {employees.map((employee, index) => {
-        return (
-          <TableRow
-            key={`table-row-${ employee.employeeId }`}
-            employee={employee}
-            index={index} />
-        )
-      })}
-    </tbody>
-  )
-}
-
-type TableRowProps = { employee: TableDataType, index: number }
 
 export const TableRow = (props: TableRowProps) => { // Table row
   const { rowProps, hovered } = useHandleTableRow(props.index)
@@ -65,46 +62,55 @@ export const TableRow = (props: TableRowProps) => { // Table row
   )
 }
 
-type SetEmployeeProps = { employee: TableDataType, hovered?: boolean }
-
-const SetEmployee = (props: SetEmployeeProps) => { // Employee table data cell
-  
-  return (
-    <td>
-      <div className={styles.employeeCell}>
-        <div className="flex gap-2">
-          <div className={styles.rank}>{props.employee.rank}</div>
-          <div className={styles.shift}>{props.employee.shift} Shift</div>
-          <Paramedic skills={props.employee.skills} />
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex gap-1 items-center">
-            <div className="font-bold whitespace-nowrap md:indent-5 md:text-lg">{props.employee.fullName}</div>
-            <Phone
-              phone={props.employee.phone}
-              hovered={props.hovered} />
-            <Email
-              email={props.employee.email}
-              hovered={props.hovered} />
-          </div>
-        </div>
-
-        <Skills
-          skills={props.employee.skills}
-          employeeId={props.employee.employeeId} />
-        
-      </div>
-    </td>
-  )
+type SetEmployeeProps = { 
+  employee: TableDataType
+  hovered?: boolean 
 }
 
-type PhoneProps = { phone: string, hovered: boolean | undefined }
+const SetEmployee = (props: SetEmployeeProps) => (
+  <td>
+    <div className={styles.employeeCell}>
+      <div className="flex gap-2">
+        <div className={styles.rank}>{props.employee.rank}</div>
+        <div className={styles.shift}>{props.employee.shift} Shift</div>
+        <Paramedic skills={props.employee.skills} />
+      </div>
+      <div className="flex flex-col items-center">
+        <div className="flex gap-1 items-center">
+          <div className="font-bold whitespace-nowrap md:indent-5 md:text-lg">{props.employee.fullName}</div>
+          <Phone
+            phone={props.employee.phone}
+            hovered={props.hovered} />
+          <Email
+            email={props.employee.email}
+            hovered={props.hovered} />
+        </div>
+      </div>
+
+      <Skills
+        skills={props.employee.skills}
+        employeeId={props.employee.employeeId} />
+      
+    </div>
+  </td>
+)
+
+type PhoneProps = { 
+  phone: string
+  hovered: boolean | undefined 
+}
 
 const Phone = (props: PhoneProps) => { // Phone icon
-  const variant = !props.hovered ? 'normal' : 'light'
+  const variant = !props.hovered ? 
+    'normal' : 
+    'light'
+
+  const className = props.phone ? 
+    'block' :
+    'hidden'
 
   return (
-    <div className={props.phone ? 'block' : 'hidden'}>
+    <div className={className}>
       <PhoneIcon
         iconProps={{ width: 20, height: 20, variant }} 
         phoneNumber={props.phone} />
@@ -112,12 +118,17 @@ const Phone = (props: PhoneProps) => { // Phone icon
   )
 }
 
-type EmailProps = { email: string, hovered: boolean | undefined }
+type EmailProps = { 
+  email: string
+  hovered: boolean | undefined 
+}
 
 const Email = (props: EmailProps) => { // Email icon
-  if(!props.email) return
+  if(!props.email) return null
 
-  const variant = !props.hovered ? 'normal' : 'light'
+  const variant = !props.hovered ? 
+    'normal' : 
+    'light'
 
   return (
     <EmailIcon
@@ -129,30 +140,30 @@ const Email = (props: EmailProps) => { // Email icon
 const Paramedic = ({ skills }: { skills: string }) => { // Paramedic icon
   const visible = skills.split(',').some(skill => skill === 'Paramedic')
 
-  if(!visible) return
+  if(!visible) return null
 
   return (
     <ParamedicIcon iconProps={{ width: 28, height: 28 }} />
   )
 }
 
-type SkillsProps = { skills: string, employeeId: string }
-
-const Skills = (props: SkillsProps) => { // Employee skills
-
-  return (
-    <div className="flex flex-col indent-10 gap-1 leading-none">
-      {props.skills.split(',').map(skill => {
-        return (
-          <small key={`employee-skill-${ props.employeeId }-${ skill }`}>{skill}</small>
-        )
-      })}
-    </div>
-  )
+type SkillsProps = { 
+  skills: string
+  employeeId: string 
 }
 
+const Skills = (props: SkillsProps) => (
+  <div className="flex flex-col indent-10 gap-1 leading-none">
+    {props.skills.split(',').map(skill => {
+      return (
+        <small key={`employee-skill-${ props.employeeId }-${ skill }`}>{skill}</small>
+      )
+    })}
+  </div>
+)
+
 const Hours = ({ employee }: { employee: TableDataType }) => { // Step up hours table data cell
-  if(!employee) return
+  if(!employee) return null
 
   return (
     <td>

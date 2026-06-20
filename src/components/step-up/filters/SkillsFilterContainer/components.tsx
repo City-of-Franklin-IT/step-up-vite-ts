@@ -9,7 +9,7 @@ import SkillsBtn from "../../buttons/SkillsBtn"
 export const Header = () => {
   const { skillsFilter } = useContext(StepUpCtx)
 
-  if(skillsFilter) return
+  if(skillsFilter) return null
 
   return (
     <div className={styles.header}>Filter <small className="italic">by</small> Skill</div>
@@ -32,7 +32,7 @@ export const Buttons = ({ skills, hidden }: { skills: string[], hidden: boolean 
 export const Footer = () => {
   const { skillsFilter } = useContext(StepUpCtx)
 
-  if(!skillsFilter) return
+  if(!skillsFilter) return null
 
   return (
     <span className={styles.footer}>Showing { skillsFilter }</span>
@@ -42,7 +42,7 @@ export const Footer = () => {
 const SkillsBtns = ({ skills }: { skills: string[] }) => {
   const { visible, onClick } = useHandleSkillsBtns()
 
-  if(!visible) return
+  if(!visible) return null
 
   return (
     <div className={'flex flex-col justify-around w-full gap-8 md:flex-row md:flex-wrap'}>
@@ -65,7 +65,7 @@ const SkillsBtns = ({ skills }: { skills: string[] }) => {
 const RemoveFilterBtn = () => {
   const { visible, onClick } = useHandleRemoveFilterBtn()
 
-  if(!visible) return
+  if(!visible) return null
 
   return (
     <SkillsBtn btnProps={{ onClick }}>

@@ -2,8 +2,8 @@ import styles from './RosterContainer.module.css'
 import { useRosterGroups, useHandleDatePicker, useHandlePickedDate } from './hooks'
 
 // Types
-import * as AppTypes from '@/context/App/AppTypes'
-import { RosterItemType } from '../../context'
+import type * as AppTypes from '@/context/App/AppTypes'
+import type { RosterItemType } from '../../context'
 
 // Components
 import CalendarIcon from '../../../icons/CalendarIcon'
@@ -11,17 +11,16 @@ import RosterTable from '../../tables/RosterTable'
 import RosterLegend from '../../tables/RosterLegend'
 import Loading from '@/components/loading/Loading'
 
-export const CalendarBtn = ({ onClick }: { onClick: React.MouseEventHandler<HTMLButtonElement> }) => {
-
-  return (
-    <button
-      type="button"
-      className={styles.calendarBtn}
-      onClick={onClick}>
-        <CalendarIcon width={28} height={28} />
-    </button>
-  )
-}
+export const CalendarBtn = ({ onClick }: { onClick: React.MouseEventHandler<HTMLButtonElement> }) => (
+  <button
+    type="button"
+    className={styles.calendarBtn}
+    onClick={onClick}>
+      <CalendarIcon 
+        width={28} 
+        height={28} />
+  </button>
+)
 
 export const DatePicker = ({ showDatePicker }: { showDatePicker: boolean }) => {
   const onChange = useHandleDatePicker()
@@ -32,7 +31,7 @@ export const DatePicker = ({ showDatePicker }: { showDatePicker: boolean }) => {
     <input
       type="date"
       className="input text-warning-content bg-warning"
-      onChange={(e) => onChange(e)} />
+      onChange={onChange} />
   )
 }
 
@@ -54,7 +53,10 @@ export const Tables = ({ rosters }: { rosters: AppTypes.RosterEntryInterface[] |
   )
 }
 
-type StationGroupType = { unit: AppTypes.ApparatusType, roster: RosterItemType[] }
+type StationGroupType = { 
+  unit: AppTypes.ApparatusType
+  roster: RosterItemType[] 
+}
 
 const StationGroups = ({ stations }: { stations: { station: string, units: StationGroupType[] }[] }) => {
   if(!stations.length) return <Loading />
@@ -76,18 +78,15 @@ const StationGroups = ({ stations }: { stations: { station: string, units: Stati
   )
 }
 
-const Group = ({ groups }: { groups: StationGroupType[] }) => {
-
-  return (
-    <>
-      {groups.map(group => {
-        return (
-          <RosterTable
-            key={`roster-table-${ group.unit }`}
-            rosters={group.roster as RosterItemType[]}
-            label={group.unit} />
-        )
-      })}
-    </>
-  )
-}
+const Group = ({ groups }: { groups: StationGroupType[] }) => (
+  <>
+    {groups.map(group => {
+      return (
+        <RosterTable
+          key={`roster-table-${ group.unit }`}
+          rosters={group.roster as RosterItemType[]}
+          label={group.unit} />
+      )
+    })}
+  </>
+)
