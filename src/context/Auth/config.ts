@@ -37,7 +37,7 @@ export const msalConfig = {
 }
 
 export const acquireRequest = (account: any) => ({
-    scopes: ["openid", "profile", "email"],
+    scopes: ["openid", "profile", "email", `api://${CLIENT_ID}/.default`],
     account,
     redirectUri: 'https://fireapps.franklintn.gov/step-up'
 })

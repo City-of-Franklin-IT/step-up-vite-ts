@@ -50,7 +50,7 @@ export function AuthCtxProvider({ children }: { children: ReactNode }) {
           ...acquireRequest(newActiveAccount),
           account: newActiveAccount
         }).then((response) => {
-          setToken(response.idToken)
+          setToken(response.accessToken)
           setIsReady(true)
         }).catch(() => {
           setToken(undefined)
@@ -68,7 +68,7 @@ export function AuthCtxProvider({ children }: { children: ReactNode }) {
         ...acquireRequest(activeAccount),
         account: activeAccount
       }).then((response) => {
-        setToken(response.idToken)
+        setToken(response.accessToken)
         setIsReady(true)
       }).catch(() => {
         setToken(undefined)
