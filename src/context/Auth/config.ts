@@ -1,5 +1,5 @@
 import { LogLevel } from '@azure/msal-browser'
-import { CLIENT_ID } from '@/config'
+import { CLIENT_ID, ENTRA_CLIENT_ID } from '@/config'
 
 export const msalConfig = {
     auth: {
@@ -37,7 +37,7 @@ export const msalConfig = {
 }
 
 export const acquireRequest = (account: any) => ({
-    scopes: ["openid", "profile", "email", `api://${CLIENT_ID}/.default`],
+    scopes: ["openid", "profile", "email", `api://${ENTRA_CLIENT_ID}/.default`],
     account,
     redirectUri: 'https://fireapps.franklintn.gov/step-up'
 })

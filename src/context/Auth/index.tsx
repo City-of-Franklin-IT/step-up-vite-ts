@@ -90,8 +90,8 @@ export function AuthCtxProvider({ children }: { children: ReactNode }) {
         account: activeAccount,
         forceRefresh: true
       })
-      setToken(result.idToken)
-      return result.idToken
+      setToken(result.accessToken)
+      return result.accessToken
     } catch {
       setToken(undefined)
       return undefined
