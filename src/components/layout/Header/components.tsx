@@ -1,5 +1,4 @@
 import { Link } from "react-router"
-import { APP_TITLE } from '@/config'
 import ffdIcon from '@/assets/icons/ffd/ffd.png'
 import { useActiveAccount } from "@/helpers/hooks"
 import useHandleLogoutRedirect from "@/context/Auth/hooks/useHandleLogoutRedirect"
@@ -13,7 +12,7 @@ export const Title = () => {
       className="flex flex-col text-primary-content text-center mt-4 w-fit lg:my-4">
         <div className="flex gap-4 text-primary-content items-center justify-center">
           <img src={ffdIcon} alt="ffd icon" className="w-20" />
-          <h1 className="text-xl font-bold text-center md:text-2xl lg:text-4xl">{APP_TITLE}</h1>
+          <h1 className="text-xl font-bold text-center md:text-2xl lg:text-4xl">{import.meta.env.VITE_APP_TITLE}</h1>
         </div>
     </Link>
   )

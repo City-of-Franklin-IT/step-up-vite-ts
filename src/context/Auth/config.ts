@@ -1,12 +1,11 @@
 import { LogLevel } from '@azure/msal-browser'
-import { CLIENT_ID, ENTRA_CLIENT_ID } from '@/config'
 
 export const msalConfig = {
     auth: {
-        clientId: CLIENT_ID,
-        authority: 'https://login.microsoftonline.com/f6644f52-f834-4a2f-a433-e6bc40d7c17f/',
-        redirectUri: 'https://fireapps.franklintn.gov/step-up',
-        postLogoutRedirectUri: 'https://fireapps.franklintn.gov/',
+        clientId: import.meta.env.VITE_CLIENT_ID,
+        authority: import.meta.env.VITE_AUTH_AUTHORITY,
+        redirectUri: import.meta.env.VITE_AUTH_REDIRECT_URI,
+        postLogoutRedirectUri: import.meta.env.VITE_AUTH_POST_LOGOUT_REDIRECT_URI,
         navigateToLoginRequestUrl: true,
         allowRedirectInIframe: true
     },
@@ -37,7 +36,7 @@ export const msalConfig = {
 }
 
 export const acquireRequest = (account: any) => ({
-    scopes: ["openid", "profile", "email", `api://${ENTRA_CLIENT_ID}/.default`],
+    scopes: ["openid", "profile", "email", `api://${ import.meta.env.VITE_ENTRA_CLIENT_ID }/.default`],
     account,
-    redirectUri: 'https://fireapps.franklintn.gov/step-up'
+    redirectUri: import.meta.env.VITE_AUTH_REDIRECT_URI
 })

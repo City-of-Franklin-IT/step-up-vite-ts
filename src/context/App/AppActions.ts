@@ -1,8 +1,4 @@
-import { NODE_ENV } from "../../config"
-
-const baseUrl = NODE_ENV === 'development' ?
-    'https://cofasv38.franklin-gov.com/api/v2/ffd/step-up' :
-    'https://fireapps.franklintn.gov/api/v2/ffd/step-up'
+const baseUrl = import.meta.env.VITE_BASE_URL
 
 // Types
 import * as AppTypes from '@/context/App/AppTypes'
