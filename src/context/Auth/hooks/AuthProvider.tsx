@@ -1,30 +1,40 @@
-import { PublicClientApplication, EventType, AuthenticationResult } from "@azure/msal-browser"
+import { useEffect, useRef, useState } from "react"
+import { PublicClientApplication } from "@azure/msal-browser"
 import { MsalProvider } from "@azure/msal-react"
-import { useEffect, useState } from "react"
 import { msalConfig } from "../config"
+
+// Types
+import { AuthenticationResult, EventType } from "@azure/msal-browser"
+
+// Components
+import Loading from "@/components/loading/Loading"
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [msalInstance, setMsalInstance] = useState<PublicClientApplication | null>(null)
   const [isInitialized, setIsInitialized] = useState(false)
+  const hasInitializedRef = useRef(false)
 
   useEffect(() => {
+    if(hasInitializedRef.current) return
+    hasInitializedRef.current = true
+
     const initializeMsal = async () => {
       const instance = new PublicClientApplication(msalConfig)
+
       await instance.initialize()
 
-      // Promote first account if no active account exists
       const accounts = instance.getAllAccounts()
-      if (!instance.getActiveAccount() && accounts.length > 0) {
+
+      if(!instance.getActiveAccount() && accounts.length > 0) {
         instance.setActiveAccount(accounts[0])
       }
 
-      // Listen for successful login events
       instance.addEventCallback((event) => {
-        if (event.eventType === EventType.LOGIN_SUCCESS) {
-          const authResult = event.payload as AuthenticationResult
-          if (authResult?.account) {
-            instance.setActiveAccount(authResult.account)
-          }
+        const authenticationResult = event.payload as AuthenticationResult
+        const account = authenticationResult?.account
+
+        if(event.eventType === EventType.LOGIN_SUCCESS && account) {
+          instance.setActiveAccount(account)
         }
       })
 
@@ -36,12 +46,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   if(!isInitialized || !msalInstance) {
-    return <div>Initializing authentication...</div>
+    return <Loading />
   }
 
-  return (
-    <MsalProvider instance={msalInstance}>
-      {children}
-    </MsalProvider>
-  )
+  return <MsalProvider instance={msalInstance}>
+    {children}
+  </MsalProvider>
 }

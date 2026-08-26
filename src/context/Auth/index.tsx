@@ -1,107 +1,107 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { useMsal } from '@azure/msal-react'
-import { acquireRequest } from '@/context/Auth/config'
+import { MOCK_AUTH, MOCK_TOKEN } from './constants'
+import { acquireRequest, loginRequest } from '@/context/Auth/config'
 
 interface AuthContextType {
   isAuthenticated: boolean
   token: string | undefined
   isLoading: boolean
-  refreshToken: () => Promise<string | undefined>
+  refreshToken: (forceRefresh?: boolean) => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextType | null>(null)
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-const MOCK_TOKEN = 'dev-token-12345'
-
-export const MOCK_AUTH = import.meta.env.VITE_MOCK_AUTH === 'true'
-
-export function AuthCtxProvider({ children }: { children: ReactNode }) {
+export const AuthCtxProvider = ({ children }: { children: ReactNode }) => {
   const { instance, accounts, inProgress } = useMsal()
   const [token, setToken] = useState<string | undefined>(undefined)
-  const [isReady, setIsReady] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const getToken = useCallback(async () => {
+    if(MOCK_AUTH) {
+      setToken(MOCK_TOKEN)
+      setIsLoading(false)
+      return
+    }
+
+    if(inProgress !== 'none') {
+      return
+    }
+
+    setIsLoading(true)
+
+    const activeAccount = instance.getActiveAccount()
+
+    if(!activeAccount && accounts.length === 0) {
+      setToken(undefined)
+      setIsLoading(false)
+      return
+    }
+
+    if(!activeAccount && accounts.length > 0) {
+      instance.setActiveAccount(accounts[0])
+      setIsLoading(false)
+      return
+    }
+
+    if(!activeAccount) {
+      setToken(undefined)
+      setIsLoading(false)
+      return
+    }
+
+    try {
+      const request = acquireRequest(activeAccount)
+      const response = await instance.acquireTokenSilent(request)
+      setToken(response.accessToken)
+      setIsLoading(false)
+    } catch(error) {
+      try {
+        const request = acquireRequest(activeAccount)
+        const response = await instance.acquireTokenPopup(request)
+        setToken(response.accessToken)
+        setIsLoading(false)
+      } catch {
+        instance.loginRedirect(loginRequest)
+      }
+    }
+  }, [instance, accounts, inProgress])
+
+  const refreshToken = useCallback(async (forceRefresh = false) => {
+    const activeAccount = instance.getActiveAccount()
+
+    if(!activeAccount || MOCK_AUTH) return
+
+    try {
+      const request = { ...acquireRequest(activeAccount), forceRefresh }
+      const response = await instance.acquireTokenSilent(request)
+      setToken(response.accessToken)
+    } catch {
+      instance.loginRedirect(loginRequest)
+    }
+  }, [instance])
 
   useEffect(() => {
-    if (MOCK_AUTH) {
-      setToken(MOCK_TOKEN)
-      setIsReady(true)
-      return
-    }
+    getToken()
+  }, [inProgress, getToken])
 
-    if (inProgress !== 'none') {
-      return
-    }
-
-    const activeAccount = instance.getActiveAccount()
-
-    // 1. Check if accounts exist
-    if (!activeAccount && accounts.length === 0) {
-      setToken(undefined)
-      setIsReady(true)
-      return
-    }
-
-    // 2. Promote first account if needed
-    if (!activeAccount && accounts.length > 0) {
-      instance.setActiveAccount(accounts[0])
-      const newActiveAccount = instance.getActiveAccount()
-
-      if (newActiveAccount) {
-        instance.acquireTokenSilent({
-          ...acquireRequest(newActiveAccount),
-          account: newActiveAccount
-        }).then((response) => {
-          setToken(response.accessToken)
-          setIsReady(true)
-        }).catch(() => {
-          setToken(undefined)
-          setIsReady(true)
-        })
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if(!document.hidden) {
+        refreshToken(true)
       }
-      return
     }
 
-    // 3. Use existing active account - MUST acquire token
-    if (activeAccount) {
-      // NOTE: activeAccount.idToken is undefined for cached accounts!
-      // You MUST call acquireTokenSilent() to get a valid token
-      instance.acquireTokenSilent({
-        ...acquireRequest(activeAccount),
-        account: activeAccount
-      }).then((response) => {
-        setToken(response.accessToken)
-        setIsReady(true)
-      }).catch(() => {
-        setToken(undefined)
-        setIsReady(true)
-      })
-    } else {
-      setToken(undefined)
-      setIsReady(true)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
-  }, [inProgress, accounts.length, instance, MOCK_AUTH])
-
-  const refreshToken = async (): Promise<string | undefined> => {
-    if (MOCK_AUTH) return MOCK_TOKEN
-    const activeAccount = instance.getActiveAccount()
-    if (!activeAccount) return undefined
-    try {
-      const result = await instance.acquireTokenSilent({
-        ...acquireRequest(activeAccount),
-        account: activeAccount,
-        forceRefresh: true
-      })
-      setToken(result.accessToken)
-      return result.accessToken
-    } catch {
-      setToken(undefined)
-      return undefined
-    }
-  }
+  }, [refreshToken])
 
   const value: AuthContextType = {
     isAuthenticated: !!token,
     token,
-    isLoading: !isReady && !MOCK_AUTH,
+    isLoading,
     refreshToken
   }
 
@@ -112,10 +112,13 @@ export function AuthCtxProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider')
+  if(!context) {
+    throw new Error('useAuth must be used within AuthCtxProvider')
   }
+  
   return context
 }
+
+export { MOCK_AUTH, MOCK_TOKEN } from './constants'

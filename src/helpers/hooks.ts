@@ -85,7 +85,7 @@ export const useRedirectAfterLogin = () => {
 
 export const withTokenRefresh = async <T>(
   fn: () => Promise<T>,
-  refresh: () => Promise<string | undefined>
+  refresh: () => Promise<unknown>
 ): Promise<T> => {
   try {
     return await fn()

@@ -102,7 +102,7 @@ Core data types are defined in `src/context/App/types.ts`:
 
 - Production API: `https://fireapps.franklintn.gov/api/v3/ffd/step-up`
 - Development API: `https://cofasv38.franklin-gov.com/api/v3/ffd/step-up`
-- API URL configured via `VITE_BASE_URL` environment variable
+- API URL configured via `VITE_API_URL` environment variable
 - Data fetching uses React Query hooks
 - Authentication token passed via `Authorization` header
 
