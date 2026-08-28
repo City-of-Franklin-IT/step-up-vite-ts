@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useAuth, MOCK_AUTH } from '@/context/Auth'
+import { useAuth } from '@/context/Auth'
 
 export const useHandleAuth = () => {
   const { isAuthenticated, isLoading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(MOCK_AUTH) {
+    if(import.meta.env.DEV) {
       navigate('/home')
       return
     }

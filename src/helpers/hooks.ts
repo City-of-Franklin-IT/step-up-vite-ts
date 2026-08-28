@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
 import { infoPopup } from "@/utils/Toast/Toast"
-import { useAuth, MOCK_AUTH } from "@/context/Auth"
+import { useAuth } from "@/context/Auth"
 
 export const useGetToken = () => {
   const { token } = useAuth()
@@ -45,7 +45,7 @@ export const useUnauthRedirect = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (MOCK_AUTH) return
+    if (import.meta.env.DEV) return
 
     if (!isLoading && !isAuthenticated) {
       infoPopup('Unauthorized: Please Login')
@@ -58,7 +58,7 @@ export const useRedirectAfterLogin = () => {
   const { isAuthenticated, isLoading } = useAuth()
 
   useEffect(() => {
-    if (MOCK_AUTH) return
+    if (import.meta.env.DEV) return
 
     if (!isLoading && isAuthenticated) {
       const redirectUrl = sessionStorage.getItem('redirectUrl')

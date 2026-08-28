@@ -9,6 +9,5 @@ vi.mock('@/context/Auth', () => ({
     isLoading: false,
     refreshToken: vi.fn()
   })),
-  AuthCtxProvider: ({ children }: any) => children,
-  MOCK_AUTH: false
+  AuthCtxProvider: ({ children }: any) => children
 }))

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { useMsal } from '@azure/msal-react'
-import { MOCK_AUTH, MOCK_TOKEN } from './constants'
 import { acquireRequest, loginRequest } from '@/context/Auth/config'
 
 interface AuthContextType {
@@ -18,8 +17,8 @@ export const AuthCtxProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const getToken = useCallback(async () => {
-    if(MOCK_AUTH) {
-      setToken(MOCK_TOKEN)
+    if(import.meta.env.DEV) {
+      setToken(import.meta.env.VITE_MOCK_TOKEN)
       setIsLoading(false)
       return
     }
@@ -70,7 +69,7 @@ export const AuthCtxProvider = ({ children }: { children: ReactNode }) => {
   const refreshToken = useCallback(async (forceRefresh = false) => {
     const activeAccount = instance.getActiveAccount()
 
-    if(!activeAccount || MOCK_AUTH) return
+    if(!activeAccount || import.meta.env.DEV) return
 
     try {
       const request = { ...acquireRequest(activeAccount), forceRefresh }
@@ -120,5 +119,3 @@ export const useAuth = () => {
   
   return context
 }
-
-export { MOCK_AUTH, MOCK_TOKEN } from './constants'
