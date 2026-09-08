@@ -67,6 +67,8 @@ export const AuthCtxProvider = ({ children }: { children: ReactNode }) => {
   }, [instance, accounts, inProgress])
 
   const refreshToken = useCallback(async (forceRefresh = false) => {
+    if(import.meta.env.DEV) return import.meta.env.VITE_MOCK_TOKEN
+    
     const activeAccount = instance.getActiveAccount()
 
     if(!activeAccount || import.meta.env.DEV) return
