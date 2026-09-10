@@ -1,21 +1,23 @@
-import { useHandleShiftFilterContainer } from './hooks'
+import { useHandleShiftFilter } from './hooks'
 
-// Components
-import HideBtn from "../../buttons/HideBtn"
-import * as Components from './components'
+// Types
+import * as AppTypes from '@/context/App/AppTypes'
+
+const OPTIONS: AppTypes.ShiftType[] = ['A', 'B', 'C']
 
 function ShiftFilterContainer() {
-  const btnProps = useHandleShiftFilterContainer()
+  const { value, onChange } = useHandleShiftFilter()
 
   return (
-    <div className="flex-1 flex relative items-center justify-evenly gap-8 p-8 border border-neutral-content rounded-lg">
-      <Components.Header />
-      <div className="absolute -top-5 right-5">
-        <HideBtn { ...btnProps } />
-      </div>
-      <Components.Buttons hidden={btnProps.hidden} />
-      <Components.Footer />
-    </div>
+    <label className="flex-1 flex flex-col gap-2">
+      <span className="font-[jura] uppercase text-base text-neutral-content/90">Filter <small className="italic">by</small> Shift</span>
+      <select className="select w-full" value={value} onChange={onChange}>
+        <option value="">All</option>
+        {OPTIONS.map(option => (
+          <option key={`shift-filter-${ option }`} value={option}>{option}</option>
+        ))}
+      </select>
+    </label>
   )
 }
 

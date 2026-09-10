@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/vitest",
-    "dev": "vite --port 6000",
+    "dev": "vite --port 6001",
     "build": "tsc -b && vite build",
     "deploy": "scp -r dist $USER@cofasv32:/opt/builds/step-up-vite-ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",

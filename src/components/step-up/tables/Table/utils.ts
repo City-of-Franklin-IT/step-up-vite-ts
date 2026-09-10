@@ -11,12 +11,17 @@ export interface TableDataType {
   hours: number
   shift: AppTypes.ShiftType | null
   Schedules: AppTypes.ScheduleInterface[]
+  QualifyingSchedules: AppTypes.ScheduleInterface[]
 }
 
 export const handleHours = (hours: number): string => { // Handle hours worked
   if(hours > 72) {
     return "72+"
   } else return hours.toString()
+}
+
+export const isQualified = (hours: number): boolean => { // Whether hours have reached the 72+ threshold
+  return hours >= 72
 }
 
 export const setProgressBar = (hours: number): string => { // Set step up hrs progress bar color

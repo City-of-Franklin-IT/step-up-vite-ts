@@ -1,45 +1,15 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import StepUpCtx from "../../context"
 
 /**
-* Returns hide button props and buttons visibility boolean
+* Returns skills filter select value and change handler
 **/
-export const useHandleSkillsFilterContainer = () => {
-  const [state, setState] = useState<{ hidden: boolean }>({ hidden: window.innerWidth < 768 })
-
-  const onHideBtnClick = () => {
-    setState(prevState => ({ hidden: !prevState.hidden }))
-  }
-
-  return { hidden: state.hidden, onClick: onHideBtnClick }
-}
-
-/**
-* Returns skills buttons visibility boolean and onClick handler
-**/
-export const useHandleSkillsBtns = () => {
+export const useHandleSkillsFilter = () => {
   const { skillsFilter, dispatch } = useContext(StepUpCtx)
 
-  const visible = !skillsFilter
-
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch({ type: 'SET_SKILLS_FILTER', payload: e.currentTarget.value })
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: 'SET_SKILLS_FILTER', payload: e.target.value })
   }
 
-  return { visible, onClick }
-}
-
-/**
-* Returns remove filter button visibility boolean and onClick handler
-**/
-export const useHandleRemoveFilterBtn = () => {
-  const { skillsFilter, dispatch } = useContext(StepUpCtx)
-
-  const visible = !!skillsFilter
-
-  const onClick = () => {
-    dispatch({ type: 'SET_SKILLS_FILTER', payload: '' })
-  }
-
-  return { visible, onClick }
+  return { value: skillsFilter, onChange }
 }

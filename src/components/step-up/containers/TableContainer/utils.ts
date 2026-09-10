@@ -6,6 +6,24 @@ export const scrollToTop = (topRef: React.RefObject<HTMLElement | null>) => { //
   topRef.current?.scrollIntoView({ behavior: 'smooth' })
 }
 
+export const getQualifyingShifts = (schedules: AppTypes.ScheduleInterface[]): AppTypes.ScheduleInterface[] => { // Get shifts required to reach 72+ hours
+  if(!schedules.length) return []
+
+  const sorted = [...schedules].sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+
+  const qualifying: AppTypes.ScheduleInterface[] = []
+  let cumulativeHours = 0
+
+  for(const shift of sorted) {
+    qualifying.push(shift)
+    cumulativeHours += shift.hours
+
+    if(cumulativeHours >= 72) break // Inclusive threshold
+  }
+
+  return qualifying
+}
+
 export const filterQualified = (staff: AppTypes.StaffInterface[], filter: string): TableData[] => { // Filter staff by qualification
   const qualified: TableData[] = []
 
@@ -44,7 +62,8 @@ export const filterQualified = (staff: AppTypes.StaffInterface[], filter: string
         email: employee.email,
         hours,
         shift: employee.shift,
-        Schedules: employee.Schedules
+        Schedules: employee.Schedules,
+        QualifyingSchedules: getQualifyingShifts(employee.QualifyingSchedules)
       }
 
       qualified.push(item)

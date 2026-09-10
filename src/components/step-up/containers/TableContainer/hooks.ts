@@ -1,6 +1,6 @@
 import { useMemo, useContext, useRef } from "react"
 import StepUpCtx from "../../context"
-import { filterQualified } from "./utils"
+import { filterQualified, getQualifyingShifts } from "./utils"
 
 // Types
 import * as AppTypes from '@/context/App/AppTypes'
@@ -15,6 +15,7 @@ export interface TableData {
   hours: number
   shift: AppTypes.ShiftType | null
   Schedules: AppTypes.ScheduleInterface[]
+  QualifyingSchedules: AppTypes.ScheduleInterface[]
   [key: string]: string | AppTypes.RankType | number | AppTypes.ScheduleInterface[] | null
 }
 
@@ -48,7 +49,8 @@ export const useHandleTableContainer = (staff: AppTypes.StaffInterface[] | undef
           email: x.email,
           hours,
           shift: x.shift,
-          Schedules: x.Schedules
+          Schedules: x.Schedules,
+          QualifyingSchedules: getQualifyingShifts(x.QualifyingSchedules)
         }
 
         return entry

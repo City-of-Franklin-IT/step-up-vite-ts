@@ -1,35 +1,18 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import StepUpCtx from "../../context"
 
 // Types
 import * as AppTypes from '@/context/App/AppTypes'
 
 /**
-* Returns hide button props
+* Returns qualified filter select value and change handler
 **/
-export const useHandleQualifiedFilterContainer = () => {
-  const [state, setState] = useState<{ hidden : boolean }>({ hidden: window.innerWidth < 768 })
-
-  const onHideBtnClick = () => {
-    setState(prevState => ({ hidden: !prevState.hidden }))
-  }
-
-  return { hidden: state.hidden, onClick: onHideBtnClick }
-}
-
-/**
-* Returns props for filter buttons; showRemoveBtn visibility boolean
-**/
-export const useHandleButtons = () => {
+export const useHandleQualifiedFilter = () => {
   const { filter, dispatch } = useContext(StepUpCtx)
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const payload = e.currentTarget.value as AppTypes.RankType
-
-    if(payload !== filter) {
-      dispatch({ type: 'SET_FILTER', payload })
-    }
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: 'SET_FILTER', payload: e.target.value as AppTypes.RankType | '' })
   }
 
-  return { onClick, showRemoveBtn: !!filter }
+  return { value: filter, onChange }
 }

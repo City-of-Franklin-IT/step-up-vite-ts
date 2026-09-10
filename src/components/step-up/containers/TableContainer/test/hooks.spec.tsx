@@ -31,6 +31,7 @@ const makeStaff = (overrides: Partial<AppTypes.StaffInterface> = {}): AppTypes.S
   shift: "A",
   StepUps: [{ detailCode: "ENG", hours: 8 }],
   Schedules: [],
+  QualifyingSchedules: [],
   ...overrides
 })
 
@@ -53,6 +54,22 @@ describe("useHandleTableContainer", () => {
       { wrapper: createWrapper({ showAllStaff: true }) }
     )
     expect(result.current.tableData[0].hours).toBe(72)
+  })
+
+  it("populates QualifyingSchedules with the shifts required to reach 72 hours", () => {
+    const staff = [
+      makeStaff({
+        QualifyingSchedules: [
+          { startDate: "2024-01-01", startTime: "2024-01-01T08:00:00Z", endDate: "2024-01-01", endTime: "2024-01-01T16:00:00Z", hours: 40, detailCode: "ENG" },
+          { startDate: "2024-01-08", startTime: "2024-01-08T08:00:00Z", endDate: "2024-01-08", endTime: "2024-01-08T16:00:00Z", hours: 40, detailCode: "ENG" }
+        ]
+      })
+    ]
+    const { result } = renderHook(
+      () => useHandleTableContainer(staff),
+      { wrapper: createWrapper({ showAllStaff: true }) }
+    )
+    expect(result.current.tableData[0].QualifyingSchedules).toHaveLength(2)
   })
 
   it("excludes employees with 0 hours when showAllStaff is false", () => {

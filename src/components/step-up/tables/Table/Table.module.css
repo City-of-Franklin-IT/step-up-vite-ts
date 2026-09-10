@@ -83,7 +83,7 @@
 .schedule {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 16px;
   line-height: initial;
   padding: 40px;
 }

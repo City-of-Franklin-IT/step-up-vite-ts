@@ -1,5 +1,15 @@
-import { filterQualified } from "../utils"
+import { filterQualified, getQualifyingShifts } from "../utils"
 import * as AppTypes from "@/context/App/AppTypes"
+
+const makeSchedule = (overrides: Partial<AppTypes.ScheduleInterface> = {}): AppTypes.ScheduleInterface => ({
+  startDate: "2024-01-15",
+  startTime: "2024-01-15T08:00:00Z",
+  endDate: "2024-01-15",
+  endTime: "2024-01-15T16:00:00Z",
+  hours: 8,
+  detailCode: "ENG",
+  ...overrides
+})
 
 const makeStaff = (rank: AppTypes.RankType, hours: number, shift: AppTypes.ShiftType | null = "A"): AppTypes.StaffInterface => ({
   employeeId: "001",
@@ -10,7 +20,8 @@ const makeStaff = (rank: AppTypes.RankType, hours: number, shift: AppTypes.Shift
   email: "test@test.com",
   shift,
   StepUps: [{ detailCode: "ENG", hours }],
-  Schedules: []
+  Schedules: [],
+  QualifyingSchedules: []
 })
 
 describe("filterQualified", () => {
@@ -63,10 +74,79 @@ describe("filterQualified", () => {
       email: "",
       shift: "A",
       StepUps: [{ detailCode: "ENG", hours: 40 }, { detailCode: "ENG", hours: 32 }],
-      Schedules: []
+      Schedules: [],
+      QualifyingSchedules: []
     }
     const result = filterQualified([employee], "Engineer")
     expect(result).toHaveLength(1)
     expect(result[0].hours).toBe(72)
+  })
+
+  it("carries the computed qualifying shifts through onto the result", () => {
+    const employee: AppTypes.StaffInterface = {
+      employeeId: "003",
+      rank: "Firefighter",
+      fullName: "Qualifying Shifts Employee",
+      skills: "",
+      phone: "",
+      email: "",
+      shift: "A",
+      StepUps: [{ detailCode: "ENG", hours: 80 }],
+      Schedules: [],
+      QualifyingSchedules: [
+        makeSchedule({ startTime: "2024-01-01T08:00:00Z", hours: 40 }),
+        makeSchedule({ startTime: "2024-01-08T08:00:00Z", hours: 40 }),
+        makeSchedule({ startTime: "2024-01-15T08:00:00Z", hours: 40 })
+      ]
+    }
+    const result = filterQualified([employee], "Engineer")
+    expect(result).toHaveLength(1)
+    expect(result[0].QualifyingSchedules).toHaveLength(2)
+  })
+})
+
+describe("getQualifyingShifts", () => {
+  it("returns an empty array when there are no schedules", () => {
+    expect(getQualifyingShifts([])).toEqual([])
+  })
+
+  it("includes all shifts when their hours never reach 72", () => {
+    const schedules = [
+      makeSchedule({ startTime: "2024-01-01T08:00:00Z", hours: 20 }),
+      makeSchedule({ startTime: "2024-01-08T08:00:00Z", hours: 20 })
+    ]
+    expect(getQualifyingShifts(schedules)).toHaveLength(2)
+  })
+
+  it("includes shifts up through the one that reaches exactly 72 hours", () => {
+    const schedules = [
+      makeSchedule({ startTime: "2024-01-01T08:00:00Z", hours: 40 }),
+      makeSchedule({ startTime: "2024-01-08T08:00:00Z", hours: 32 })
+    ]
+    expect(getQualifyingShifts(schedules)).toHaveLength(2)
+  })
+
+  it("excludes shifts after cumulative hours cross 72", () => {
+    const schedules = [
+      makeSchedule({ startTime: "2024-01-01T08:00:00Z", hours: 40 }),
+      makeSchedule({ startTime: "2024-01-08T08:00:00Z", hours: 40 }),
+      makeSchedule({ startTime: "2024-01-15T08:00:00Z", hours: 40 })
+    ]
+    const result = getQualifyingShifts(schedules)
+    expect(result).toHaveLength(2)
+    expect(result[0].startTime).toBe("2024-01-01T08:00:00Z")
+    expect(result[1].startTime).toBe("2024-01-08T08:00:00Z")
+  })
+
+  it("sorts shifts oldest-first before accumulating, regardless of input order", () => {
+    const schedules = [
+      makeSchedule({ startTime: "2024-01-15T08:00:00Z", hours: 40 }),
+      makeSchedule({ startTime: "2024-01-01T08:00:00Z", hours: 40 }),
+      makeSchedule({ startTime: "2024-01-08T08:00:00Z", hours: 40 })
+    ]
+    const result = getQualifyingShifts(schedules)
+    expect(result).toHaveLength(2)
+    expect(result[0].startTime).toBe("2024-01-01T08:00:00Z")
+    expect(result[1].startTime).toBe("2024-01-08T08:00:00Z")
   })
 })

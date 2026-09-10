@@ -1,4 +1,4 @@
-import { handleHours, setProgressBar } from "../utils"
+import { handleHours, setProgressBar, isQualified } from "../utils"
 
 describe("handleHours", () => {
   it("returns '72+' for hours above 72", () => {
@@ -25,5 +25,17 @@ describe("setProgressBar", () => {
   it("returns warning class for hours below 72", () => {
     expect(setProgressBar(48)).toBe("progress-warning bg-warning/20")
     expect(setProgressBar(0)).toBe("progress-warning bg-warning/20")
+  })
+})
+
+describe("isQualified", () => {
+  it("returns true at or above 72 hours", () => {
+    expect(isQualified(72)).toBe(true)
+    expect(isQualified(80)).toBe(true)
+  })
+
+  it("returns false below 72 hours", () => {
+    expect(isQualified(71)).toBe(false)
+    expect(isQualified(0)).toBe(false)
   })
 })

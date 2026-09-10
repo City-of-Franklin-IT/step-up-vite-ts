@@ -12,20 +12,28 @@ const schedule: AppTypes.ScheduleInterface = {
 }
 
 describe("SchedulesTable", () => {
-  it("shows no recent shifts message when schedules array is empty", () => {
-    render(<SchedulesTable schedules={[]} employeeId="001" />)
+  it("shows the empty message when schedules array is empty", () => {
+    render(<SchedulesTable schedules={[]} employeeId="001" emptyMessage="No Recent Step-Up Shifts" testIdPrefix="recent" colorVariant="info" />)
     expect(screen.getByTestId("no-recent-shifts")).toBeInTheDocument()
-    expect(screen.queryByTestId("schedules-table")).not.toBeInTheDocument()
+    expect(screen.getByText("No Recent Step-Up Shifts")).toBeInTheDocument()
+    expect(screen.queryByTestId("recent-schedules-table")).not.toBeInTheDocument()
+  })
+
+  it("shows a different empty message for the qualifying shifts variant", () => {
+    render(<SchedulesTable schedules={[]} employeeId="001" emptyMessage="No Step-Up Shifts" testIdPrefix="qualifying" colorVariant="warning" />)
+    expect(screen.getByTestId("no-qualifying-shifts")).toBeInTheDocument()
+    expect(screen.getByText("No Step-Up Shifts")).toBeInTheDocument()
+    expect(screen.queryByTestId("qualifying-schedules-table")).not.toBeInTheDocument()
   })
 
   it("shows the schedules table when entries are present", () => {
-    render(<SchedulesTable schedules={[schedule]} employeeId="001" />)
-    expect(screen.getByTestId("schedules-table")).toBeInTheDocument()
+    render(<SchedulesTable schedules={[schedule]} employeeId="001" emptyMessage="No Recent Step-Up Shifts" testIdPrefix="recent" colorVariant="info" />)
+    expect(screen.getByTestId("recent-schedules-table")).toBeInTheDocument()
     expect(screen.queryByTestId("no-recent-shifts")).not.toBeInTheDocument()
   })
 
   it("renders schedule row data correctly", () => {
-    render(<SchedulesTable schedules={[schedule]} employeeId="001" />)
+    render(<SchedulesTable schedules={[schedule]} employeeId="001" emptyMessage="No Recent Step-Up Shifts" testIdPrefix="recent" colorVariant="info" />)
     expect(screen.getByText("2024-01-15")).toBeInTheDocument()
     expect(screen.getByText("08:00")).toBeInTheDocument()
     expect(screen.getByText("2024-01-16")).toBeInTheDocument()
@@ -38,7 +46,7 @@ describe("SchedulesTable", () => {
       schedule,
       { ...schedule, startDate: "2024-02-01", endDate: "2024-02-01", detailCode: "LT" }
     ]
-    render(<SchedulesTable schedules={schedules} employeeId="001" />)
+    render(<SchedulesTable schedules={schedules} employeeId="001" emptyMessage="No Recent Step-Up Shifts" testIdPrefix="recent" colorVariant="info" />)
     expect(screen.getAllByText("08:00")).toHaveLength(2)
     expect(screen.getByText("LT")).toBeInTheDocument()
   })

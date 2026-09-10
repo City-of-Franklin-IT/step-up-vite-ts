@@ -18,7 +18,7 @@ function TableContainer({ staff }: { staff: AppTypes.StaffInterface[] | undefine
   return (
     <div ref={topRef} className={styles.container}>
       <div className="flex flex-col gap-14">
-        <div className="ml-10 w-3/4">
+        <div className="self-start w-full max-w-full lg:max-w-[50%]">
           <Search />
         </div>
         <FiltersContainer skills={skills} />

@@ -8,6 +8,7 @@ export interface StaffInterface {
   shift: ShiftType | null
   StepUps: StepUpsInterface[]
   Schedules: ScheduleInterface[]
+  QualifyingSchedules: ScheduleInterface[]
   [key: string]: string | RankType | StepUpsInterface[] | ScheduleInterface[] | ShiftType | null
 }
 

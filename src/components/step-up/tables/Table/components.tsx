@@ -1,5 +1,5 @@
 import styles from './Table.module.css'
-import { handleHours, setProgressBar } from './utils'
+import { handleHours, setProgressBar, isQualified } from './utils'
 import { useHandleTableRow } from './hooks'
 
 // Types
@@ -14,9 +14,9 @@ import EmailIcon from '../../../icons/EmailIcon'
 export const Headers = () => (
   <thead>
     <tr className="text-primary-content uppercase bg-primary text-left">
-      <th className="px-4">Employee</th>
-      <th className="text-center rounded-tr-lg whitespace-nowrap lg:rounded-none md:transform md:-translate-x-10">Step-Up HRs.</th>
-      <th className="text-center hidden lg:block">Recent Step Up Shifts</th>
+      <th className="px-4 py-3">Employee</th>
+      <th className="text-center py-3">Qualifying Shifts</th>
+      <th className="text-center py-3">Recent Step Up Shifts</th>
     </tr>
   </thead>
 )
@@ -41,21 +41,36 @@ type TableRowProps = {
 
 export const TableRow = (props: TableRowProps) => { // Table row
   const { rowProps, hovered } = useHandleTableRow(props.index)
+  const qualified = isQualified(props.employee.hours)
 
   return (
     <tr
       key={`table-row-${ props.employee.employeeId }`}
       { ...rowProps }>
-        <SetEmployee 
+        <SetEmployee
           employee={props.employee}
           hovered={hovered} />
-        <Hours employee={props.employee} />
 
-        <td className="hidden lg:table-cell">
+        <td>
           <div className={styles.schedule}>
-            <SchedulesTable 
+            <HoursGauge employee={props.employee} />
+            <SchedulesTable
+              schedules={props.employee.QualifyingSchedules}
+              employeeId={props.employee.employeeId}
+              emptyMessage="No Step-Up Shifts"
+              testIdPrefix="qualifying"
+              colorVariant={qualified ? 'success' : 'warning'} />
+          </div>
+        </td>
+
+        <td>
+          <div className={styles.schedule}>
+            <SchedulesTable
               schedules={props.employee.Schedules}
-              employeeId={props.employee.employeeId} />
+              employeeId={props.employee.employeeId}
+              emptyMessage="No Recent Step-Up Shifts"
+              testIdPrefix="recent"
+              colorVariant="info" />
           </div>
         </td>
     </tr>
@@ -162,15 +177,13 @@ const Skills = (props: SkillsProps) => (
   </div>
 )
 
-const Hours = ({ employee }: { employee: TableDataType }) => { // Step up hours table data cell
+const HoursGauge = ({ employee }: { employee: TableDataType }) => { // Step up hours gauge, shown above the Qualifying Shifts table
   if(!employee) return null
 
   return (
-    <td>
-      <div className="flex flex-col items-center px-6 md:transform md:-translate-x-10">
-        <div className={styles.hours}>{handleHours(employee.hours)} <span className="text-sm">HRs.</span></div>
-        <progress className={`progress ${ setProgressBar(employee.hours) } h-4 shadow-lg`} value={employee.hours} max={73}></progress>
-      </div>
-    </td>
+    <div className="flex flex-col items-center">
+      <div className={styles.hours}>{handleHours(employee.hours)} <span className="text-sm">HRs.</span></div>
+      <progress className={`progress ${ setProgressBar(employee.hours) } h-4 shadow-lg`} value={employee.hours} max={73}></progress>
+    </div>
   )
 }

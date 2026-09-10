@@ -1,21 +1,23 @@
-import { useHandleQualifiedFilterContainer } from './hooks'
+import { useHandleQualifiedFilter } from './hooks'
 
-// Components
-import HideBtn from "../../buttons/HideBtn"
-import * as Components from './components'
+// Types
+import * as AppTypes from '@/context/App/AppTypes'
+
+const OPTIONS: AppTypes.RankType[] = ['Engineer', 'Lieutenant', 'Captain', 'BC']
 
 function QualifiedFilterContainer() {
-  const btnProps = useHandleQualifiedFilterContainer()
+  const { value, onChange } = useHandleQualifiedFilter()
 
   return (
-    <div className="flex-1 flex relative items-center justify-evenly gap-8 p-8 border border-neutral-content rounded-lg">
-      <Components.Header />
-      <div className="absolute -top-5 right-5">
-        <HideBtn { ...btnProps } />
-      </div>
-      <Components.Buttons hidden={btnProps.hidden} />
-      <Components.Footer />
-    </div>
+    <label className="flex-1 flex flex-col gap-2">
+      <span className="font-[jura] uppercase text-base text-neutral-content/90">Filter Qualified</span>
+      <select className="select w-full" value={value} onChange={onChange}>
+        <option value="">All</option>
+        {OPTIONS.map(option => (
+          <option key={`qualified-filter-${ option }`} value={option}>{option}</option>
+        ))}
+      </select>
+    </label>
   )
 }
 
