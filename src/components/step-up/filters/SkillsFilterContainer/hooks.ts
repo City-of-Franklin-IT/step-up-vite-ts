@@ -13,3 +13,30 @@ export const useHandleSkillsFilter = () => {
 
   return { value: skillsFilter, onChange }
 }
+
+/**
+* Returns skills filter button click handler and visibility
+**/
+export const useHandleSkillsBtns = () => {
+  const { skillsFilter, dispatch } = useContext(StepUpCtx)
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = (e.currentTarget as HTMLButtonElement).value
+    dispatch({ type: 'SET_SKILLS_FILTER', payload: value })
+  }
+
+  return { onClick, visible: !skillsFilter }
+}
+
+/**
+* Returns remove filter button handler and visibility
+**/
+export const useHandleRemoveFilterBtn = () => {
+  const { skillsFilter, dispatch } = useContext(StepUpCtx)
+
+  const onClick = (_e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch({ type: 'SET_SKILLS_FILTER', payload: '' })
+  }
+
+  return { onClick, visible: !!skillsFilter }
+}

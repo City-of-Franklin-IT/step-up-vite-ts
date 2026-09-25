@@ -1,10 +1,10 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useLocation } from "react-router"
 import HeaderCtx from "./context"
 
 // Types
 import { PagesType } from "./context"
-import { useActiveAccount } from "@/helpers/hooks"
+import { useActiveAccount, useDismissOnOutside } from "@/helpers/hooks"
 
 /**
 * Handles setting activePage in context on page change
@@ -61,4 +61,19 @@ export const useHandleHeaderBtn = (label: string) => {
   const className = `btn btn-ghost rounded-none uppercase hover:bg-primary hover:shadow-none ${ textColor }`
 
   return { visible, className }
+}
+
+export const useHandleMobileMenu = () => {
+  const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+  const ref = useDismissOnOutside(open, () => setOpen(false))
+
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
+  const onBtnClick = () => setOpen(o => !o)
+  const close = () => setOpen(false)
+
+  return { ref, open, onBtnClick, close }
 }

@@ -31,6 +31,7 @@ export default defineConfig({
     }
   },
   server: {
+    port: 6002,
     allowedHosts: ['cofasv38.franklin-gov.com', 'istest.franklintn.gov', 'dev.franklintn.gov']
   }
 })
