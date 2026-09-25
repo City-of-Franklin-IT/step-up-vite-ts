@@ -79,7 +79,7 @@ const MenuItems = ({ visible, onNavigate, onLogout }: MenuItemsProps) => {
       </li>
       <li>
         <a href={'/home'} className="uppercase hover:bg-primary/80">
-          Back to All PD Apps
+          Back to All Fire Apps
         </a>
       </li>
       <li>
