@@ -21,6 +21,8 @@ function Header() {
 
         <Components.MobileMenu />
       </div>
+
+      <Components.HomeLink />
     </header>
   )
 }

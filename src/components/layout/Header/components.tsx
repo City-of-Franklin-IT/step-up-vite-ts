@@ -94,7 +94,7 @@ const MenuItems = ({ visible, onNavigate, onLogout }: MenuItemsProps) => {
 export const HomeLink = () => {
 
   return (
-    <a href={'/home'} className="text-neutral-content uppercase p-3 m-auto bg-neutral/20 w-fit rounded-b-lg hover:bg-warning/50 hover:text-neutral">Back To All FFD Apps</a>
+    <a href={'/home'} className="hidden md:block text-neutral-content uppercase p-3 m-auto bg-neutral/20 w-fit rounded-b-lg hover:bg-warning/50 hover:text-neutral">Back To All FFD Apps</a>
   )
 }
 
