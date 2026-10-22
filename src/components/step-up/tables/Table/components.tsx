@@ -44,35 +44,33 @@ export const TableRow = (props: TableRowProps) => { // Table row
   const qualified = isQualified(props.employee.hours)
 
   return (
-    <tr
-      key={`table-row-${ props.employee.employeeId }`}
-      { ...rowProps }>
-        <SetEmployee
-          employee={props.employee}
-          hovered={hovered} />
+    <tr { ...rowProps }>
+      <SetEmployee
+        employee={props.employee}
+        hovered={hovered} />
 
-        <td>
-          <div className={styles.schedule}>
-            <HoursGauge employee={props.employee} />
-            <SchedulesTable
-              schedules={props.employee.QualifyingSchedules}
-              employeeId={props.employee.employeeId}
-              emptyMessage="No Step-Up Shifts"
-              testIdPrefix="qualifying"
-              colorVariant={qualified ? 'success' : 'warning'} />
-          </div>
-        </td>
+      <td>
+        <div className={styles.schedule}>
+          <HoursGauge employee={props.employee} />
+          <SchedulesTable
+            schedules={props.employee.QualifyingSchedules}
+            employeeId={props.employee.employeeId}
+            emptyMessage="No Step-Up Shifts"
+            testIdPrefix="qualifying"
+            colorVariant={qualified ? 'success' : 'warning'} />
+        </div>
+      </td>
 
-        <td>
-          <div className={styles.schedule}>
-            <SchedulesTable
-              schedules={props.employee.Schedules}
-              employeeId={props.employee.employeeId}
-              emptyMessage="No Recent Step-Up Shifts"
-              testIdPrefix="recent"
-              colorVariant="info" />
-          </div>
-        </td>
+      <td>
+        <div className={styles.schedule}>
+          <SchedulesTable
+            schedules={props.employee.Schedules}
+            employeeId={props.employee.employeeId}
+            emptyMessage="No Recent Step-Up Shifts"
+            testIdPrefix="recent"
+            colorVariant="info" />
+        </div>
+      </td>
     </tr>
   )
 }
