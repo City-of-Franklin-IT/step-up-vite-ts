@@ -6,7 +6,7 @@ interface AuthContextType {
   isAuthenticated: boolean
   token: string | undefined
   isLoading: boolean
-  refreshToken: (forceRefresh?: boolean) => Promise<void>
+  refreshToken: (forceRefresh?: boolean) => Promise<string | undefined>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
