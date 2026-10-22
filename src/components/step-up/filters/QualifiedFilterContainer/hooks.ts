@@ -16,3 +16,17 @@ export const useHandleQualifiedFilter = () => {
 
   return { value: filter, onChange }
 }
+
+/**
+* Returns qualified filter button click handler and remove button visibility
+**/
+export const useHandleButtons = () => {
+  const { filter, dispatch } = useContext(StepUpCtx)
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = (e.currentTarget as HTMLButtonElement).value as AppTypes.RankType | ''
+    dispatch({ type: 'SET_FILTER', payload: value })
+  }
+
+  return { onClick, showRemoveBtn: !!filter }
+}

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/vitest",
-    "dev": "vite --port 6001",
+    "dev": "vite --port 6000",
     "build": "tsc -b && vite build",
     "deploy": "scp -r dist $USER@cofasv32:/opt/builds/step-up-vite-ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -15,6 +15,7 @@
     "@azure/msal-browser": "^4.24.0",
     "@azure/msal-react": "^3.0.20",
     "@tanstack/react-query": "^5.62.12",
+    "lucide-react": "^1.48.0",
     "motion": "^12.23.24",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

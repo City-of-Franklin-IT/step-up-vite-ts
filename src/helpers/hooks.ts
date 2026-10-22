@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router"
 import { infoPopup } from "@/utils/Toast/Toast"
 import { useAuth } from "@/context/Auth"
@@ -83,4 +83,47 @@ export const withTokenRefresh = async <T>(
     if (e instanceof Error && e.message === '401') await refresh()
     throw e
   }
+}
+
+export const useDismissOnOutside = (open: boolean, onDismiss: () => void) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const dismiss = useRef(onDismiss)
+  dismiss.current = onDismiss
+
+  useEffect(() => {
+    if (!open) return
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) dismiss.current()
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") dismiss.current()
+    }
+
+    document.addEventListener("pointerdown", onPointerDown)
+    document.addEventListener("keydown", onKey)
+
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown)
+      document.removeEventListener("keydown", onKey)
+    }
+  }, [open])
+
+  return ref
+}
+
+export const useElementHeightVar = (ref: React.RefObject<HTMLElement | null>, varName: string) => {
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const update = () => {
+      document.documentElement.style.setProperty(varName, `${el.getBoundingClientRect().height}px`)
+    }
+
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref, varName])
 }
