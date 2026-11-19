@@ -1,0 +1,19 @@
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine
+RUN printf '%s\n' \
+  'server {' \
+  '  listen 7001;' \
+  '  root /usr/share/nginx/html;' \
+  '  location /step-up {' \
+  '    try_files $uri $uri/ /step-up/index.html;' \
+  '  }' \
+  '}' > /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html/step-up
+EXPOSE 7001
+CMD ["nginx", "-g", "daemon off;"]

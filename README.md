@@ -43,7 +43,7 @@ npm install
 
 ## Configuration
 
-Configure the following values in `src/config/index.ts`:
+Configure the following values in `src/config.ts`:
 
 | Variable | Description | Example |
 |----------|-------------|---------|

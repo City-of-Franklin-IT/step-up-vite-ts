@@ -1,3 +1,4 @@
+import { APP_TITLE } from "@/config"
 import { Menu, X } from "lucide-react"
 import { Link, useLocation } from "react-router"
 import ffdIcon from '@/assets/icons/ffd/ffd.png'
@@ -13,7 +14,7 @@ export const Title = () => {
       className="flex flex-col text-primary-content text-center w-fit">
         <div className="flex gap-2 text-primary-content items-center justify-center md:gap-4">
           <img src={ffdIcon} alt="ffd icon" className="w-12 md:w-20" />
-          <h1 className="text-xl font-bold text-center md:text-2xl lg:text-4xl">{import.meta.env.VITE_APP_TITLE}</h1>
+          <h1 className="text-xl font-bold text-center md:text-2xl lg:text-4xl">{APP_TITLE}</h1>
         </div>
     </Link>
   )

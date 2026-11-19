@@ -36,8 +36,3 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 
-# Environment files
-.env
-.env.local
-.env.*.local
-.env.development

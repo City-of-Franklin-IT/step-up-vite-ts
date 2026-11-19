@@ -1,0 +1,7 @@
+services:
+  step-up:
+    image: ghcr.io/city-of-franklin-it/step-up-vite-ts:1.0.0
+    container_name: step-up
+    restart: unless-stopped
+    ports:
+      - "7001:7001"

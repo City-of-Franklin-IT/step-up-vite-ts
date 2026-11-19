@@ -1,3 +1,4 @@
+import { MOCK_TOKEN } from "@/config"
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { useMsal } from '@azure/msal-react'
 import { acquireRequest, loginRequest } from '@/context/Auth/config'
@@ -18,7 +19,7 @@ export const AuthCtxProvider = ({ children }: { children: ReactNode }) => {
 
   const getToken = useCallback(async () => {
     if(import.meta.env.DEV) {
-      setToken(import.meta.env.VITE_MOCK_TOKEN)
+      setToken(MOCK_TOKEN)
       setIsLoading(false)
       return
     }
@@ -67,7 +68,7 @@ export const AuthCtxProvider = ({ children }: { children: ReactNode }) => {
   }, [instance, accounts, inProgress])
 
   const refreshToken = useCallback(async (forceRefresh = false) => {
-    if(import.meta.env.DEV) return import.meta.env.VITE_MOCK_TOKEN
+    if(import.meta.env.DEV) return MOCK_TOKEN
     
     const activeAccount = instance.getActiveAccount()
 

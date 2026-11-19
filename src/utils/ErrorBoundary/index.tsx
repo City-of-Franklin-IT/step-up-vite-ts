@@ -1,3 +1,4 @@
+import { APP_BASE } from "@/config"
 import { useNavigate } from 'react-router'
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 
@@ -6,7 +7,7 @@ function ErrorBoundary({ children }: { children: React.ReactElement }) {
     const navigate = useNavigate()
 
     setTimeout(() => { // Navigate to href after 50ms
-      const href = import.meta.env.VITE_APP_BASE
+      const href = APP_BASE
 
       navigate(href)
     }, (50))

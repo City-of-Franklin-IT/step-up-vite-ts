@@ -102,7 +102,7 @@ Core data types are defined in `src/context/App/types.ts`:
 
 - Production API: `https://fireapps.franklintn.gov/api/v3/ffd/step-up`
 - Development API: `https://cofasv38.franklin-gov.com/api/v3/ffd/step-up`
-- API URL configured via `VITE_API_URL` environment variable
+- API URL configured in `src/config.ts` (selects dev/prod URL by build mode)
 - Data fetching uses React Query hooks
 - Authentication token passed via `Authorization` header
 
@@ -131,7 +131,7 @@ Core data types are defined in `src/context/App/types.ts`:
 
 - React 19 with TypeScript strict mode enabled
 - Development mode bypasses authentication (returns `'dev-token'`)
-- Environment mode set via `NODE_ENV` in `src/config/index.ts`
+- All configuration lives in `src/config.ts` (no `.env` files)
 - Dev server runs on port 6000 and allows specific hosts for cross-domain development
 - Props should be written inline rather than each on a new line (per user preference)
 
