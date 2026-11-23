@@ -3,11 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "image": "hcr.io/city-of-franklin-it/step-up-vite-ts:1.0.1",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/vitest",
     "dev": "vite --port 6000",
     "build": "tsc -b && vite build",
-    "deploy": "scp -r dist $USER@cofasv32:/opt/builds/step-up-vite-ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
