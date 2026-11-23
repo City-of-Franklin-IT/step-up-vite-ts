@@ -8,12 +8,12 @@ RUN npm run build
 FROM nginx:alpine
 RUN printf '%s\n' \
   'server {' \
-  '  listen 7001;' \
+  '  listen 7002;' \
   '  root /usr/share/nginx/html;' \
   '  location /step-up {' \
   '    try_files $uri $uri/ /step-up/index.html;' \
   '  }' \
   '}' > /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html/step-up
-EXPOSE 7001
+EXPOSE 7002
 CMD ["nginx", "-g", "daemon off;"]
